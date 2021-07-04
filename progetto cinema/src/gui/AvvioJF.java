@@ -26,7 +26,7 @@ public class AvvioJF extends SuperJFrame {
 	public AvvioJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		getContentPane().setBackground(SystemColor.activeCaption);
-		setBounds(100, 100, 534, 469);
+		setBounds(200, 20, 887, 697);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Benvenuto in S.I.G.M.A.");
 		
@@ -47,21 +47,21 @@ public class AvvioJF extends SuperJFrame {
 		
 		JButton statisticheButton = new JButton("");
 		statisticheButton.setToolTipText("visualizza statistiche");
-		statisticheButton.setBounds(0, 0, 96, 107);
+		statisticheButton.setBounds(0, 0, 149, 162);
 		statistichePanel.add(statisticheButton);
 		bottoniPanel.add(inserisciSpettacoloPanel);
 		inserisciSpettacoloPanel.setLayout(null);
 		
 		JButton inserisciSpettacoloButton = new JButton("");
 		inserisciSpettacoloButton.setToolTipText("inserisci spettacolo nel database");
-		inserisciSpettacoloButton.setBounds(0, 0, 96, 107);
+		inserisciSpettacoloButton.setBounds(0, 0, 149, 162);
 		inserisciSpettacoloPanel.add(inserisciSpettacoloButton);
 		bottoniPanel.add(cancellaOModificaSpettacoloPanel);
 		cancellaOModificaSpettacoloPanel.setLayout(null);
 		
 		JButton cancellaOModificaSpettacoloButton = new JButton("");
 		cancellaOModificaSpettacoloButton.setToolTipText("cancella o modifica spettacolo nel database");
-		cancellaOModificaSpettacoloButton.setBounds(0, 0, 96, 107);
+		cancellaOModificaSpettacoloButton.setBounds(0, 0, 149, 162);
 		cancellaOModificaSpettacoloPanel.add(cancellaOModificaSpettacoloButton);
 		bottoniPanel.add(esciEsternoPanel);
 		esciEsternoPanel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -71,10 +71,10 @@ public class AvvioJF extends SuperJFrame {
 		introPanel.setLayout(null);
 		
 		JLabel introLabel = new JLabel("");
-		introLabel.setBounds(0, 0, 1360, 699);
+		introLabel.setBounds(0, 0, 2100, 1106);
 		introPanel.add(introLabel);
 		
-		JButton fittizioButton = new JButton("                     ");
+		JButton fittizioButton = new JButton("                                       ");
 		fittizioButton.setEnabled(false);
 		esciEsternoPanel.add(fittizioButton);
 		fittizioButton.setVisible(false);
@@ -90,13 +90,13 @@ public class AvvioJF extends SuperJFrame {
 				System.exit(0);
 			}
 		});
-		esciButton.setBounds(0, 0, 95, 53);
+		esciButton.setBounds(0, 0, 149, 81);
 		esciPanel.add(esciButton);
 		
 		creaSfondoScalatoSu(cancellaOModificaSpettacoloButton, "iconaDataBaseModificaElimina.png");
 		creaSfondoScalatoSu(inserisciSpettacoloButton, "iconaDataBaseAggiungi.png");
 		creaSfondoScalatoSu(statisticheButton, "iconaStatistiche.png");
-		creaSfondoScalatoSu(introLabel, "sfondoAvvioJF3.png");
+		creaSfondoScalatoSu(introLabel, "shawshankModificatoChessHammer2.png");
 		creaSfondoScalatoSu(esciButton, "iconaEsci.png");
 
 	}	
