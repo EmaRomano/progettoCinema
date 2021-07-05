@@ -24,7 +24,7 @@ public class SuperJFrame extends JFrame {
 
 	public SuperJFrame(ControllerGUI controllerGUI) {
 		this.controllerGUI=controllerGUI;
-
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

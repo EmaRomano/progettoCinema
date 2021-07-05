@@ -60,6 +60,11 @@ public class AvvioJF extends SuperJFrame {
 		cancellaOModificaSpettacoloPanel.setLayout(null);
 		
 		JButton cancellaOModificaSpettacoloButton = new JButton("");
+		cancellaOModificaSpettacoloButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.bottoneCercaOModificaPremuto();
+			}
+		});
 		cancellaOModificaSpettacoloButton.setToolTipText("cancella o modifica spettacolo nel database");
 		cancellaOModificaSpettacoloButton.setBounds(0, 0, 149, 162);
 		cancellaOModificaSpettacoloPanel.add(cancellaOModificaSpettacoloButton);
@@ -75,6 +80,7 @@ public class AvvioJF extends SuperJFrame {
 		introPanel.add(introLabel);
 		
 		JButton fittizioButton = new JButton("                                       ");
+		fittizioButton.setBackground(SystemColor.activeCaption);
 		fittizioButton.setEnabled(false);
 		esciEsternoPanel.add(fittizioButton);
 		fittizioButton.setVisible(false);
