@@ -50,6 +50,7 @@ public class CercaSpettacoloJF extends SuperJFrame {
 		cercaBottonePanel.setLayout(null);
 		
 		JButton cercaButton = new JButton("");
+		cercaButton.setToolTipText("cerca spettacolo");
 		cercaButton.setBounds(0, 0, 155, 136);
 		cercaBottonePanel.add(cercaButton);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -87,6 +88,7 @@ public class CercaSpettacoloJF extends SuperJFrame {
 		indietroBottonePanel.setLayout(null);
 		
 		JButton indietroButton = new JButton("");
+		indietroButton.setToolTipText("indietro");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
