@@ -56,7 +56,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 		JPanel immaginePanel = new JPanel();
 
-		JLabel introLabel = new JLabel("Cerca spettacolo nel database:");
+		JLabel introLabel = new JLabel("Cerca spettacolo da cancellare o modificare:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JPanel schedulingPanel = new JPanel();

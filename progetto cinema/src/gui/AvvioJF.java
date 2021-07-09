@@ -49,6 +49,12 @@ public class AvvioJF extends SuperJFrame {
 		statistichePanel.setLayout(null);
 		
 		JButton statisticheButton = new JButton("");
+		statisticheButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controllerGUI.bottoneStatistichePremuto();
+			}
+		});
 		statisticheButton.setToolTipText("visualizza statistiche");
 		statisticheButton.setBounds(0, 0, 149, 162);
 		statistichePanel.add(statisticheButton);
@@ -59,7 +65,7 @@ public class AvvioJF extends SuperJFrame {
 		inserisciSpettacoloButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controllerGUI.bottoneCalcolaStatistichePremuto();
+				controllerGUI.bottoneInserisciSpettacoloPremuto();
 			}
 		});
 		inserisciSpettacoloButton.setToolTipText("inserisci spettacolo nel database");
@@ -107,19 +113,20 @@ public class AvvioJF extends SuperJFrame {
 		esciButton.setBounds(0, 0, 149, 81);
 		esciPanel.add(esciButton);
 		
-		creaSfondoScalatoSu(cancellaOModificaSpettacoloButton, "iconaDatabase.jpg");
 		
 		JLabel gearsLabel = new JLabel("");
 		cancellaOModificaSpettacoloPanel.setLayer(gearsLabel, 1);
 		gearsLabel.setBounds(79, 11, 55, 55);
 		cancellaOModificaSpettacoloPanel.add(gearsLabel);
-		creaSfondoScalatoSu(inserisciSpettacoloButton, "iconaDatabase.jpg");
 		
 		JLabel aggiungiLabel = new JLabel("");
 		inserisciSpettacoloPanel.setLayer(aggiungiLabel, 1);
 		aggiungiLabel.setBounds(81, 11, 55, 55);
 		inserisciSpettacoloPanel.add(aggiungiLabel);
+		
 		creaSfondoScalatoSu(statisticheButton, "iconaStatistiche.jpg");
+		creaSfondoScalatoSu(cancellaOModificaSpettacoloButton, "iconaDatabase.jpg");
+		creaSfondoScalatoSu(inserisciSpettacoloButton, "iconaDatabase.jpg");
 		creaSfondoScalatoSu(introLabel, "shawshank.png");
 		creaSfondoScalatoSu(esciButton, "iconaEsci.png");
 		creaSfondoScalatoSu(gearsLabel, "iconaChiave.png");

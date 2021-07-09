@@ -9,26 +9,34 @@ public class ControllerGUI {
 	private CercaSpettacoloJF cercaSpettacoloJF;
 	private InserisciSpettacoloJF inserisciSpettacoloJF;
 	private CancellaOModificaSpettacoloJF cancellaOModificaSpettacoloJF;
+	private OpzioniStatisticheJF opzioniStatisticheJF;
 	
 	public ControllerGUI() {
 		avvioJF=new AvvioJF(this);
 		cercaSpettacoloJF=new CercaSpettacoloJF(this);
 		inserisciSpettacoloJF=new InserisciSpettacoloJF(this);
 		cancellaOModificaSpettacoloJF = new CancellaOModificaSpettacoloJF(this);
+		opzioniStatisticheJF=new OpzioniStatisticheJF(this);
 	
 		avvioJF.setVisible(true);
 	}
 	
 	
 	/*******************************metodi di navigazione finestre*******************************/
-	public void bottoneCalcolaStatistichePremuto() {
-		avvioJF.setVisible(false);
-		inserisciSpettacoloJF.setVisible(true);	
+	
+	public void bottoneStatistichePremuto() {
+		opzioniStatisticheJF.setVisible(true);
+		avvioJF.setVisible(false);	
 	}
 	
 	public void bottoneCancellaOModificaSpettacoloPremuto() {
 		avvioJF.setVisible(false);
 		cercaSpettacoloJF.setVisible(true);	
+	}
+	
+	public void bottoneInserisciSpettacoloPremuto() {
+		avvioJF.setVisible(false);
+		inserisciSpettacoloJF.setVisible(true);
 	}
 	
 	public void bottoneCercaSpettacoloPremuto() {
@@ -38,9 +46,10 @@ public class ControllerGUI {
 	
 	public void bottoneIndietroPremutoDallaFinestra(SuperJFrame finestra) {
 		finestra.setVisible(false);
-		if (finestra instanceof CercaSpettacoloJF) avvioJF.setVisible(true);
+		if (finestra instanceof CercaSpettacoloJF ||
+			finestra instanceof InserisciSpettacoloJF||
+			finestra instanceof OpzioniStatisticheJF) avvioJF.setVisible(true);
 		if (finestra instanceof CancellaOModificaSpettacoloJF) cercaSpettacoloJF.setVisible(true);
-		if(finestra instanceof InserisciSpettacoloJF) avvioJF.setVisible(true);
 	}
 	
 	/*******************************fine metodi mavigazione finestre*******************************/
