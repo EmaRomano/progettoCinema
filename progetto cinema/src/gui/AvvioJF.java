@@ -19,6 +19,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 import java.awt.Font;
+import javax.swing.JLayeredPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AvvioJF extends SuperJFrame {
 
@@ -36,9 +39,9 @@ public class AvvioJF extends SuperJFrame {
 		
 		JPanel statistichePanel = new JPanel();
 		
-		JPanel inserisciSpettacoloPanel = new JPanel();
+		JLayeredPane inserisciSpettacoloPanel = new JLayeredPane();
 		
-		JPanel cancellaOModificaSpettacoloPanel = new JPanel();
+		JLayeredPane cancellaOModificaSpettacoloPanel = new JLayeredPane();
 		
 		JPanel esciEsternoPanel = new JPanel();
 		bottoniPanel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -53,6 +56,12 @@ public class AvvioJF extends SuperJFrame {
 		inserisciSpettacoloPanel.setLayout(null);
 		
 		JButton inserisciSpettacoloButton = new JButton("");
+		inserisciSpettacoloButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controllerGUI.bottoneCalcolaStatistichePremuto();
+			}
+		});
 		inserisciSpettacoloButton.setToolTipText("inserisci spettacolo nel database");
 		inserisciSpettacoloButton.setBounds(0, 0, 149, 162);
 		inserisciSpettacoloPanel.add(inserisciSpettacoloButton);
@@ -62,7 +71,7 @@ public class AvvioJF extends SuperJFrame {
 		JButton cancellaOModificaSpettacoloButton = new JButton("");
 		cancellaOModificaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneCercaOModificaPremuto();
+				controllerGUI.bottoneCancellaOModificaSpettacoloPremuto();
 			}
 		});
 		cancellaOModificaSpettacoloButton.setToolTipText("cancella o modifica spettacolo nel database");
@@ -79,11 +88,10 @@ public class AvvioJF extends SuperJFrame {
 		introLabel.setBounds(0, 0, 2100, 1106);
 		introPanel.add(introLabel);
 		
-		JButton fittizioButton = new JButton("                                       ");
-		fittizioButton.setBackground(SystemColor.activeCaption);
-		fittizioButton.setEnabled(false);
-		esciEsternoPanel.add(fittizioButton);
-		fittizioButton.setVisible(false);
+		JLabel fittiziaLabel = new JLabel("                                             ");
+		fittiziaLabel.setOpaque(true);
+		fittiziaLabel.setBackground(Color.WHITE);
+		esciEsternoPanel.add(fittiziaLabel);
 		
 		JPanel esciPanel = new JPanel();
 		esciEsternoPanel.add(esciPanel);
@@ -99,11 +107,23 @@ public class AvvioJF extends SuperJFrame {
 		esciButton.setBounds(0, 0, 149, 81);
 		esciPanel.add(esciButton);
 		
-		creaSfondoScalatoSu(cancellaOModificaSpettacoloButton, "iconaDataBaseModificaElimina.png");
-		creaSfondoScalatoSu(inserisciSpettacoloButton, "iconaDataBaseAggiungi.png");
-		creaSfondoScalatoSu(statisticheButton, "iconaStatistiche.png");
-		creaSfondoScalatoSu(introLabel, "shawshankModificatoChessHammer2.png");
+		creaSfondoScalatoSu(cancellaOModificaSpettacoloButton, "iconaDatabase.jpg");
+		
+		JLabel gearsLabel = new JLabel("");
+		cancellaOModificaSpettacoloPanel.setLayer(gearsLabel, 1);
+		gearsLabel.setBounds(79, 11, 55, 55);
+		cancellaOModificaSpettacoloPanel.add(gearsLabel);
+		creaSfondoScalatoSu(inserisciSpettacoloButton, "iconaDatabase.jpg");
+		
+		JLabel aggiungiLabel = new JLabel("");
+		inserisciSpettacoloPanel.setLayer(aggiungiLabel, 1);
+		aggiungiLabel.setBounds(81, 11, 55, 55);
+		inserisciSpettacoloPanel.add(aggiungiLabel);
+		creaSfondoScalatoSu(statisticheButton, "iconaStatistiche.jpg");
+		creaSfondoScalatoSu(introLabel, "shawshank.png");
 		creaSfondoScalatoSu(esciButton, "iconaEsci.png");
+		creaSfondoScalatoSu(gearsLabel, "iconaChiave.png");
+		creaSfondoScalatoSu(aggiungiLabel, "iconaAdd.png");
 
 	}	
 }

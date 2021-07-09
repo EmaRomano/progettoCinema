@@ -10,9 +10,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 
 import controllers.ControllerGUI;
@@ -24,7 +26,7 @@ public class SuperJFrame extends JFrame {
 
 	public SuperJFrame(ControllerGUI controllerGUI) {
 		this.controllerGUI=controllerGUI;
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -43,5 +45,10 @@ public class SuperJFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	public void rendiTestoNonEditabile(JSpinner spinner) {
+		JFormattedTextField spinnerTF=((JSpinner.DefaultEditor)spinner.getEditor()).getTextField(); 
+		spinnerTF.setEditable(false);
+	};
 
 }
