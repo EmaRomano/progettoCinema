@@ -27,7 +27,6 @@ public class FinestraCalendario extends JFrame {
 	{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);	    
 		setSize(235, 200);
-		setTitle("MindFusion.Scheduling Sample: Minimal Application");
 		
 		cambiaSupporto = new PropertyChangeSupport(this);
 
@@ -52,7 +51,7 @@ public class FinestraCalendario extends JFrame {
 					//raise the event
 					setSelectedDate(cal);					
  
-					dispose();						
+					dispose();	
 					
 				}
 				

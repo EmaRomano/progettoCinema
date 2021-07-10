@@ -29,7 +29,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 	private JLabel aPartireDaLabel = new JLabel();
 
 	public void setDataDiRiferimento(String statisticheAPartireDaData) {
-		this.aPartireDaLabel.setText(statisticheAPartireDaData);
+		aPartireDaLabel.setText(statisticheAPartireDaData);
 	}
 
 	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI) {

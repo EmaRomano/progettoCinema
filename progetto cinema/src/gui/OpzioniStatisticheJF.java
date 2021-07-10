@@ -38,7 +38,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF =
 			new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
-	private String dataDaPassare="da sempre";
+	private String dataDaPassare;
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -83,11 +83,14 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
 				Date d = (Date)mostraDataTF.getValue();				
 
-				finestraCalendario.resetSelection(d);				
+				finestraCalendario.resetSelection(d);	
+				
 				if (!finestraCalendario.isVisible()) {
 					finestraCalendario.setUndecorated(true);
 				}
+				
 				finestraCalendario.setVisible(true);
+				
 			}
 		});
 		
@@ -115,11 +118,6 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		contenitorePanel.add(daSempreRB);
 		
 		JRadioButton aPartireDaDataRB = new JRadioButton("a partire da:");
-		aPartireDaDataRB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dataDaPassare="dal  "+mostraDataTF.getText();
-			}
-		});
 		aPartireDaDataRB.setFont(new Font("Calibri", Font.PLAIN, 22));
 		aPartireDaDataRB.setBackground(new Color(176, 196, 222));
 		aPartireDaDataRB.setBounds(56, 107, 148, 23);
@@ -142,11 +140,12 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		indietroLabel.setBounds(21, 300, 87, 82);
 		getContentPane().add(indietroLabel);
 		creaSfondoScalatoSu(indietroLabel, "iconaIndietro.png");
-		
+
 		JLabel calcolaLabel = new JLabel("");
 		calcolaLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				dataDaPassare = aPartireDaDataRB.isSelected() ? "dal  " + mostraDataTF.getText() : " da sempre";
 				controllerGUI.bottoneStatisticheAPartireDa(dataDaPassare);
 			}
 		});
