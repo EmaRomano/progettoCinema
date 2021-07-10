@@ -18,6 +18,8 @@ import java.util.Date;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -27,11 +29,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeListener {
 	
 	private static final long serialVersionUID = 1L; 
-	JFormattedTextField  mostraDataTF = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+	private JFormattedTextField  mostraDataTF =
+			new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+	private String dataDaPassare="da sempre";
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -53,8 +60,9 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		getContentPane().setLayout(null);
 		
 		JPanel contenitorePanel = new JPanel();
+		contenitorePanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contenitorePanel.setBackground(new Color(176, 196, 222));
-		contenitorePanel.setBounds(21, 26, 528, 328);
+		contenitorePanel.setBounds(21, 26, 528, 201);
 		getContentPane().add(contenitorePanel);
 		contenitorePanel.setLayout(null);
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
@@ -83,29 +91,44 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 			}
 		});
 		
+				
+				JLabel introLabel = new JLabel("Calcola statistiche:");
+				introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+				introLabel.setBounds(20, 11, 204, 34);
+				contenitorePanel.add(introLabel);
+		
 		mostraDataTF.setBounds(210, 104, 91, 28);
 		contenitorePanel.add(mostraDataTF);
 		scegliDataButton.setBounds(311, 104, 139, 28);
 		contenitorePanel.add(scegliDataButton);
 		/***********************************fine blocco codice per DatePicker**************************/	
-
-		
-		JLabel introLabel = new JLabel("Calcola statistiche:");
-		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		introLabel.setBounds(0, 0, 204, 34);
-		contenitorePanel.add(introLabel);
 		
 		JRadioButton daSempreRB = new JRadioButton("da sempre");
+		daSempreRB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dataDaPassare="da sempre";
+			}
+		});
 		daSempreRB.setBackground(new Color(176, 196, 222));
 		daSempreRB.setFont(new Font("Calibri", Font.PLAIN, 22));
 		daSempreRB.setBounds(56, 65, 148, 23);
 		contenitorePanel.add(daSempreRB);
 		
 		JRadioButton aPartireDaDataRB = new JRadioButton("a partire da:");
+		aPartireDaDataRB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dataDaPassare="dal  "+mostraDataTF.getText();
+			}
+		});
 		aPartireDaDataRB.setFont(new Font("Calibri", Font.PLAIN, 22));
 		aPartireDaDataRB.setBackground(new Color(176, 196, 222));
 		aPartireDaDataRB.setBounds(56, 107, 148, 23);
 		contenitorePanel.add(aPartireDaDataRB);
+		
+		ButtonGroup gruppoRadioButtons = new ButtonGroup();
+		gruppoRadioButtons.add(daSempreRB);
+		gruppoRadioButtons.add(aPartireDaDataRB);
+		daSempreRB.setSelected(true);
 		
 		JLabel indietroLabel = new JLabel("");
 		indietroLabel.addMouseListener(new MouseAdapter() {
@@ -116,16 +139,23 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		});
 		indietroLabel.setToolTipText("indietro");
 		indietroLabel.setOpaque(false);
-		indietroLabel.setBounds(10, 235, 87, 82);
-		contenitorePanel.add(indietroLabel);
+		indietroLabel.setBounds(21, 300, 87, 82);
+		getContentPane().add(indietroLabel);
 		creaSfondoScalatoSu(indietroLabel, "iconaIndietro.png");
 		
 		JLabel calcolaLabel = new JLabel("");
+		calcolaLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controllerGUI.bottoneStatisticheAPartireDa(dataDaPassare);
+			}
+		});
 		calcolaLabel.setToolTipText("calcola statistiche");
 		calcolaLabel.setOpaque(false);
-		calcolaLabel.setBounds(431, 235, 87, 82);
-		contenitorePanel.add(calcolaLabel);
+		calcolaLabel.setBounds(465, 300, 87, 82);
+		getContentPane().add(calcolaLabel);
 		creaSfondoScalatoSu(calcolaLabel, "iconaCalcola.png");
+	    
 
 
 	}

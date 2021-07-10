@@ -52,7 +52,7 @@ public class AvvioJF extends SuperJFrame {
 		statisticheButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controllerGUI.bottoneStatistichePremuto();
+				controllerGUI.bottoneStatisticheDaAvvioPremuto();
 			}
 		});
 		statisticheButton.setToolTipText("visualizza statistiche");

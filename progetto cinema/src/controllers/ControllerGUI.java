@@ -10,13 +10,15 @@ public class ControllerGUI {
 	private InserisciSpettacoloJF inserisciSpettacoloJF;
 	private CancellaOModificaSpettacoloJF cancellaOModificaSpettacoloJF;
 	private OpzioniStatisticheJF opzioniStatisticheJF;
-	
+	private StatistichePerFasceOrarieJF statistichePerFasceOrarieJF;
+		
 	public ControllerGUI() {
 		avvioJF=new AvvioJF(this);
 		cercaSpettacoloJF=new CercaSpettacoloJF(this);
 		inserisciSpettacoloJF=new InserisciSpettacoloJF(this);
 		cancellaOModificaSpettacoloJF = new CancellaOModificaSpettacoloJF(this);
 		opzioniStatisticheJF=new OpzioniStatisticheJF(this);
+		statistichePerFasceOrarieJF=new StatistichePerFasceOrarieJF(this);
 	
 		avvioJF.setVisible(true);
 	}
@@ -24,7 +26,7 @@ public class ControllerGUI {
 	
 	/*******************************metodi di navigazione finestre*******************************/
 	
-	public void bottoneStatistichePremuto() {
+	public void bottoneStatisticheDaAvvioPremuto() {
 		opzioniStatisticheJF.setVisible(true);
 		avvioJF.setVisible(false);	
 	}
@@ -44,12 +46,19 @@ public class ControllerGUI {
 		cancellaOModificaSpettacoloJF.setVisible(true);
 	}
 	
+	public void bottoneStatisticheAPartireDa(String data) {
+		opzioniStatisticheJF.setVisible(false);
+		statistichePerFasceOrarieJF.setDataDiRiferimento(data);
+		statistichePerFasceOrarieJF.setVisible(true);
+	}
+	
 	public void bottoneIndietroPremutoDallaFinestra(SuperJFrame finestra) {
 		finestra.setVisible(false);
 		if (finestra instanceof CercaSpettacoloJF ||
 			finestra instanceof InserisciSpettacoloJF||
 			finestra instanceof OpzioniStatisticheJF) avvioJF.setVisible(true);
 		if (finestra instanceof CancellaOModificaSpettacoloJF) cercaSpettacoloJF.setVisible(true);
+		if (finestra instanceof StatistichePerFasceOrarieJF) opzioniStatisticheJF.setVisible(true);
 	}
 	
 	/*******************************fine metodi mavigazione finestre*******************************/
