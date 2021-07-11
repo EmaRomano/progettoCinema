@@ -70,16 +70,14 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		schedulingPanel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), null, null, null));
 		schedulingPanel.setBackground(new Color(176, 196, 222));
 		
-		JLabel indietroLabel = new JLabel("");
-		indietroLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
-				finestraCalendario.dispose();
+		JButton indietroButton = new JButton("");
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
 			}
 		});
 		
-		JLabel salvaSpettacoloLabel = new JLabel("");
+		JButton salvaSpettacoloButton = new JButton("");
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -88,13 +86,13 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(23)
-							.addComponent(indietroLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+							.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(salvaSpettacoloLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+									.addComponent(salvaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 									.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
 					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
 					.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
@@ -108,21 +106,21 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 					.addComponent(schedulingPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(indietroLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-						.addComponent(salvaSpettacoloLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+						.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+						.addComponent(salvaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 				.addComponent(immaginePanel, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
 		);
 		
-		indietroLabel.setToolTipText("indietro");
-		indietroLabel.setOpaque(false);
-		indietroLabel.setSize(87,83);
-		creaSfondoScalatoSu(indietroLabel, "iconaIndietro.png");
+		indietroButton.setToolTipText("indietro");
+		indietroButton.setOpaque(false);
+		indietroButton.setSize(87,83);
+		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 		
-		salvaSpettacoloLabel.setToolTipText("salva spettacolo");
-		salvaSpettacoloLabel.setOpaque(false);
-		salvaSpettacoloLabel.setSize(87, 83);
-		creaSfondoScalatoSu(salvaSpettacoloLabel, "iconaSalva.png");
+		salvaSpettacoloButton.setToolTipText("salva spettacolo");
+		salvaSpettacoloButton.setOpaque(false);
+		salvaSpettacoloButton.setSize(87, 83);
+		creaSfondoScalatoSu(salvaSpettacoloButton, "iconaSalva.png");
 		
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(12, 49, 75, 27);

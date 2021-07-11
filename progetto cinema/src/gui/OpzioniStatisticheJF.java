@@ -39,7 +39,11 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF =
 			new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
-	private String dataDaPassare;
+	private String dataDaPassare="sempre";
+	
+	public String getDataDaPassare() {
+		return dataDaPassare;
+	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -127,34 +131,30 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		gruppoRadioButtons.add(aPartireDaDataRB);
 		daSempreRB.setSelected(true);
 		
-		JLabel indietroLabel = new JLabel("");
-		indietroLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
-				finestraCalendario.dispose();
+		JButton indietroButton = new JButton("");
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
 			}
 		});
-		indietroLabel.setToolTipText("indietro");
-		indietroLabel.setOpaque(false);
-		indietroLabel.setBounds(21, 300, 87, 82);
-		getContentPane().add(indietroLabel);
-		creaSfondoScalatoSu(indietroLabel, "iconaIndietro.png");
+		indietroButton.setToolTipText("indietro");
+		indietroButton.setOpaque(false);
+		indietroButton.setBounds(21, 300, 87, 82);
+		getContentPane().add(indietroButton);
+		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 
-		JLabel calcolaLabel = new JLabel("");
-		calcolaLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				dataDaPassare = aPartireDaDataRB.isSelected() ? mostraDataTF.getText() : "sempre";
+		JButton calcolaButton = new JButton("");
+		calcolaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dataDaPassare = aPartireDaDataRB.isSelected()? mostraDataTF.getText():"sempre";
 				controllerGUI.bottoneStatisticheAPartireDa(dataDaPassare);
-				finestraCalendario.dispose();
 			}
 		});
-		calcolaLabel.setToolTipText("calcola statistiche");
-		calcolaLabel.setOpaque(false);
-		calcolaLabel.setBounds(465, 300, 87, 82);
-		getContentPane().add(calcolaLabel);
-		creaSfondoScalatoSu(calcolaLabel, "iconaCalcola.png");
+		calcolaButton.setToolTipText("calcola statistiche");
+		calcolaButton.setOpaque(false);
+		calcolaButton.setBounds(465, 300, 87, 82);
+		getContentPane().add(calcolaButton);
+		creaSfondoScalatoSu(calcolaButton, "iconaCalcola.png");
 	    
 
 

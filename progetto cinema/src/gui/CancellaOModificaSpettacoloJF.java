@@ -70,17 +70,15 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		schedulingPanel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), null, null, null));
 		schedulingPanel.setBackground(new Color(176, 196, 222));
 
-		JLabel indietroLabel = new JLabel("");
-		indietroLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
-				finestraCalendario.dispose();
+		JButton indietroButton = new JButton("");
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
 			}
 		});
 
-		JLabel salvaModificheLabel = new JLabel("");
-		JLabel cancellaSpettacoloLabel = new JLabel("");
+		JButton salvaModificheButton = new JButton("");
+		JButton cancellaSpettacoloButton = new JButton("");
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -89,16 +87,16 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 										.addGap(23)
-										.addComponent(indietroLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+										.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
 										.addContainerGap()
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 												.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
 												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 														.addGroup(groupLayout.createSequentialGroup()
-																.addComponent(cancellaSpettacoloLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+																.addComponent(cancellaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 																.addGap(18)
-																.addComponent(salvaModificheLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+																.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
 														.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
 						.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
 						.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
@@ -112,27 +110,27 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 						.addComponent(schedulingPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
 						.addGap(18)
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(indietroLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-								.addComponent(salvaModificheLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cancellaSpettacoloLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+								.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+								.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+								.addComponent(cancellaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 						.addContainerGap())
 				.addComponent(immaginePanel, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
 				);
 
-		indietroLabel.setToolTipText("indietro");
-		indietroLabel.setOpaque(false);
-		indietroLabel.setSize(87,83);
-		creaSfondoScalatoSu(indietroLabel, "iconaIndietro.png");
+		indietroButton.setToolTipText("indietro");
+		indietroButton.setOpaque(false);
+		indietroButton.setSize(87,83);
+		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 
-		salvaModificheLabel.setToolTipText("salva modifiche");
-		salvaModificheLabel.setOpaque(false);
-		salvaModificheLabel.setSize(87, 83);
-		creaSfondoScalatoSu(salvaModificheLabel, "iconaSalva.png");
+		salvaModificheButton.setToolTipText("salva modifiche");
+		salvaModificheButton.setOpaque(false);
+		salvaModificheButton.setSize(87, 83);
+		creaSfondoScalatoSu(salvaModificheButton, "iconaSalva.png");
 
-		cancellaSpettacoloLabel.setToolTipText("cancella spettacolo");
-		cancellaSpettacoloLabel.setOpaque(false);
-		cancellaSpettacoloLabel.setSize(87, 83);
-		creaSfondoScalatoSu(cancellaSpettacoloLabel, "iconaCancella.png");
+		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");
+		cancellaSpettacoloButton.setOpaque(false);
+		cancellaSpettacoloButton.setSize(87, 83);
+		creaSfondoScalatoSu(cancellaSpettacoloButton, "iconaCancella.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(12, 49, 75, 27);

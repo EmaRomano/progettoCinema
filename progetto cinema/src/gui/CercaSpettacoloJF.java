@@ -66,27 +66,23 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		schedulingPanel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), null, null, null));
 		schedulingPanel.setBackground(new Color(176, 196, 222));
 
-		JLabel indietroLabel = new JLabel("");
-		indietroLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
-				finestraCalendario.dispose();
+		JButton indietroButton = new JButton("");
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
 			}
 		});
 		
-		JLabel cercaLabel = new JLabel("");
-		cercaLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		JButton cercaButton = new JButton("");
+		cercaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneCercaSpettacoloPremuto();
-				finestraCalendario.dispose();
 			}
 		});
-		cercaLabel.setToolTipText("cerca spettacolo");
-		cercaLabel.setOpaque(false);
-		cercaLabel.setSize(87, 83);
-		creaSfondoScalatoSu(cercaLabel, "iconaCerca.png");
+		cercaButton.setToolTipText("cerca spettacolo");
+		cercaButton.setOpaque(false);
+		cercaButton.setSize(87, 83);
+		creaSfondoScalatoSu(cercaButton, "iconaCerca.png");
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -98,11 +94,11 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(cercaLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+									.addComponent(cercaButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 									.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(23)
-							.addComponent(indietroLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
 					.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
 		);
@@ -115,16 +111,16 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 					.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(indietroLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-						.addComponent(cercaLabel, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+						.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cercaButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 				.addComponent(immaginePanel, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
 		);
 
-		indietroLabel.setToolTipText("indietro");
-		indietroLabel.setOpaque(false);
-		indietroLabel.setSize(87,83);
-		creaSfondoScalatoSu(indietroLabel, "iconaIndietro.png");
+		indietroButton.setToolTipText("indietro");
+		indietroButton.setOpaque(false);
+		indietroButton.setSize(87,83);
+		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(45, 15, 75, 27);
