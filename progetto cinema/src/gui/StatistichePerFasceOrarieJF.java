@@ -41,13 +41,14 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
-		JLabel introLabel = new JLabel("Affluenza per fasce orarie:");
+		JLabel introLabel = new JLabel("Affluenza per fasce orarie da:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		introLabel.setBounds(5, 24, 251, 29);
+		introLabel.setBounds(5, 24, 274, 29);
 		getContentPane().add(introLabel);
+		aPartireDaLabel.setForeground(new Color(138, 43, 226));
 		
-		aPartireDaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		aPartireDaLabel.setBounds(259, 23, 244, 29);
+		aPartireDaLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		aPartireDaLabel.setBounds(278, 23, 225, 29);
 		getContentPane().add(aPartireDaLabel);
 		
 		JPanel barrePanel = new JPanel();

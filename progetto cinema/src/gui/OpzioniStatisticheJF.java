@@ -32,7 +32,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-
+//TODO in tutte le finestre contenenti il datepicker si deve fare in modo che la finestrella calendario si chiuda quando viene aperta 
+//ma non cliccata
 public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeListener {
 	
 	private static final long serialVersionUID = 1L; 
@@ -65,6 +66,8 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		contenitorePanel.setBounds(21, 26, 528, 201);
 		getContentPane().add(contenitorePanel);
 		contenitorePanel.setLayout(null);
+		
+
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
 		
 		/**********************codice per implementazione DatePicker**********************/
@@ -95,23 +98,19 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		});
 		
 				
-				JLabel introLabel = new JLabel("Calcola statistiche:");
-				introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-				introLabel.setBounds(20, 11, 204, 34);
-				contenitorePanel.add(introLabel);
+		JLabel introLabel = new JLabel("Calcola statistiche:");
+		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		introLabel.setBounds(20, 11, 204, 34);
+		contenitorePanel.add(introLabel);
 		
 		mostraDataTF.setBounds(210, 104, 91, 28);
 		contenitorePanel.add(mostraDataTF);
 		scegliDataButton.setBounds(311, 104, 139, 28);
 		contenitorePanel.add(scegliDataButton);
+		
 		/***********************************fine blocco codice per DatePicker**************************/	
 		
 		JRadioButton daSempreRB = new JRadioButton("da sempre");
-		daSempreRB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dataDaPassare="da sempre";
-			}
-		});
 		daSempreRB.setBackground(new Color(176, 196, 222));
 		daSempreRB.setFont(new Font("Calibri", Font.PLAIN, 22));
 		daSempreRB.setBounds(56, 65, 148, 23);
@@ -133,6 +132,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 		indietroLabel.setToolTipText("indietro");
@@ -145,8 +145,9 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		calcolaLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dataDaPassare = aPartireDaDataRB.isSelected() ? "dal  " + mostraDataTF.getText() : " da sempre";
+				dataDaPassare = aPartireDaDataRB.isSelected() ? mostraDataTF.getText() : "sempre";
 				controllerGUI.bottoneStatisticheAPartireDa(dataDaPassare);
+				finestraCalendario.dispose();
 			}
 		});
 		calcolaLabel.setToolTipText("calcola statistiche");

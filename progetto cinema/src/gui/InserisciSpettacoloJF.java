@@ -57,6 +57,9 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		SuperJFrame questaFinestra = this;
 		this.setTitle("Inserisci spettacolo");
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
+		
+		mostraDataTF.setValue(new Date());
+		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
 
 		JPanel immaginePanel = new JPanel();
 
@@ -72,6 +75,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 		
@@ -176,8 +180,6 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		
 
 		/**********************codice per implementazione DatePicker**********************/
-		mostraDataTF.setValue(new Date());
-		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
 		finestraCalendario.addPropertyChangeListener(this);
 
 		JButton scegliDataButton = new JButton("scegli data");

@@ -53,6 +53,9 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		setTitle("cerca spettacolo");
 		SuperJFrame questaFinestra = this;
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
+		
+		mostraDataTF.setValue(new Date());
+		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
 
 		JPanel immaginePanel = new JPanel();
 
@@ -68,6 +71,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controllerGUI.bottoneIndietroPremutoDallaFinestra(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 		
@@ -76,6 +80,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controllerGUI.bottoneCercaSpettacoloPremuto();
+				finestraCalendario.dispose();
 			}
 		});
 		cercaLabel.setToolTipText("cerca spettacolo");
@@ -176,9 +181,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 
 
-		//codice per implementazione DatePicker
-		mostraDataTF.setValue(new Date());
-		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
+		/**********************codice per implementazione DatePicker**********************/
 		finestraCalendario.addPropertyChangeListener(this);
 
 		JButton scegliDataButton = new JButton("scegli data");
@@ -204,7 +207,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		schedulingPanel.add(mostraDataTF);
 		scegliDataButton.setBounds(237, 89, 139, 28);
 		schedulingPanel.add(scegliDataButton);
-		//fine blocco codice per DatePicker
+		/***********************************fine blocco codice per DatePicker**************************/	
 
 	}
 }

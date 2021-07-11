@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 
 import gui.*;
 //TODO cancella la cartella documenti prima della consegna del progetto
+//TODO in tutte le finestre che contengono il datepicker, inserisci finestraCalendario.dispose()
+// su tutti i pulsanti di uscita dalla finestra;
+//TODO nella finestra di avvio hai scritto unina con la la lettera piccola
 public class ControllerGUI {
 	private AvvioJF avvioJF;
 	private CercaSpettacoloJF cercaSpettacoloJF;
