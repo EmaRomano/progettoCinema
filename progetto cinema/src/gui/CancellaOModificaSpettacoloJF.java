@@ -74,11 +74,22 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 
 		JButton salvaModificheButton = new JButton("");
+		salvaModificheButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finestraCalendario.dispose();
+			}
+		});
 		JButton cancellaSpettacoloButton = new JButton("");
+		cancellaSpettacoloButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finestraCalendario.dispose();
+			}
+		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(

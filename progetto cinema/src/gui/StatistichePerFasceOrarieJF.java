@@ -35,7 +35,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 
 	public void setDataDiRiferimento(String dataRicevuta) {
 		aPartireDaLabel.setText(dataRicevuta);
-		dataDiRiferimento=dataRicevuta;
+		dataDiRiferimento=String.valueOf(dataRicevuta);
 	}
 
 	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI) {

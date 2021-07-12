@@ -46,7 +46,7 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		
 		JLabel introLabel = new JLabel("Affluenza per sale da:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		introLabel.setBounds(5, 24, 274, 29);
+		introLabel.setBounds(5, 24, 208, 29);
 		getContentPane().add(introLabel);
 		aPartireDaLabel.setForeground(new Color(138, 43, 226));
 		
@@ -206,17 +206,17 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		sala5Label.setBounds(0, 280, 123, 23);
 		sala5Panel.add(sala5Label);
 		
-		JPanel opzioniEBottoniPanel = new JPanel();
-		opzioniEBottoniPanel.setBackground(new Color(230, 230, 250));
-		opzioniEBottoniPanel.setBounds(5, 495, 644, 149);
-		opzioniEBottoniPanel.setLayout(null);
+		JPanel bottoniPanel = new JPanel();
+		bottoniPanel.setBackground(new Color(230, 230, 250));
+		bottoniPanel.setBounds(5, 495, 644, 149);
+		bottoniPanel.setLayout(null);
 		
-		getContentPane().add(opzioniEBottoniPanel);
+		getContentPane().add(bottoniPanel);
 		
 		JPanel indietroPanel = new JPanel();
 		indietroPanel.setBorder(null);
 		indietroPanel.setBounds(10, 56, 87, 82);
-		opzioniEBottoniPanel.add(indietroPanel);
+		bottoniPanel.add(indietroPanel);
 		indietroPanel.setLayout(null);
 		
 		JButton indietroButton = new JButton("");
@@ -234,7 +234,7 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		JPanel tornaAllAvvioPanel = new JPanel();
 		tornaAllAvvioPanel.setBorder(null);
 		tornaAllAvvioPanel.setBounds(117, 56, 87, 82);
-		opzioniEBottoniPanel.add(tornaAllAvvioPanel);
+		bottoniPanel.add(tornaAllAvvioPanel);
 		tornaAllAvvioPanel.setLayout(null);
 		
 		JButton tornaAllAvvioButton = new JButton("");

@@ -74,10 +74,16 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 		
 		JButton salvaSpettacoloButton = new JButton("");
+		salvaSpettacoloButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finestraCalendario.dispose();
+			}
+		});
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(

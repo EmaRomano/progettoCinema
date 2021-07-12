@@ -40,10 +40,6 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 	private JFormattedTextField  mostraDataTF =
 			new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
 	private String dataDaPassare="sempre";
-	
-	public String getDataDaPassare() {
-		return dataDaPassare;
-	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -135,6 +131,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 		indietroButton.setToolTipText("indietro");
@@ -148,6 +145,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 			public void actionPerformed(ActionEvent e) {
 				dataDaPassare = aPartireDaDataRB.isSelected()? mostraDataTF.getText():"sempre";
 				controllerGUI.bottoneStatisticheAPartireDa(dataDaPassare);
+				finestraCalendario.dispose();
 			}
 		});
 		calcolaButton.setToolTipText("calcola statistiche");

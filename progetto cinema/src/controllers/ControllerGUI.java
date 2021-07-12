@@ -16,6 +16,7 @@ public class ControllerGUI {
 	private OpzioniStatisticheJF opzioniStatisticheJF;
 	private StatistichePerFasceOrarieJF statistichePerFasceOrarieJF;
 	private StatistichePerSaleJF statistichePerSaleJF;
+	private SpettacoliPerIncassoJF spettacoliPerIncassoJF;
 			
 	public ControllerGUI() {
 		avvioJF=new AvvioJF(this);		
@@ -25,6 +26,7 @@ public class ControllerGUI {
 		opzioniStatisticheJF=new OpzioniStatisticheJF(this);
 		statistichePerFasceOrarieJF=new StatistichePerFasceOrarieJF(this);
 		statistichePerSaleJF= new StatistichePerSaleJF(this);
+		spettacoliPerIncassoJF=new SpettacoliPerIncassoJF(this);
 		
 		avvioJF.setVisible(true);
 		}
@@ -65,7 +67,9 @@ public class ControllerGUI {
 	}
 	
 	public void bottoneSpettacoliPerIncassoPremuto(String dataDiRiferimento) {
-		//TODO
+		statistichePerFasceOrarieJF.setVisible(false);
+		spettacoliPerIncassoJF.setDataDiRiferimento(dataDiRiferimento);
+		spettacoliPerIncassoJF.setVisible(true);
 	}
 
 	
@@ -79,7 +83,8 @@ public class ControllerGUI {
 			cercaSpettacoloJF.setVisible(true);
 		} else if (finestra instanceof StatistichePerFasceOrarieJF) {
 			opzioniStatisticheJF.setVisible(true);
-		} else if (finestra instanceof StatistichePerSaleJF) {
+		} else if (finestra instanceof StatistichePerSaleJF||
+				   finestra instanceof SpettacoliPerIncassoJF) {
 			statistichePerFasceOrarieJF.setVisible(true);
 		}
 	}

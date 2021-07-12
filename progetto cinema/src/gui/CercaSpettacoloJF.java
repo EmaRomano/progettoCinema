@@ -70,6 +70,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				finestraCalendario.dispose();
 			}
 		});
 		
@@ -77,6 +78,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		cercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.bottoneCercaSpettacoloPremuto();
+				finestraCalendario.dispose();
 			}
 		});
 		cercaButton.setToolTipText("cerca spettacolo");
