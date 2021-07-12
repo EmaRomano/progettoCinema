@@ -59,7 +59,7 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		nellaFasciaOrariaLabel.setBounds(5, 62, 187, 29);
 		getContentPane().add(nellaFasciaOrariaLabel);
 		
-		JLabel indicaFasciaOrariaLabel = new JLabel("");
+		JLabel indicaFasciaOrariaLabel = new JLabel("(fasce orarie)");
 		indicaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		indicaFasciaOrariaLabel.setBounds(202, 62, 187, 29);
 		getContentPane().add(indicaFasciaOrariaLabel);
