@@ -26,6 +26,8 @@ import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class StatistichePerFasceOrarieJF extends SuperJFrame {
 	private JLabel aPartireDaLabel = new JLabel();
@@ -239,21 +241,34 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 
 		ButtonGroup gruppoRadioButtons = new ButtonGroup();
 
-		JRadioButton spettacoliPerIncassoRB = new JRadioButton("spettacoli con maggiore incasso");
-		spettacoliPerIncassoRB.setBounds(18, 25, 313, 37);
+		JRadioButton spettacoliPerIncassoRB = new JRadioButton("primi ");
+		spettacoliPerIncassoRB.setBounds(19, 68, 79, 37);
 		opzioniPanel.add(spettacoliPerIncassoRB);
 		spettacoliPerIncassoRB.setBackground(new Color(176, 196, 222));
 		spettacoliPerIncassoRB.setFont(new Font("Calibri", Font.PLAIN, 22));
 		gruppoRadioButtons.add(spettacoliPerIncassoRB);
 		spettacoliPerIncassoRB.setSelected(true);
-
+		gruppoRadioButtons.add(spettacoliPerIncassoRB);
+		
 		JRadioButton affluenzaPerSaleRB = new JRadioButton("affluenza per sale");
-		affluenzaPerSaleRB.setBounds(18, 64, 313, 37);
-		opzioniPanel.add(affluenzaPerSaleRB);
-		affluenzaPerSaleRB.setBackground(new Color(176, 196, 222));
 		affluenzaPerSaleRB.setFont(new Font("Calibri", Font.PLAIN, 22));
+		affluenzaPerSaleRB.setBackground(new Color(176, 196, 222));
+		affluenzaPerSaleRB.setBounds(19, 28, 313, 37);
+		opzioniPanel.add(affluenzaPerSaleRB);
 		gruppoRadioButtons.add(affluenzaPerSaleRB);
+		
+		JLabel spettacoliPerIncassoLabel = new JLabel("spettacoli per incasso");
+		spettacoliPerIncassoLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		spettacoliPerIncassoLabel.setBounds(175, 68, 232, 33);
+		opzioniPanel.add(spettacoliPerIncassoLabel);
+		
+		JSpinner primiPerIncassoSpinner = new JSpinner();
+		primiPerIncassoSpinner.setModel(new SpinnerNumberModel(10, 10, null, 1));
+		primiPerIncassoSpinner.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		primiPerIncassoSpinner.setBounds(104, 68, 61, 33);
+		opzioniPanel.add(primiPerIncassoSpinner);
 		getContentPane().add(opzioniEBottoniPanel);
+		rendiTestoNonEditabile(primiPerIncassoSpinner);
 
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {

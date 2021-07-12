@@ -1,5 +1,6 @@
 package controllers;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import gui.*;
@@ -15,18 +16,18 @@ public class ControllerGUI {
 	private OpzioniStatisticheJF opzioniStatisticheJF;
 	private StatistichePerFasceOrarieJF statistichePerFasceOrarieJF;
 	private StatistichePerSaleJF statistichePerSaleJF;
-		
+			
 	public ControllerGUI() {
-		avvioJF=new AvvioJF(this);
+		avvioJF=new AvvioJF(this);		
 		cercaSpettacoloJF=new CercaSpettacoloJF(this);
 		inserisciSpettacoloJF=new InserisciSpettacoloJF(this);
 		cancellaOModificaSpettacoloJF = new CancellaOModificaSpettacoloJF(this);
 		opzioniStatisticheJF=new OpzioniStatisticheJF(this);
 		statistichePerFasceOrarieJF=new StatistichePerFasceOrarieJF(this);
 		statistichePerSaleJF= new StatistichePerSaleJF(this);
-	
+		
 		avvioJF.setVisible(true);
-	}
+		}
 	
 	
 	/*******************************metodi di navigazione finestre*******************************/
@@ -64,7 +65,6 @@ public class ControllerGUI {
 	}
 	
 	public void bottoneSpettacoliPerIncassoPremuto(String dataDiRiferimento) {
-		//statistichePerFasceOrarieJF.setVisible(false);
 		//TODO
 	}
 
@@ -98,8 +98,6 @@ public class ControllerGUI {
 	public static void main(String[] args) {		
 		ControllerGUI controllerGUI=new ControllerGUI();
 	}
-
-
 
 
 
