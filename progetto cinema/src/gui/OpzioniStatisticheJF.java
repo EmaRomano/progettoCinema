@@ -39,7 +39,6 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF =
 			new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
-	private String dataDaPassare="sempre";
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -116,15 +115,15 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		daSempreRB.setBounds(56, 65, 148, 23);
 		contenitorePanel.add(daSempreRB);
 		
-		JRadioButton aPartireDaDataRB = new JRadioButton("a partire da:");
-		aPartireDaDataRB.setFont(new Font("Calibri", Font.PLAIN, 22));
-		aPartireDaDataRB.setBackground(new Color(176, 196, 222));
-		aPartireDaDataRB.setBounds(56, 107, 148, 23);
-		contenitorePanel.add(aPartireDaDataRB);
+		JRadioButton dataRiferimentoStatisticheRB = new JRadioButton("a partire da:");
+		dataRiferimentoStatisticheRB.setFont(new Font("Calibri", Font.PLAIN, 22));
+		dataRiferimentoStatisticheRB.setBackground(new Color(176, 196, 222));
+		dataRiferimentoStatisticheRB.setBounds(56, 107, 148, 23);
+		contenitorePanel.add(dataRiferimentoStatisticheRB);
 		
 		ButtonGroup gruppoRadioButtons = new ButtonGroup();
 		gruppoRadioButtons.add(daSempreRB);
-		gruppoRadioButtons.add(aPartireDaDataRB);
+		gruppoRadioButtons.add(dataRiferimentoStatisticheRB);
 		daSempreRB.setSelected(true);
 		
 		JButton indietroButton = new JButton("");
@@ -143,8 +142,9 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		JButton calcolaButton = new JButton("");
 		calcolaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dataDaPassare = aPartireDaDataRB.isSelected()? mostraDataTF.getText():"sempre";
-				controllerGUI.bottoneStatisticheAPartireDa(dataDaPassare);
+				String dataRiferimentoStatistiche =
+					   dataRiferimentoStatisticheRB.isSelected()? mostraDataTF.getText():"sempre";
+				controllerGUI.bottoneStatisticheAPartireDa(dataRiferimentoStatistiche);
 				finestraCalendario.dispose();
 			}
 		});
@@ -153,7 +153,6 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		calcolaButton.setBounds(465, 300, 87, 82);
 		getContentPane().add(calcolaButton);
 		creaSfondoScalatoSu(calcolaButton, "iconaCalcola.png");
-	    
 
 
 	}

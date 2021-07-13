@@ -14,11 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class SpettacoliPerIncassoJF extends SuperJFrame {
-	
+	private String dataDiRiferimento;
 	private JLabel aPartireDaLabel = new JLabel();
 
-	public void setDataDiRiferimento(String dataRicevuta) {
-		aPartireDaLabel.setText(dataRicevuta);
+	public void setDataDiRiferimento(String data) {
+		dataDiRiferimento=String.valueOf(data);
+		aPartireDaLabel.setText(dataDiRiferimento);
 	}
 
 	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI) {

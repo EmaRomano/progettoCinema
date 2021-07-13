@@ -30,12 +30,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 public class StatistichePerFasceOrarieJF extends SuperJFrame {
-	private JLabel aPartireDaLabel = new JLabel();
 	private String dataDiRiferimento;
+	private JLabel aPartireDaLabel = new JLabel();
 
-	public void setDataDiRiferimento(String dataRicevuta) {
-		aPartireDaLabel.setText(dataRicevuta);
-		dataDiRiferimento=String.valueOf(dataRicevuta);
+	public void setDataDiRiferimento(String data) {
+		dataDiRiferimento=String.valueOf(data);
+		aPartireDaLabel.setText(dataDiRiferimento);
 	}
 
 	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI) {
@@ -51,10 +51,11 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		introLabel.setBounds(5, 11, 274, 29);
 		getContentPane().add(introLabel);
-		aPartireDaLabel.setForeground(new Color(138, 43, 226));
-
+		
 		aPartireDaLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		aPartireDaLabel.setBounds(278, 11, 225, 29);
+		aPartireDaLabel.setForeground(new Color(138, 43, 226));
+		aPartireDaLabel.setText(dataDiRiferimento);
 		getContentPane().add(aPartireDaLabel);
 
 		JPanel barrePanel = new JPanel();
@@ -72,14 +73,12 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JProgressBar tassoAffluenzaFascia1PB = new JProgressBar();
 		tassoAffluenzaFascia1PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia1PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia1PB.setToolTipText("");
 		tassoAffluenzaFascia1PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia1PB.setValue(55);
 		tassoAffluenzaFascia1PB.setBounds(10, 33, 103, 245);
 		fascia1Panel.add(tassoAffluenzaFascia1PB);
 
 		JLabel nPagantiFascia1Label = new JLabel("1.000.000.000"); 
-		nPagantiFascia1Label.setToolTipText("");
 		nPagantiFascia1Label.setFont(new Font("Calibri", Font.BOLD, 15));
 		nPagantiFascia1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		nPagantiFascia1Label.setBounds(10, 0, 100, 34);
@@ -111,14 +110,12 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JProgressBar tassoAffluenzaFascia2PB = new JProgressBar();
 		tassoAffluenzaFascia2PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia2PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia2PB.setToolTipText("");
 		tassoAffluenzaFascia2PB.setValue(84);
 		tassoAffluenzaFascia2PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia2PB.setBounds(10, 33, 103, 245);
 		fascia2Panel.add(tassoAffluenzaFascia2PB);
 
 		JLabel nPagantiFascia2Label = new JLabel("n. paganti"); 
-		nPagantiFascia2Label.setToolTipText("");
 		nPagantiFascia2Label.setHorizontalAlignment(SwingConstants.CENTER);
 		nPagantiFascia2Label.setFont(new Font("Calibri", Font.BOLD, 15));
 		nPagantiFascia2Label.setBounds(10, 0, 100, 34);
@@ -150,14 +147,12 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JProgressBar tassoAffluenzaFascia3PB = new JProgressBar();
 		tassoAffluenzaFascia3PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia3PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia3PB.setToolTipText("");
 		tassoAffluenzaFascia3PB.setValue(79);
 		tassoAffluenzaFascia3PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia3PB.setBounds(10, 33, 103, 245);
 		fascia3Panel.add(tassoAffluenzaFascia3PB);
 
 		JLabel nPagantiFascia3Label = new JLabel("n. paganti"); 
-		nPagantiFascia3Label.setToolTipText("");
 		nPagantiFascia3Label.setHorizontalAlignment(SwingConstants.CENTER);
 		nPagantiFascia3Label.setFont(new Font("Calibri", Font.BOLD, 15));
 		nPagantiFascia3Label.setBounds(10, 0, 100, 32);
@@ -183,21 +178,18 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 
 		JPanel fascia4Panel = new JPanel();
 		fascia4Panel.setBackground(new Color(176, 196, 222));
-		fascia4Panel.setToolTipText("tasso affluenza medio");
 		fascia4Panel.setLayout(null);
 		barrePanel.add(fascia4Panel);
 
 		JProgressBar tassoAffluenzaFascia4PB = new JProgressBar();
 		tassoAffluenzaFascia4PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia4PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia4PB.setToolTipText("");
 		tassoAffluenzaFascia4PB.setValue(48);
 		tassoAffluenzaFascia4PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia4PB.setBounds(10, 33, 103, 245);
 		fascia4Panel.add(tassoAffluenzaFascia4PB);
 
 		JLabel nPagantiFascia4Label = new JLabel("n. paganti"); 
-		nPagantiFascia4Label.setToolTipText("");
 		nPagantiFascia4Label.setHorizontalAlignment(SwingConstants.CENTER);
 		nPagantiFascia4Label.setFont(new Font("Calibri", Font.BOLD, 15));
 		nPagantiFascia4Label.setBounds(10, 0, 100, 32);

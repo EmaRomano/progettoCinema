@@ -29,10 +29,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
 public class StatistichePerSaleJF extends SuperJFrame {
+	private String dataDiRiferimento;
 	private JLabel aPartireDaLabel = new JLabel();
 
-	public void setDataDiRiferimento(String dataRicevuta) {
-		aPartireDaLabel.setText(dataRicevuta);
+	public void setDataDiRiferimento(String data) {
+		dataDiRiferimento=String.valueOf(data);
+		aPartireDaLabel.setText(dataDiRiferimento);
 	}
 
 	public StatistichePerSaleJF(ControllerGUI controllerGUI) {
@@ -48,10 +50,10 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		introLabel.setBounds(5, 24, 208, 29);
 		getContentPane().add(introLabel);
-		aPartireDaLabel.setForeground(new Color(138, 43, 226));
 		
 		aPartireDaLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		aPartireDaLabel.setBounds(229, 24, 274, 29);
+		aPartireDaLabel.setForeground(new Color(138, 43, 226));
 		getContentPane().add(aPartireDaLabel);
 		
 		JLabel nellaFasciaOrariaLabel = new JLabel("Nelle fasce orarie: ");

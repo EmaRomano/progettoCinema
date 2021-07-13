@@ -54,21 +54,21 @@ public class ControllerGUI {
 		cancellaOModificaSpettacoloJF.setVisible(true);
 	}
 	
-	public void bottoneStatisticheAPartireDa(String dataDaPassare) {
+	public void bottoneStatisticheAPartireDa(String data) {
 		opzioniStatisticheJF.setVisible(false);
-		statistichePerFasceOrarieJF.setDataDiRiferimento(dataDaPassare);
+		statistichePerFasceOrarieJF.setDataDiRiferimento(data);
 		statistichePerFasceOrarieJF.setVisible(true);
 	}
 	
-	public void bottoneStatistichePerSalePremuto(String dataDaPassare) {
+	public void bottoneStatistichePerSalePremuto(String data) {
 		statistichePerFasceOrarieJF.setVisible(false);
-		statistichePerSaleJF.setDataDiRiferimento(dataDaPassare);
+		statistichePerSaleJF.setDataDiRiferimento(data);
 		statistichePerSaleJF.setVisible(true);
 	}
 	
-	public void bottoneSpettacoliPerIncassoPremuto(String dataDiRiferimento) {
+	public void bottoneSpettacoliPerIncassoPremuto(String data) {
 		statistichePerFasceOrarieJF.setVisible(false);
-		spettacoliPerIncassoJF.setDataDiRiferimento(dataDiRiferimento);
+		spettacoliPerIncassoJF.setDataDiRiferimento(data);
 		spettacoliPerIncassoJF.setVisible(true);
 	}
 
