@@ -17,6 +17,10 @@ public class ControllerGUI {
 	private StatistichePerFasceOrarieJF statistichePerFasceOrarieJF;
 	private StatistichePerSaleJF statistichePerSaleJF;
 	private SpettacoliPerIncassoJF spettacoliPerIncassoJF;
+	private ChiediConfermaSalvataggioJD chiediConfermaSalvataggioJD;
+	private ChiediConfermaModificaJD chiediConfermaModificaJD;
+	private ChiediConfermaCancellazioneJD chiediConfermaCancellazioneJD;
+	private DaiConfermaSalvataggioJD daiConfermaSalvataggioJD;
 			
 	public ControllerGUI() {
 		avvioJF=new AvvioJF(this);		
@@ -28,7 +32,14 @@ public class ControllerGUI {
 		statistichePerSaleJF= new StatistichePerSaleJF(this);
 		spettacoliPerIncassoJF=new SpettacoliPerIncassoJF(this);
 		
+		chiediConfermaSalvataggioJD= new ChiediConfermaSalvataggioJD(this);
+		chiediConfermaModificaJD=new ChiediConfermaModificaJD(this);
+		chiediConfermaCancellazioneJD=new ChiediConfermaCancellazioneJD(this);
+		
+		daiConfermaSalvataggioJD=new DaiConfermaSalvataggioJD(this);
+		
 		avvioJF.setVisible(true);
+		
 		}
 	
 	
@@ -95,6 +106,25 @@ public class ControllerGUI {
 		avvioJF.setVisible(true);
 	}
 	
+
+	public void richiestaSalvataggioSpettacolo() {
+		chiediConfermaSalvataggioJD.setVisible(true);
+	}
+	
+	public void richiestaModificaSpettacolo() {
+		chiediConfermaModificaJD.setVisible(true);
+	}
+	
+	public void richiestaCancellazioneSpettacolo() {
+		chiediConfermaCancellazioneJD.setVisible(true);
+	}
+	
+	public void confermaSalvataggioSpettacolo() {
+		// TODO chiamata a metodi
+		daiConfermaSalvataggioJD.setVisible(true); //TODO solo per testing
+		chiediConfermaSalvataggioJD.setVisible(false);
+	}
+	
 	/*******************************fine metodi mavigazione finestre*******************************/
 	
 
@@ -104,6 +134,8 @@ public class ControllerGUI {
 	public static void main(String[] args) {		
 		ControllerGUI controllerGUI=new ControllerGUI();
 	}
+
+
 
 
 

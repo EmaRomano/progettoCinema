@@ -81,12 +81,14 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		JButton salvaModificheButton = new JButton("");
 		salvaModificheButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controllerGUI.richiestaModificaSpettacolo();
 				finestraCalendario.dispose();
 			}
 		});
 		JButton cancellaSpettacoloButton = new JButton("");
 		cancellaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controllerGUI.richiestaCancellazioneSpettacolo();
 				finestraCalendario.dispose();
 			}
 		});

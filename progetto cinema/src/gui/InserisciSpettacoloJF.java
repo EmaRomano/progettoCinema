@@ -81,6 +81,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		JButton salvaSpettacoloButton = new JButton("");
 		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controllerGUI.richiestaSalvataggioSpettacolo();
 				finestraCalendario.dispose();
 			}
 		});

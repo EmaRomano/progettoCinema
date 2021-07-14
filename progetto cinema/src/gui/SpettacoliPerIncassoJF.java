@@ -42,14 +42,14 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		dataRiferimentoLabel.setText(dataDiRiferimento);
 	}
 	
-	public void creaTabellaSpettacoli(int numero) {
+	public void creaTabellaSpettacoli(int numeroRighe) {
 		if(getContentPane().isAncestorOf(scrollTabella))
 			getContentPane().remove(scrollTabella);
-		listaRighe=new RigaSpettacoloJPanel[numero];
+		listaRighe=new RigaSpettacoloJPanel[numeroRighe];
 		tabellaPanel = new JPanel();
-		tabellaPanel.setBounds(0, 0, 865, numero*29);
-		tabellaPanel.setLayout(new GridLayout(numero, 1));
-		for (int i=0; i<numero; i++) {
+		tabellaPanel.setBounds(0, 0, 865, numeroRighe*29);
+		tabellaPanel.setLayout(new GridLayout(numeroRighe, 1));
+		for (int i=0; i<numeroRighe; i++) {
 			listaRighe[i]=new RigaSpettacoloJPanel();
 			listaRighe[i].setBounds(0, i*29, 865,29);
 			listaRighe[i].setOrdinale(i+1);
