@@ -66,9 +66,10 @@ public class ControllerGUI {
 		statistichePerSaleJF.setVisible(true);
 	}
 	
-	public void bottoneSpettacoliPerIncassoPremuto(String data) {
+	public void bottoneSpettacoliPerIncassoPremuto(String data, int numero) {
 		statistichePerFasceOrarieJF.setVisible(false);
 		spettacoliPerIncassoJF.setDataDiRiferimento(data);
+		spettacoliPerIncassoJF.creaTabellaSpettacoli(numero);
 		spettacoliPerIncassoJF.setVisible(true);
 	}
 

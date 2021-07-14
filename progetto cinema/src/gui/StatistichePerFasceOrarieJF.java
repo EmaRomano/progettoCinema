@@ -255,7 +255,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		opzioniPanel.add(spettacoliPerIncassoLabel);
 		
 		JSpinner primiPerIncassoSpinner = new JSpinner();
-		primiPerIncassoSpinner.setModel(new SpinnerNumberModel(10, 10, null, 1));
+		primiPerIncassoSpinner.setModel(new SpinnerNumberModel(10, 1, null, 1));
 		primiPerIncassoSpinner.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		primiPerIncassoSpinner.setBounds(104, 68, 61, 33);
 		opzioniPanel.add(primiPerIncassoSpinner);
@@ -279,21 +279,22 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		opzioniEBottoniPanel.add(calcolaPerSalePanel);
 		calcolaPerSalePanel.setLayout(null);
 
-		JButton calcolaPerSaleLabel = new JButton("");
-		calcolaPerSaleLabel.addActionListener(new ActionListener() {
+		JButton calcolaPerSaleOSpettacoliButton = new JButton("");
+		calcolaPerSaleOSpettacoliButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(affluenzaPerSaleRB.isSelected()) {
 					controllerGUI.bottoneStatistichePerSalePremuto(dataDiRiferimento);
 				} else {
-					controllerGUI.bottoneSpettacoliPerIncassoPremuto(dataDiRiferimento);				
+					int numeroSpettacoli=(Integer)primiPerIncassoSpinner.getValue();
+					controllerGUI.bottoneSpettacoliPerIncassoPremuto(dataDiRiferimento, numeroSpettacoli);	
 				}
 			}
 		});
-		calcolaPerSaleLabel.setBounds(0, 0, 87, 82);
-		calcolaPerSalePanel.add(calcolaPerSaleLabel);
-		calcolaPerSaleLabel.setToolTipText("calcola statistiche");
-		calcolaPerSaleLabel.setOpaque(false);
-		creaSfondoScalatoSu(calcolaPerSaleLabel, "iconaCalcola.png");
+		calcolaPerSaleOSpettacoliButton.setBounds(0, 0, 87, 82);
+		calcolaPerSalePanel.add(calcolaPerSaleOSpettacoliButton);
+		calcolaPerSaleOSpettacoliButton.setToolTipText("calcola statistiche");
+		calcolaPerSaleOSpettacoliButton.setOpaque(false);
+		creaSfondoScalatoSu(calcolaPerSaleOSpettacoliButton, "iconaCalcola.png");
 		
 		JLabel pagantiPerFasciaLabel = new JLabel("paganti per fascia:");
 		pagantiPerFasciaLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
