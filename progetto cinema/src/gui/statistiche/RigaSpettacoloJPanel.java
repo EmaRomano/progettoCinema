@@ -1,4 +1,4 @@
-package gui;
+package gui.statistiche;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,12 +12,23 @@ import javax.swing.border.LineBorder;
 
 public class RigaSpettacoloJPanel extends JPanel {
 	private JLabel ordinaleLabel = new JLabel();
-	private JLabel titoloFilmLabel = new JLabel("Non e' un Paese per C++");
-	private JLabel salaLabel = new JLabel("4. EASTWOOD");
-	private JLabel oraLabel = new JLabel("20:30");
-	private JLabel incassoLabel = new JLabel("10.000.000");
+	private JLabel titoloFilmLabel = new JLabel();
+	private JLabel salaLabel = new JLabel();
+	private JLabel oraLabel = new JLabel();
+	private JLabel incassoLabel = new JLabel();
 	private JProgressBar incassoPB = new JProgressBar();
 	
+	public RigaSpettacoloJPanel(int numeroRiga, String titoloFilm, String nomeSala, String ora,
+			double incassoAssoluto, double percentualeIncasso) {
+		this();
+		ordinaleLabel.setText(String.valueOf(numeroRiga));
+		this.titoloFilmLabel.setText(titoloFilm);
+		this.salaLabel.setText(nomeSala);
+		this.oraLabel.setText(ora);
+		this.incassoLabel.setText(String.valueOf(incassoAssoluto));;
+		incassoPB.setValue((int)Math.round(percentualeIncasso));
+	}
+
 	public RigaSpettacoloJPanel() {
 		setLayout(null);
 		setBorder(new LineBorder(new Color(0, 0, 0), 1));
@@ -50,30 +61,30 @@ public class RigaSpettacoloJPanel extends JPanel {
 		incassoLabel.setBounds(587, 0, 105, 29);
 		add(incassoLabel);
 		
-		incassoPB.setValue(83);
 		incassoPB.setForeground(Color.RED);
 		incassoPB.setBackground(new Color(176, 196, 222));
 		incassoPB.setBounds(692, 2, 170, 25);
 		add(incassoPB);
 	}
 	
-	public void setOrdinale(int n) {
-		ordinaleLabel.setText(String.valueOf(n));
-	}
-	
-	public void setTitoloFilm(String titolo) {
-		titoloFilmLabel.setText(titolo);
-	}
-	
-	public void setSala(String sala) {
-		salaLabel.setText(sala);
-	}
-
-	public void setOra(String Ora) {
-		oraLabel.setText(Ora);
-	}
-	
-	public void setIncasso(String incasso) {
-		incassoLabel.setText(incasso);
-	}
+//	TODO
+//	public void setOrdinale(int n) {
+//		ordinaleLabel.setText(String.valueOf(n));
+//	}
+//	
+//	public void setTitoloFilm(String titolo) {
+//		titoloFilmLabel.setText(titolo);
+//	}
+//	
+//	public void setSala(String sala) {
+//		salaLabel.setText(sala);
+//	}
+//
+//	public void setOra(String Ora) {
+//		oraLabel.setText(Ora);
+//	}
+//	
+//	public void setIncasso(String incasso) {
+//		incassoLabel.setText(incasso);
+//	}
 }

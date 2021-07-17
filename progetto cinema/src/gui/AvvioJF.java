@@ -29,7 +29,6 @@ public class AvvioJF extends SuperJFrame {
 	public AvvioJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		getContentPane().setBackground(SystemColor.activeCaption);
-		setBounds(200, 20, 887, 697);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Benvenuto in S.I.G.M.A.");
 		

@@ -1,10 +1,13 @@
-package gui;
+package gui.statistiche;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
 import controllers.ControllerGUI;
+import gui.SuperJFrame;
+import gui.utilita.FinestraCalendario;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -32,13 +35,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.SwingConstants;
 //TODO in tutte le finestre contenenti il datepicker si deve fare in modo che la finestrella calendario si chiuda quando viene aperta 
 //ma non cliccata
 public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeListener {
 	
 	private static final long serialVersionUID = 1L; 
-	private JFormattedTextField  mostraDataTF =
-			new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -53,7 +56,10 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 
 	public OpzioniStatisticheJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
-		setBounds(200, 20, 595, 432);
+		
+		setSize(595, 432);
+		impostaAlCentro(this);
+		
 		this.setTitle("Opzioni statistiche");
 		SuperJFrame questaFinestra = this;
 		getContentPane().setBackground(new Color(230, 230, 250));
@@ -65,6 +71,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		contenitorePanel.setBounds(21, 26, 528, 201);
 		getContentPane().add(contenitorePanel);
 		contenitorePanel.setLayout(null);
+		mostraDataTF.setHorizontalAlignment(SwingConstants.CENTER);
 		
 
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
@@ -102,9 +109,9 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		introLabel.setBounds(20, 11, 204, 34);
 		contenitorePanel.add(introLabel);
 		
-		mostraDataTF.setBounds(210, 104, 91, 28);
+		mostraDataTF.setBounds(210, 104, 139, 28);
 		contenitorePanel.add(mostraDataTF);
-		scegliDataButton.setBounds(311, 104, 139, 28);
+		scegliDataButton.setBounds(359, 104, 139, 28);
 		contenitorePanel.add(scegliDataButton);
 		
 		/***********************************fine blocco codice per DatePicker**************************/	

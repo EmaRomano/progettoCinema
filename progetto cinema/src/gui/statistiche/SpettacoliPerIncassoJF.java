@@ -1,10 +1,12 @@
-package gui;
+package gui.statistiche;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
 import controllers.ControllerGUI;
+import gui.SuperJFrame;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
@@ -52,7 +54,6 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		for (int i=0; i<numeroRighe; i++) {
 			listaRighe[i]=new RigaSpettacoloJPanel();
 			listaRighe[i].setBounds(0, i*29, 865,29);
-			listaRighe[i].setOrdinale(i+1);
 			tabellaPanel.add(listaRighe[i]);
 		}
 		scrollTabella =new JScrollPane(tabellaPanel);
@@ -65,7 +66,8 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		super(controllerGUI);
 		SuperJFrame questaFinestra=this;
 		getContentPane().setBackground(new Color(230, 230, 250));
-		setBounds(100, 100, 1113, 622);
+		setSize(1113, 622);
+		impostaAlCentro(questaFinestra);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setTitle("Spettacoli per incasso");

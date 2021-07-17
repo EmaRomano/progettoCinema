@@ -1,9 +1,26 @@
 package controllers;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.text.DateFormatter;
 
+import entita.Spettacolo;
 import gui.*;
+import gui.inserimento.ChiediConfermaSalvataggioJD;
+import gui.inserimento.DaiConfermaSalvataggioJD;
+import gui.inserimento.InserisciSpettacoloJF;
+import gui.modifica.CancellaOModificaSpettacoloJF;
+import gui.modifica.CercaSpettacoloJF;
+import gui.modifica.ChiediConfermaCancellazioneJD;
+import gui.modifica.ChiediConfermaModificaJD;
+import gui.statistiche.OpzioniStatisticheJF;
+import gui.statistiche.SpettacoliPerIncassoJF;
+import gui.statistiche.StatistichePerFasceOrarieJF;
+import gui.statistiche.StatistichePerSaleJF;
 //TODO cancella la cartella documenti prima della consegna del progetto
 //TODO in tutte le finestre che contengono il datepicker, inserisci finestraCalendario.dispose()
 // su tutti i pulsanti di uscita dalla finestra;
@@ -21,6 +38,11 @@ public class ControllerGUI {
 	private ChiediConfermaModificaJD chiediConfermaModificaJD;
 	private ChiediConfermaCancellazioneJD chiediConfermaCancellazioneJD;
 	private DaiConfermaSalvataggioJD daiConfermaSalvataggioJD;
+	
+	private DateTimeFormatter formatoDataEOra=
+			DateTimeFormatter.ofPattern("dd LLL yyyy-hh:mm");
+	DateFormatter formatoData;
+
 			
 	public ControllerGUI() {
 		avvioJF=new AvvioJF(this);		
@@ -120,23 +142,51 @@ public class ControllerGUI {
 	}
 	
 	public void confermaSalvataggioSpettacolo() {
-		// TODO chiamata a metodi
-		daiConfermaSalvataggioJD.setVisible(true); //TODO solo per testing
 		chiediConfermaSalvataggioJD.setVisible(false);
+		//codice per salvataggio spettacolo
+//		
+//		Spettacolo spettacoloDaInserire = 
+//				traduciInSpettacolo(inserisciSpettacoloJF.getSpettacoloGuiDaInserire());
+		
+		
+		daiConfermaSalvataggioJD.setVisible(true); //TODO solo per testing
+		
 	}
 	
-	/*******************************fine metodi mavigazione finestre*******************************/
+	/*******************************metodi di comunicazione GUI-Logica*******************************/
 	
-
-
 	
-	//TODO questo si dovra' spostare nel futuro controller centrale 
-	public static void main(String[] args) {		
-		ControllerGUI controllerGUI=new ControllerGUI();
+	public Spettacolo traduciInSpettacolo(SpettacoloGUI spettacoloGUI) {
+		Spettacolo spettacolo = new Spettacolo();
+		spettacolo.setTitoloFilm(spettacoloGUI.getTitoloFilm());
+		spettacolo.setSalaId(spettacoloGUI.getSalaId());
+		spettacolo.setDataEOra(LocalDateTime.parse(spettacoloGUI.getDataEOra(), formatoDataEOra));
+		spettacolo.setDurataInMinuti(Duration.ofMinutes(spettacoloGUI.getDurataSpettacoloInMinuti()));
+		//spettacolo.setiD(spettacoloGUI.getId);
+		
+		
+		
+		
+		return spettacolo;
 	}
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 }

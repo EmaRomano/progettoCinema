@@ -1,4 +1,4 @@
-package gui;
+package gui.modifica;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -28,11 +28,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
+import gui.SuperJFrame;
+import gui.utilita.FinestraCalendario;
 
 public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L; 
-	JFormattedTextField  mostraDataTF = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -48,10 +50,12 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 	public CercaSpettacoloJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
-		setBounds(200, 20, 568, 439);
+		setSize(568, 439);
+		impostaAlCentro(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("cerca spettacolo");
 		SuperJFrame questaFinestra = this;
+		mostraDataTF.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
 		
 		mostraDataTF.setValue(new Date());
@@ -201,9 +205,9 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			}
 		});
 
-		mostraDataTF.setBounds(140, 89, 91, 28);
+		mostraDataTF.setBounds(140, 89, 146, 28);
 		schedulingPanel.add(mostraDataTF);
-		scegliDataButton.setBounds(237, 89, 139, 28);
+		scegliDataButton.setBounds(296, 89, 139, 28);
 		schedulingPanel.add(scegliDataButton);
 		/***********************************fine blocco codice per DatePicker**************************/	
 

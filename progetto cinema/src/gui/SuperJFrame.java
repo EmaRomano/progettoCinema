@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
@@ -23,9 +24,20 @@ public class SuperJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private ControllerGUI controllerGUI;
+	
+	private Dimension dimensioneSchermo = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	public void impostaAlCentro(SuperJFrame finestra) {
+		setLocation(dimensioneSchermo.width/2-finestra.getSize().width/2, 
+				    dimensioneSchermo.height/2-finestra.getSize().height/2);		
+	}
+
 
 	public SuperJFrame(ControllerGUI controllerGUI) {
 		this.controllerGUI=controllerGUI;
+		
+		setSize(887, 697);
+		impostaAlCentro(this);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

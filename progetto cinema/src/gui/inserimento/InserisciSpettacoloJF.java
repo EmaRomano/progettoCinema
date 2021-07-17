@@ -1,8 +1,14 @@
-package gui;
+package gui.inserimento;
+
+
+//data=(LocalDate)mostraDataTF.getValue();
+//DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+//mostraDataTF.setText(data.format(formattatore));
 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -10,6 +16,9 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -21,22 +30,75 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.BevelBorder;
-
-import controllers.ControllerGUI;
-import javax.swing.JTextField;
-import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 
-public class CancellaOModificaSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
+import com.mindfusion.scheduling.Calendar;
+
+import controllers.ControllerGUI;
+import gui.SpettacoloGUI;
+import gui.SuperJFrame;
+import gui.utilita.FinestraCalendario;
+import gui.utilita.IntegerSpinner;
+
+public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L; 
-	JFormattedTextField  mostraDataTF = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
-	private JTextField titoloFimlmTF;
+	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
+	
+	private JTextField titoloFimlTF;
+	private JComboBox elencoSaleCB;
+	private IntegerSpinner oraJSpinner;
+	private IntegerSpinner minutoJSpinner;
+	private IntegerSpinner durataFilmSpinner;
+	private IntegerSpinner margineSpinner;
+	private IntegerSpinner prezzoBigliettoRegolareEuroSpinner;
+	private IntegerSpinner prezzoBigliettoRegolareCentesimiSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto1EuroSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto1CentesimiSpinner;
+	private	IntegerSpinner prezzoBigliettoRidotto2EuroSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto2CentesimiSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto3EuroSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto3CentesimiSpinner;
+	private IntegerSpinner pagantiRegolariSpinner;
+	private IntegerSpinner pagantiRidotto1Spinner;
+	private IntegerSpinner pagantiRidotto2Spinner;
+	private IntegerSpinner pagantiRidotto3Spinner;
+
+	private SpettacoloGUI spettacoloGuiDaInserire;
+
+	public void creaSpettacoloGuiDaInserire() {
+		spettacoloGuiDaInserire.setTitoloFilm(titoloFimlTF.getText());
+		spettacoloGuiDaInserire.setSalaId(String.valueOf(elencoSaleCB.getSelectedIndex()));
+		spettacoloGuiDaInserire.setDataEOra(mostraDataTF.getText()+
+				                            "-"+oraJSpinner.getValue()+":"+
+				                              minutoJSpinner.getValue());
+		spettacoloGuiDaInserire.setDurataSpettacoloInMinuti(durataFilmSpinner.getIntero()+
+				margineSpinner.getIntero());
+		spettacoloGuiDaInserire.setPrezzoBigliettoRegolare(prezzoBigliettoRegolareEuroSpinner.getIntero(),
+				prezzoBigliettoRegolareCentesimiSpinner.getIntero());
+		spettacoloGuiDaInserire.setPrezzoBigliettoRidotto1(prezzoBigliettoRidotto1EuroSpinner.getIntero(),
+				prezzoBigliettoRidotto1CentesimiSpinner.getIntero());
+		spettacoloGuiDaInserire.setPrezzoBigliettoRidotto2(prezzoBigliettoRidotto2EuroSpinner.getIntero(),
+				prezzoBigliettoRidotto2CentesimiSpinner.getIntero());
+		spettacoloGuiDaInserire.setPrezzoBigliettoRidotto3(prezzoBigliettoRidotto3EuroSpinner.getIntero(),
+				prezzoBigliettoRidotto3CentesimiSpinner.getIntero());
+		spettacoloGuiDaInserire.setPagantiRegolari(pagantiRegolariSpinner.getIntero());
+		spettacoloGuiDaInserire.setPagantiRiduzione1(pagantiRidotto1Spinner.getIntero());
+		spettacoloGuiDaInserire.setPagantiRiduzione2(pagantiRidotto2Spinner.getIntero());
+		spettacoloGuiDaInserire.setPagantiRiduzione3(pagantiRidotto3Spinner.getIntero());
+	}
+
+	public SpettacoloGUI getSpettacoloGuiDaInserire() {
+		creaSpettacoloGuiDaInserire();
+		return spettacoloGuiDaInserire;
+	}
+
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -49,21 +111,21 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		}	
 	}
 
-	public CancellaOModificaSpettacoloJF(ControllerGUI controllerGUI) {
+	public InserisciSpettacoloJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
-		setBounds(200, 20, 887, 697);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SuperJFrame questaFinestra = this;
-		this.setTitle("Cancella o modifica spettacolo");
+		this.setTitle("Inserisci spettacolo");
+		mostraDataTF.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
-		
+
 		mostraDataTF.setValue(new Date());
 		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
 
 		JPanel immaginePanel = new JPanel();
 
-		JLabel introLabel = new JLabel("Cancella o modifica spettacolo:");
+		JLabel introLabel = new JLabel("Inserisci spettacolo:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JPanel schedulingPanel = new JPanel();
@@ -78,78 +140,62 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 			}
 		});
 
-		JButton salvaModificheButton = new JButton("");
-		salvaModificheButton.addActionListener(new ActionListener() {
+		JButton salvaSpettacoloButton = new JButton("");
+		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaModificaSpettacolo();
-				finestraCalendario.dispose();
-			}
-		});
-		JButton cancellaSpettacoloButton = new JButton("");
-		cancellaSpettacoloButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaCancellazioneSpettacolo();
+				controllerGUI.richiestaSalvataggioSpettacolo();
 				finestraCalendario.dispose();
 			}
 		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-										.addGap(23)
-										.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
-												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-														.addGroup(groupLayout.createSequentialGroup()
-																.addComponent(cancellaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-																.addGap(18)
-																.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-														.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
-						.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-						.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
-				);
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(23)
+							.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(salvaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+									.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+					.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
+		);
 		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addGap(7)
-						.addComponent(schedulingPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-						.addGap(18)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-								.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cancellaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap())
+					.addContainerGap()
+					.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addComponent(schedulingPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+						.addComponent(salvaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 				.addComponent(immaginePanel, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
-				);
+		);
 
 		indietroButton.setToolTipText("indietro");
 		indietroButton.setOpaque(false);
 		indietroButton.setSize(87,83);
 		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 
-		salvaModificheButton.setToolTipText("salva modifiche");
-		salvaModificheButton.setOpaque(false);
-		salvaModificheButton.setSize(87, 83);
-		creaSfondoScalatoSu(salvaModificheButton, "iconaSalva.png");
-
-		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");
-		cancellaSpettacoloButton.setOpaque(false);
-		cancellaSpettacoloButton.setSize(87, 83);
-		creaSfondoScalatoSu(cancellaSpettacoloButton, "iconaCancella.png");
+		salvaSpettacoloButton.setToolTipText("salva spettacolo");
+		salvaSpettacoloButton.setOpaque(false);
+		salvaSpettacoloButton.setSize(87, 83);
+		creaSfondoScalatoSu(salvaSpettacoloButton, "iconaSalva.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(12, 49, 75, 27);
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
-		JComboBox elencoSaleCB = new JComboBox();
+		elencoSaleCB = new JComboBox();
 		elencoSaleCB.setForeground(Color.BLACK);
 		elencoSaleCB.setBackground(new Color(230, 230, 250));
 		elencoSaleCB.setBounds(145, 45, 231, 34);
@@ -167,7 +213,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
 
-		JSpinner oraJSpinner = new JSpinner();
+		oraJSpinner = new IntegerSpinner();
 		oraJSpinner.setModel(new SpinnerNumberModel(20, 0, 23, 1));
 		oraJSpinner.setBounds(145, 133, 64, 34);
 		oraJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
@@ -178,7 +224,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		schedulingPanel.add(elencoSaleCB);
 		rendiTestoNonEditabile(oraJSpinner);
 
-		JSpinner minutoJSpinner = new JSpinner();
+		minutoJSpinner = new IntegerSpinner();
 		minutoJSpinner.setToolTipText("doppio click per modificare lo step"); //TODO eventuale funzionalita' da implementare
 		minutoJSpinner.setModel(new SpinnerNumberModel(30, 0, 59, 5));
 		minutoJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
@@ -212,7 +258,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				Date d = (Date)mostraDataTF.getValue();				
+				Date d = (Date)mostraDataTF.getValue();	
 
 				finestraCalendario.resetSelection(d);				
 				if (!finestraCalendario.isVisible()) {
@@ -222,9 +268,9 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 			}
 		});
 
-		mostraDataTF.setBounds(145, 94, 91, 28);
+		mostraDataTF.setBounds(145, 94, 154, 28);
 		schedulingPanel.add(mostraDataTF);
-		scegliDataButton.setBounds(237, 94, 139, 28);
+		scegliDataButton.setBounds(300, 94, 139, 28);
 		schedulingPanel.add(scegliDataButton);
 
 		/***********************************fine blocco codice per DatePicker**************************/	
@@ -234,24 +280,24 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		titoloFilmLabel.setBounds(12, 13, 108, 25);
 		schedulingPanel.add(titoloFilmLabel);
 
-		titoloFimlmTF = new JTextField();
-		titoloFimlmTF.setText("Non e' un paese per C++");
-		titoloFimlmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
-		titoloFimlmTF.setColumns(10);
-		titoloFimlmTF.setBounds(145, 11, 372, 28);
-		schedulingPanel.add(titoloFimlmTF);
+		titoloFimlTF = new JTextField();
+		titoloFimlTF.setText("Non e' un paese per C++");
+		titoloFimlTF.setFont(new Font("Calibri", Font.PLAIN, 21));
+		titoloFimlTF.setColumns(10);
+		titoloFimlTF.setBounds(145, 11, 372, 28);
+		schedulingPanel.add(titoloFimlTF);
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
 		durataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		durataFilmLabel.setBounds(12, 179, 121, 25);
 		schedulingPanel.add(durataFilmLabel);
 
-		JSpinner durataSpinner = new JSpinner();
-		durataSpinner.setModel(new SpinnerNumberModel(100, 0, null, 1));
-		durataSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		durataSpinner.setBounds(145, 174, 64, 34);
-		schedulingPanel.add(durataSpinner);
-		rendiTestoNonEditabile(durataSpinner);
+		durataFilmSpinner = new IntegerSpinner();
+		durataFilmSpinner.setModel(new SpinnerNumberModel(100, 0, null, 1));
+		durataFilmSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
+		durataFilmSpinner.setBounds(145, 174, 64, 34);
+		schedulingPanel.add(durataFilmSpinner);
+		rendiTestoNonEditabile(durataFilmSpinner);
 
 		JLabel margineDurataLabel = new JLabel(";    margine:");
 		margineDurataLabel.setToolTipText("durata spettacolo = durata film + margine");
@@ -259,7 +305,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		margineDurataLabel.setBounds(221, 178, 108, 25);
 		schedulingPanel.add(margineDurataLabel);
 
-		JSpinner margineSpinner = new JSpinner();
+		margineSpinner = new IntegerSpinner();
 		margineSpinner.setModel(new SpinnerNumberModel(20, 5, null, 5));
 		margineSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
 		margineSpinner.setBounds(339, 174, 53, 34);
@@ -380,7 +426,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRegolarePanel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRegolarePanel);
 
-		JSpinner prezzoBigliettoRegolareEuroSpinner = new JSpinner();
+		prezzoBigliettoRegolareEuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRegolareEuroSpinner.setModel(new SpinnerNumberModel(6, 0, null, 1));
 		prezzoBigliettoRegolareEuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRegolareEuroSpinner.setBounds(23, 4, 47, 30);
@@ -393,7 +439,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		virgola1Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRegolarePanel.add(virgola1Label);
 
-		JSpinner prezzoBigliettoRegolareCentesimiSpinner = new JSpinner();
+		prezzoBigliettoRegolareCentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRegolareCentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRegolareCentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRegolareCentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -406,7 +452,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRidotto1Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto1Panel);
 
-		JSpinner prezzoBigliettoRidotto1EuroSpinner = new JSpinner();
+		prezzoBigliettoRidotto1EuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto1EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		prezzoBigliettoRidotto1EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto1EuroSpinner.setBounds(23, 4, 47, 30);
@@ -419,7 +465,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		virgola2Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto1Panel.add(virgola2Label);
 
-		JSpinner prezzoBigliettoRidotto1CentesimiSpinner = new JSpinner();
+		prezzoBigliettoRidotto1CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto1CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRidotto1CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto1CentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -432,7 +478,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRidotto2Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto2Panel);
 
-		JSpinner prezzoBigliettoRidotto2EuroSpinner = new JSpinner();
+		prezzoBigliettoRidotto2EuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto2EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		prezzoBigliettoRidotto2EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto2EuroSpinner.setBounds(23, 4, 47, 30);
@@ -445,7 +491,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		virgola3Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto2Panel.add(virgola3Label);
 
-		JSpinner prezzoBigliettoRidotto2CentesimiSpinner = new JSpinner();
+		IntegerSpinner prezzoBigliettoRidotto2CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto2CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRidotto2CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto2CentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -458,7 +504,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRidotto3Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto3Panel);
 
-		JSpinner prezzoBigliettoRidotto3EuroSpinner = new JSpinner();
+		prezzoBigliettoRidotto3EuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto3EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		prezzoBigliettoRidotto3EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto3EuroSpinner.setBounds(23, 4, 47, 30);
@@ -471,7 +517,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		virgola4Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto3Panel.add(virgola4Label);
 
-		JSpinner prezzoBigliettoRidotto3CentesimiSpinner = new JSpinner();
+		prezzoBigliettoRidotto3CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto3CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRidotto3CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto3CentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -502,7 +548,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiRegolariPanel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiRegolariPanel);
 
-		JSpinner pagantiRegolariSpinner = new JSpinner();
+		pagantiRegolariSpinner = new IntegerSpinner();
 		pagantiRegolariSpinner.setModel(new SpinnerNumberModel(250, 0, null, 1));
 		pagantiRegolariSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRegolariSpinner.setBounds(46, 4, 65, 30);
@@ -515,7 +561,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiConRiduzione1Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione1Panel);
 
-		JSpinner pagantiRidotto1Spinner = new JSpinner();
+		pagantiRidotto1Spinner = new IntegerSpinner();
 		pagantiRidotto1Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		pagantiRidotto1Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto1Spinner.setBounds(46, 4, 65, 30);
@@ -528,7 +574,7 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiConRiduzione2Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione2Panel);
 
-		JSpinner pagantiRidotto2Spinner = new JSpinner();
+		pagantiRidotto2Spinner = new IntegerSpinner();
 		pagantiRidotto2Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		pagantiRidotto2Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto2Spinner.setBounds(46, 4, 65, 30);
@@ -541,16 +587,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiConRiduzione3Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione3Panel);
 
-		JSpinner pagantiRidotto3Spinner = new JSpinner();
+		pagantiRidotto3Spinner = new IntegerSpinner();
 		pagantiRidotto3Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		pagantiRidotto3Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto3Spinner.setBounds(46, 4, 65, 30);
 		pagantiConRiduzione3Panel.add(pagantiRidotto3Spinner);
 		rendiTestoNonEditabile(pagantiRidotto3Spinner);
 		/********************************fine blocco codice tabella prezzario*********************************/
-
-
-
 
 	}
 }

@@ -1,10 +1,12 @@
-package gui;
+package gui.statistiche;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
 import controllers.ControllerGUI;
+import gui.SuperJFrame;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -43,7 +45,8 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;
 		setTitle("Affluenza per fasce orarie");
-		setBounds(200, 20, 537, 737);
+		setSize(537, 737);
+		impostaAlCentro(questaFinestra);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 

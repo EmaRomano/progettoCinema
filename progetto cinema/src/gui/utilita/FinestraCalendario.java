@@ -1,4 +1,4 @@
-package gui;
+package gui.utilita;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.swing.JFrame;
@@ -44,7 +45,7 @@ public class FinestraCalendario extends JFrame {
 					//clear the selection
 					calendario.getSelection().reset();
 					//get the date that was double-clicked
-					DateTime dataPuntata = calendario.getDateAt(e.getX(), e.getY());
+      					DateTime dataPuntata = calendario.getDateAt(e.getX(), e.getY());
 					//create a java.util.Calendar instance that points to the selected Date
 					java.util.Calendar cal = java.util.Calendar.getInstance();
 					cal.set(dataPuntata.getYear(), dataPuntata.getMonth() - 1, dataPuntata.getDay());

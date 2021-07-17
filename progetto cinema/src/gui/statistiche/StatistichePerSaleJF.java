@@ -1,10 +1,12 @@
-package gui;
+package gui.statistiche;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
 import controllers.ControllerGUI;
+import gui.SuperJFrame;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -42,7 +44,8 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;
 		setTitle("Affluenza per sale");
-		setBounds(200, 20, 703, 683);
+		setSize(703, 683);
+		impostaAlCentro(questaFinestra);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
