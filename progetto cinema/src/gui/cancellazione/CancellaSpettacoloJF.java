@@ -1,4 +1,4 @@
-package gui.modifica;
+package gui.cancellazione;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -35,40 +35,24 @@ import javax.swing.JTextField;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 
-public class CancellaOModificaSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
+public class CancellaSpettacoloJF extends SuperJFrame {
 
-	private static final long serialVersionUID = 1L; 
-	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
-	
-	private JTextField titoloFimlmTF;
-
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		//get the selected date from the calendar control and set it to the text field
-		if (event.getPropertyName().equals("selectedDate")) {
-
-			java.util.Calendar cal = (java.util.Calendar)event.getNewValue();
-			Date selDate =  cal.getTime();
-			mostraDataTF.setValue(selDate);
-		}	
-	}
-
-	public CancellaOModificaSpettacoloJF(ControllerGUI controllerGUI) {
+	public CancellaSpettacoloJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setBounds(200, 20, 887, 697);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SuperJFrame questaFinestra = this;
-		this.setTitle("Cancella o modifica spettacolo");
+		this.setTitle("Cancella spettacolo");
+		JLabel  mostraDataTF = new JLabel();
+		mostraDataTF.setText("11/11/2011");
 		mostraDataTF.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
-		
-		mostraDataTF.setValue(new Date());
 		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
 
 		JPanel immaginePanel = new JPanel();
 
-		JLabel introLabel = new JLabel("Cancella o modifica spettacolo:");
+		JLabel introLabel = new JLabel("Cancella spettacolo:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JPanel schedulingPanel = new JPanel();
@@ -78,89 +62,66 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				//TODO temporaneo: solo per testing
+				controllerGUI.tornaAllAvvioDa(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});
 
-		JButton salvaModificheButton = new JButton("");
-		salvaModificheButton.addActionListener(new ActionListener() {
+		JButton cancellaButton = new JButton("");
+		cancellaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaModificaSpettacolo();
-				finestraCalendario.dispose();
-			}
-		});
-		JButton cancellaSpettacoloButton = new JButton("");
-		cancellaSpettacoloButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaCancellazioneSpettacolo();
+				//TODO
 				finestraCalendario.dispose();
 			}
 		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-										.addGap(23)
-										.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
-												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-														.addGroup(groupLayout.createSequentialGroup()
-																.addComponent(cancellaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-																.addGap(18)
-																.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-														.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
-						.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-						.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
-				);
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(23)
+							.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(cancellaButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+									.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+					.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
+		);
 		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addGap(7)
-						.addComponent(schedulingPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-						.addGap(18)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-								.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cancellaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap())
+					.addContainerGap()
+					.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addComponent(schedulingPanel, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cancellaButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 				.addComponent(immaginePanel, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
-				);
+		);
 
 		indietroButton.setToolTipText("indietro");
 		indietroButton.setOpaque(false);
 		indietroButton.setSize(87,83);
 		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 
-		salvaModificheButton.setToolTipText("salva modifiche");
-		salvaModificheButton.setOpaque(false);
-		salvaModificheButton.setSize(87, 83);
-		creaSfondoScalatoSu(salvaModificheButton, "iconaSalva.png");
-
-		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");
-		cancellaSpettacoloButton.setOpaque(false);
-		cancellaSpettacoloButton.setSize(87, 83);
-		creaSfondoScalatoSu(cancellaSpettacoloButton, "iconaCancella.png");
+		cancellaButton.setToolTipText("cancella spettacolo");
+		cancellaButton.setOpaque(false);
+		cancellaButton.setSize(87, 83);
+		creaSfondoScalatoSu(cancellaButton, "iconaCancellaPiccola.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
-		salaLabel.setBounds(12, 49, 75, 27);
+		salaLabel.setBounds(12, 59, 75, 27);
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-
-		JComboBox elencoSaleCB = new JComboBox();
-		elencoSaleCB.setForeground(Color.BLACK);
-		elencoSaleCB.setBackground(new Color(230, 230, 250));
-		elencoSaleCB.setBounds(145, 45, 231, 34);
-		elencoSaleCB.setModel(new DefaultComboBoxModel(new String[] {
-				"1. LEONE", "2. BERGMAN", "3. KUBRICK", "4. HITCHCOCK", "5. GILLIAM"}));
-		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel dataLabel = new JLabel("Data: ");
 		dataLabel.setBounds(12, 97, 75, 19);
@@ -172,29 +133,16 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
 
-		JSpinner oraJSpinner = new JSpinner();
-		oraJSpinner.setModel(new SpinnerNumberModel(20, 0, 23, 1));
-		oraJSpinner.setBounds(145, 133, 64, 34);
-		oraJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		schedulingPanel.add(oraJSpinner);
+		JLabel mostraOraLabel = new JLabel();
+		mostraOraLabel.setForeground(new Color(0, 0, 205));
+		mostraOraLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		mostraOraLabel.setText("20:30");
+		mostraOraLabel.setBounds(145, 133, 154, 34);
+		mostraOraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		schedulingPanel.add(mostraOraLabel);
 		schedulingPanel.add(oraLabel);
 		schedulingPanel.add(dataLabel);
 		schedulingPanel.add(salaLabel);
-		schedulingPanel.add(elencoSaleCB);
-		rendiTestoNonEditabile(oraJSpinner);
-
-		JSpinner minutoJSpinner = new JSpinner();
-		minutoJSpinner.setToolTipText("doppio click per modificare lo step"); //TODO eventuale funzionalita' da implementare
-		minutoJSpinner.setModel(new SpinnerNumberModel(30, 0, 59, 5));
-		minutoJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		minutoJSpinner.setBounds(235, 133, 64, 34);
-		schedulingPanel.add(minutoJSpinner);
-		rendiTestoNonEditabile(minutoJSpinner);
-
-		JLabel duePuntiLabel = new JLabel(":");
-		duePuntiLabel.setFont(new Font("Calibri", Font.BOLD, 22));
-		duePuntiLabel.setBounds(219, 133, 12, 34);
-		schedulingPanel.add(duePuntiLabel);
 		immaginePanel.setLayout(null);
 
 		JLabel immagineLabel = new JLabel("");
@@ -203,47 +151,16 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		getContentPane().setLayout(groupLayout);
 		creaSfondoScalatoSu(immagineLabel, "hitchcockStack.png");
 
+		JLabel mostraTitoloFilmLabel = new JLabel("Titolo film:");
+		mostraTitoloFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraTitoloFilmLabel.setBounds(10, 23, 108, 25);
+		schedulingPanel.add(mostraTitoloFilmLabel);
 
-
-		/**********************codice per implementazione DatePicker**********************/
-		finestraCalendario.addPropertyChangeListener(this);
-
-		JButton scegliDataButton = new JButton("scegli data");
-		scegliDataButton.setFont(new Font("Calibri", Font.PLAIN, 22));
-
-		scegliDataButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
-						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				Date d = (Date)mostraDataTF.getValue();				
-
-				finestraCalendario.resetSelection(d);				
-				if (!finestraCalendario.isVisible()) {
-					finestraCalendario.setUndecorated(true);
-				}
-				finestraCalendario.setVisible(true);
-			}
-		});
-
-		mostraDataTF.setBounds(145, 94, 154, 28);
-		schedulingPanel.add(mostraDataTF);
-		scegliDataButton.setBounds(300, 94, 139, 28);
-		schedulingPanel.add(scegliDataButton);
-
-		/***********************************fine blocco codice per DatePicker**************************/	
-
-		JLabel titoloFilmLabel = new JLabel("Titolo film:");
-		titoloFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		titoloFilmLabel.setBounds(12, 13, 108, 25);
-		schedulingPanel.add(titoloFilmLabel);
-
-		titoloFimlmTF = new JTextField();
-		titoloFimlmTF.setText("Non e' un paese per C++");
+		JLabel titoloFimlmTF = new JLabel();
+		titoloFimlmTF.setForeground(new Color(0, 0, 205));
+		titoloFimlmTF.setText("Non aprite quella finestra");
 		titoloFimlmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
-		titoloFimlmTF.setColumns(10);
-		titoloFimlmTF.setBounds(145, 11, 372, 28);
+		titoloFimlmTF.setBounds(140, 21, 372, 28);
 		schedulingPanel.add(titoloFimlmTF);
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
@@ -251,12 +168,12 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		durataFilmLabel.setBounds(12, 179, 121, 25);
 		schedulingPanel.add(durataFilmLabel);
 
-		JSpinner durataSpinner = new JSpinner();
-		durataSpinner.setModel(new SpinnerNumberModel(100, 0, null, 1));
-		durataSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		durataSpinner.setBounds(145, 174, 64, 34);
-		schedulingPanel.add(durataSpinner);
-		rendiTestoNonEditabile(durataSpinner);
+		JLabel mostraDurataLabel = new JLabel();
+		mostraDurataLabel.setForeground(new Color(0, 0, 205));
+		mostraDurataLabel.setText("100");
+		mostraDurataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraDurataLabel.setBounds(145, 174, 64, 34);
+		schedulingPanel.add(mostraDurataLabel);
 
 		JLabel margineDurataLabel = new JLabel(";    margine:");
 		margineDurataLabel.setToolTipText("durata spettacolo = durata film + margine");
@@ -264,12 +181,12 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		margineDurataLabel.setBounds(221, 178, 108, 25);
 		schedulingPanel.add(margineDurataLabel);
 
-		JSpinner margineSpinner = new JSpinner();
-		margineSpinner.setModel(new SpinnerNumberModel(20, 5, null, 5));
-		margineSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		margineSpinner.setBounds(339, 174, 53, 34);
-		schedulingPanel.add(margineSpinner);
-		rendiTestoNonEditabile(margineSpinner);
+		JLabel mostraMargineLabel = new JLabel();
+		mostraMargineLabel.setForeground(new Color(0, 0, 205));
+		mostraMargineLabel.setText("20");
+		mostraMargineLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraMargineLabel.setBounds(339, 174, 53, 34);
+		schedulingPanel.add(mostraMargineLabel);
 
 		JLabel minutiLabel = new JLabel("(minuti)");
 		minutiLabel.setBounds(155, 209, 46, 14);
@@ -385,25 +302,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRegolarePanel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRegolarePanel);
 
-		JSpinner prezzoBigliettoRegolareEuroSpinner = new JSpinner();
-		prezzoBigliettoRegolareEuroSpinner.setModel(new SpinnerNumberModel(6, 0, null, 1));
+		JLabel prezzoBigliettoRegolareEuroSpinner = new JLabel();
+		prezzoBigliettoRegolareEuroSpinner.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRegolareEuroSpinner.setText("7,50");
+		prezzoBigliettoRegolareEuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
 		prezzoBigliettoRegolareEuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRegolareEuroSpinner.setBounds(23, 4, 47, 30);
+		prezzoBigliettoRegolareEuroSpinner.setBounds(23, 4, 128, 30);
 		prezzoBigliettoRegolarePanel.add(prezzoBigliettoRegolareEuroSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRegolareEuroSpinner);
-
-		JLabel virgola1Label = new JLabel(",");
-		virgola1Label.setVerticalAlignment(SwingConstants.BOTTOM);
-		virgola1Label.setFont(new Font("Calibri", Font.PLAIN, 22));
-		virgola1Label.setBounds(75, 10, 9, 34);
-		prezzoBigliettoRegolarePanel.add(virgola1Label);
-
-		JSpinner prezzoBigliettoRegolareCentesimiSpinner = new JSpinner();
-		prezzoBigliettoRegolareCentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
-		prezzoBigliettoRegolareCentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRegolareCentesimiSpinner.setBounds(88, 4, 47, 30);
-		prezzoBigliettoRegolarePanel.add(prezzoBigliettoRegolareCentesimiSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRegolareCentesimiSpinner);
 
 		JPanel prezzoBigliettoRidotto1Panel = new JPanel();
 		prezzoBigliettoRidotto1Panel.setBorder(null);
@@ -411,25 +316,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRidotto1Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto1Panel);
 
-		JSpinner prezzoBigliettoRidotto1EuroSpinner = new JSpinner();
-		prezzoBigliettoRidotto1EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
+		JLabel prezzoBigliettoRidotto1EuroSpinner = new JLabel();
+		prezzoBigliettoRidotto1EuroSpinner.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRidotto1EuroSpinner.setText("4,00");
+		prezzoBigliettoRidotto1EuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
 		prezzoBigliettoRidotto1EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto1EuroSpinner.setBounds(23, 4, 47, 30);
+		prezzoBigliettoRidotto1EuroSpinner.setBounds(23, 4, 128, 30);
 		prezzoBigliettoRidotto1Panel.add(prezzoBigliettoRidotto1EuroSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRidotto1EuroSpinner);
-
-		JLabel virgola2Label = new JLabel(",");
-		virgola2Label.setVerticalAlignment(SwingConstants.BOTTOM);
-		virgola2Label.setFont(new Font("Calibri", Font.PLAIN, 22));
-		virgola2Label.setBounds(75, 10, 9, 34);
-		prezzoBigliettoRidotto1Panel.add(virgola2Label);
-
-		JSpinner prezzoBigliettoRidotto1CentesimiSpinner = new JSpinner();
-		prezzoBigliettoRidotto1CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
-		prezzoBigliettoRidotto1CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto1CentesimiSpinner.setBounds(88, 4, 47, 30);
-		prezzoBigliettoRidotto1Panel.add(prezzoBigliettoRidotto1CentesimiSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRidotto1CentesimiSpinner);
 
 		JPanel prezzoBigliettoRidotto2Panel = new JPanel();
 		prezzoBigliettoRidotto2Panel.setBorder(null);
@@ -437,25 +330,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRidotto2Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto2Panel);
 
-		JSpinner prezzoBigliettoRidotto2EuroSpinner = new JSpinner();
-		prezzoBigliettoRidotto2EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
+		JLabel prezzoBigliettoRidotto2EuroSpinner = new JLabel();
+		prezzoBigliettoRidotto2EuroSpinner.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRidotto2EuroSpinner.setText("4,00");
+		prezzoBigliettoRidotto2EuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
 		prezzoBigliettoRidotto2EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto2EuroSpinner.setBounds(23, 4, 47, 30);
+		prezzoBigliettoRidotto2EuroSpinner.setBounds(23, 4, 128, 30);
 		prezzoBigliettoRidotto2Panel.add(prezzoBigliettoRidotto2EuroSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRidotto2EuroSpinner);
-
-		JLabel virgola3Label = new JLabel(",");
-		virgola3Label.setVerticalAlignment(SwingConstants.BOTTOM);
-		virgola3Label.setFont(new Font("Calibri", Font.PLAIN, 22));
-		virgola3Label.setBounds(75, 10, 9, 34);
-		prezzoBigliettoRidotto2Panel.add(virgola3Label);
-
-		JSpinner prezzoBigliettoRidotto2CentesimiSpinner = new JSpinner();
-		prezzoBigliettoRidotto2CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
-		prezzoBigliettoRidotto2CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto2CentesimiSpinner.setBounds(88, 4, 47, 30);
-		prezzoBigliettoRidotto2Panel.add(prezzoBigliettoRidotto2CentesimiSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRidotto2CentesimiSpinner);
 
 		JPanel prezzoBigliettoRidotto3Panel = new JPanel();
 		prezzoBigliettoRidotto3Panel.setBorder(null);
@@ -463,25 +344,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		prezzoBigliettoRidotto3Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto3Panel);
 
-		JSpinner prezzoBigliettoRidotto3EuroSpinner = new JSpinner();
-		prezzoBigliettoRidotto3EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
+		JLabel prezzoBigliettoRidotto3EuroSpinner = new JLabel();
+		prezzoBigliettoRidotto3EuroSpinner.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRidotto3EuroSpinner.setText("4,00");
+		prezzoBigliettoRidotto3EuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
 		prezzoBigliettoRidotto3EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto3EuroSpinner.setBounds(23, 4, 47, 30);
+		prezzoBigliettoRidotto3EuroSpinner.setBounds(23, 4, 128, 30);
 		prezzoBigliettoRidotto3Panel.add(prezzoBigliettoRidotto3EuroSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRidotto3EuroSpinner);
-
-		JLabel virgola4Label = new JLabel(",");
-		virgola4Label.setVerticalAlignment(SwingConstants.BOTTOM);
-		virgola4Label.setFont(new Font("Calibri", Font.PLAIN, 22));
-		virgola4Label.setBounds(75, 10, 9, 34);
-		prezzoBigliettoRidotto3Panel.add(virgola4Label);
-
-		JSpinner prezzoBigliettoRidotto3CentesimiSpinner = new JSpinner();
-		prezzoBigliettoRidotto3CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
-		prezzoBigliettoRidotto3CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto3CentesimiSpinner.setBounds(88, 4, 47, 30);
-		prezzoBigliettoRidotto3Panel.add(prezzoBigliettoRidotto3CentesimiSpinner);
-		rendiTestoNonEditabile(prezzoBigliettoRidotto3CentesimiSpinner);
 
 		JPanel colonnaNumeroPagantiPanel = new JPanel();
 		colonnaNumeroPagantiPanel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
@@ -507,12 +376,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiRegolariPanel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiRegolariPanel);
 
-		JSpinner pagantiRegolariSpinner = new JSpinner();
-		pagantiRegolariSpinner.setModel(new SpinnerNumberModel(250, 0, null, 1));
-		pagantiRegolariSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		pagantiRegolariSpinner.setBounds(46, 4, 65, 30);
-		pagantiRegolariPanel.add(pagantiRegolariSpinner);
-		rendiTestoNonEditabile(pagantiRegolariSpinner);
+		JLabel pagantiRegolariLabel = new JLabel();
+		pagantiRegolariLabel.setForeground(new Color(0, 0, 205));
+		pagantiRegolariLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pagantiRegolariLabel.setText("250");
+		pagantiRegolariLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		pagantiRegolariLabel.setBounds(46, 4, 65, 30);
+		pagantiRegolariPanel.add(pagantiRegolariLabel);
 
 		JPanel pagantiConRiduzione1Panel = new JPanel();
 		pagantiConRiduzione1Panel.setBorder(null);
@@ -520,12 +390,13 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiConRiduzione1Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione1Panel);
 
-		JSpinner pagantiRidotto1Spinner = new JSpinner();
-		pagantiRidotto1Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
-		pagantiRidotto1Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		pagantiRidotto1Spinner.setBounds(46, 4, 65, 30);
-		pagantiConRiduzione1Panel.add(pagantiRidotto1Spinner);
-		rendiTestoNonEditabile(pagantiRidotto1Spinner);
+		JLabel pagantiRidotto1Label = new JLabel();
+		pagantiRidotto1Label.setForeground(new Color(0, 0, 205));
+		pagantiRidotto1Label.setText("24");
+		pagantiRidotto1Label.setHorizontalAlignment(SwingConstants.CENTER);
+		pagantiRidotto1Label.setFont(new Font("Calibri", Font.PLAIN, 20));
+		pagantiRidotto1Label.setBounds(46, 4, 65, 30);
+		pagantiConRiduzione1Panel.add(pagantiRidotto1Label);
 
 		JPanel pagantiConRiduzione2Panel = new JPanel();
 		pagantiConRiduzione2Panel.setBorder(null);
@@ -533,12 +404,12 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiConRiduzione2Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione2Panel);
 
-		JSpinner pagantiRidotto2Spinner = new JSpinner();
-		pagantiRidotto2Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
-		pagantiRidotto2Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		pagantiRidotto2Spinner.setBounds(46, 4, 65, 30);
-		pagantiConRiduzione2Panel.add(pagantiRidotto2Spinner);
-		rendiTestoNonEditabile(pagantiRidotto2Spinner);
+		JLabel pagantiRidotto2Label = new JLabel();
+		pagantiRidotto2Label.setForeground(new Color(0, 0, 205));
+		pagantiRidotto2Label.setHorizontalAlignment(SwingConstants.CENTER);
+		pagantiRidotto2Label.setFont(new Font("Calibri", Font.PLAIN, 20));
+		pagantiRidotto2Label.setBounds(46, 4, 65, 30);
+		pagantiConRiduzione2Panel.add(pagantiRidotto2Label);
 
 		JPanel pagantiConRiduzione3Panel = new JPanel();
 		pagantiConRiduzione3Panel.setBorder(null);
@@ -546,12 +417,27 @@ public class CancellaOModificaSpettacoloJF extends SuperJFrame implements Proper
 		pagantiConRiduzione3Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione3Panel);
 
-		JSpinner pagantiRidotto3Spinner = new JSpinner();
-		pagantiRidotto3Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
-		pagantiRidotto3Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		pagantiRidotto3Spinner.setBounds(46, 4, 65, 30);
-		pagantiConRiduzione3Panel.add(pagantiRidotto3Spinner);
-		rendiTestoNonEditabile(pagantiRidotto3Spinner);
+		JLabel pagantiRidotto3Label = new JLabel();
+		pagantiRidotto3Label.setForeground(new Color(0, 0, 205));
+		pagantiRidotto3Label.setHorizontalAlignment(SwingConstants.CENTER);
+		pagantiRidotto3Label.setFont(new Font("Calibri", Font.PLAIN, 20));
+		pagantiRidotto3Label.setBounds(46, 4, 65, 30);
+		pagantiConRiduzione3Panel.add(pagantiRidotto3Label);
+		
+		JLabel mostraSalaLabel = new JLabel("1. LEONE");
+		mostraSalaLabel.setForeground(new Color(0, 0, 205));
+		mostraSalaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraSalaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		mostraSalaLabel.setBounds(145, 55, 154, 34);
+		schedulingPanel.add(mostraSalaLabel);
+		
+		JLabel mostraDataLabel = new JLabel("11/11/2011");
+		mostraDataLabel.setForeground(new Color(0, 0, 205));
+		mostraDataLabel.setVerticalAlignment(SwingConstants.TOP);
+		mostraDataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraDataLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		mostraDataLabel.setBounds(155, 97, 154, 20);
+		schedulingPanel.add(mostraDataLabel);
 		/********************************fine blocco codice tabella prezzario*********************************/
 
 

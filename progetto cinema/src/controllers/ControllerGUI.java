@@ -10,10 +10,11 @@ import javax.swing.text.DateFormatter;
 
 import entita.Spettacolo;
 import gui.*;
+import gui.cancellazione.CancellaSpettacoloJF;
 import gui.inserimento.ChiediConfermaSalvataggioJD;
 import gui.inserimento.DaiConfermaSalvataggioJD;
 import gui.inserimento.InserisciSpettacoloJF;
-import gui.modifica.CancellaOModificaSpettacoloJF;
+import gui.modifica.ModificaSpettacoloJF;
 import gui.modifica.CercaSpettacoloJF;
 import gui.modifica.ChiediConfermaCancellazioneJD;
 import gui.modifica.ChiediConfermaModificaJD;
@@ -29,7 +30,8 @@ public class ControllerGUI {
 	private AvvioJF avvioJF;
 	private CercaSpettacoloJF cercaSpettacoloJF;
 	private InserisciSpettacoloJF inserisciSpettacoloJF;
-	private CancellaOModificaSpettacoloJF cancellaOModificaSpettacoloJF;
+	private ModificaSpettacoloJF modificaSpettacoloJF;
+	private CancellaSpettacoloJF cancellaSpettacoloJF;
 	private OpzioniStatisticheJF opzioniStatisticheJF;
 	private StatistichePerFasceOrarieJF statistichePerFasceOrarieJF;
 	private StatistichePerSaleJF statistichePerSaleJF;
@@ -48,7 +50,8 @@ public class ControllerGUI {
 		avvioJF=new AvvioJF(this);		
 		cercaSpettacoloJF=new CercaSpettacoloJF(this);
 		inserisciSpettacoloJF=new InserisciSpettacoloJF(this);
-		cancellaOModificaSpettacoloJF = new CancellaOModificaSpettacoloJF(this);
+		modificaSpettacoloJF = new ModificaSpettacoloJF(this);
+		cancellaSpettacoloJF = new CancellaSpettacoloJF(this);
 		opzioniStatisticheJF=new OpzioniStatisticheJF(this);
 		statistichePerFasceOrarieJF=new StatistichePerFasceOrarieJF(this);
 		statistichePerSaleJF= new StatistichePerSaleJF(this);
@@ -72,9 +75,14 @@ public class ControllerGUI {
 		avvioJF.setVisible(false);	
 	}
 	
-	public void bottoneCancellaOModificaSpettacoloPremuto() {
+	public void bottoneModificaSpettacoloPremuto() {
 		avvioJF.setVisible(false);
 		cercaSpettacoloJF.setVisible(true);	
+	}
+	
+	public void bottoneCancellaSpettacoloPremuto() {
+		avvioJF.setVisible(false);
+		cancellaSpettacoloJF.setVisible(true);
 	}
 	
 	public void bottoneInserisciSpettacoloPremuto() {
@@ -84,7 +92,7 @@ public class ControllerGUI {
 	
 	public void bottoneCercaSpettacoloPremuto() {
 		cercaSpettacoloJF.setVisible(false);
-		cancellaOModificaSpettacoloJF.setVisible(true);
+		modificaSpettacoloJF.setVisible(true);
 	}
 	
 	public void bottoneStatisticheAPartireDa(String data) {
@@ -113,7 +121,7 @@ public class ControllerGUI {
 			finestra instanceof InserisciSpettacoloJF||
 			finestra instanceof OpzioniStatisticheJF) {
 			avvioJF.setVisible(true);
-		} else if(finestra instanceof CancellaOModificaSpettacoloJF) {
+		} else if(finestra instanceof ModificaSpettacoloJF) {
 			cercaSpettacoloJF.setVisible(true);
 		} else if (finestra instanceof StatistichePerFasceOrarieJF) {
 			opzioniStatisticheJF.setVisible(true);
