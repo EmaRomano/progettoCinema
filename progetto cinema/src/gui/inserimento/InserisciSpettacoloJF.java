@@ -47,7 +47,7 @@ import gui.utilita.FinestraCalendario;
 import gui.utilita.IntegerSpinner;
 
 public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
-
+	
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 	
@@ -62,7 +62,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 	private IntegerSpinner prezzoBigliettoRidotto1EuroSpinner;
 	private IntegerSpinner prezzoBigliettoRidotto1CentesimiSpinner;
 	private	IntegerSpinner prezzoBigliettoRidotto2EuroSpinner;
-	private IntegerSpinner prezzoBigliettoRidotto2CentesimiSpinner;
+    private IntegerSpinner prezzoBigliettoRidotto2CentesimiSpinner;
 	private IntegerSpinner prezzoBigliettoRidotto3EuroSpinner;
 	private IntegerSpinner prezzoBigliettoRidotto3CentesimiSpinner;
 	private IntegerSpinner pagantiRegolariSpinner;
@@ -73,25 +73,24 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 	private SpettacoloGUI spettacoloGuiDaInserire;
 
 	public void creaSpettacoloGuiDaInserire() {
-		spettacoloGuiDaInserire.setTitoloFilm(titoloFimlTF.getText());
-		spettacoloGuiDaInserire.setSalaId(String.valueOf(elencoSaleCB.getSelectedIndex()));
-		spettacoloGuiDaInserire.setDataEOra(mostraDataTF.getText()+
-				                            "-"+oraJSpinner.getValue()+":"+
-				                              minutoJSpinner.getValue());
-		spettacoloGuiDaInserire.setDurataSpettacoloInMinuti(durataFilmSpinner.getIntero()+
-				margineSpinner.getIntero());
-		spettacoloGuiDaInserire.setPrezzoBigliettoRegolare(prezzoBigliettoRegolareEuroSpinner.getIntero(),
-				prezzoBigliettoRegolareCentesimiSpinner.getIntero());
-		spettacoloGuiDaInserire.setPrezzoBigliettoRidotto1(prezzoBigliettoRidotto1EuroSpinner.getIntero(),
-				prezzoBigliettoRidotto1CentesimiSpinner.getIntero());
-		spettacoloGuiDaInserire.setPrezzoBigliettoRidotto2(prezzoBigliettoRidotto2EuroSpinner.getIntero(),
-				prezzoBigliettoRidotto2CentesimiSpinner.getIntero());
-		spettacoloGuiDaInserire.setPrezzoBigliettoRidotto3(prezzoBigliettoRidotto3EuroSpinner.getIntero(),
-				prezzoBigliettoRidotto3CentesimiSpinner.getIntero());
-		spettacoloGuiDaInserire.setPagantiRegolari(pagantiRegolariSpinner.getIntero());
-		spettacoloGuiDaInserire.setPagantiRiduzione1(pagantiRidotto1Spinner.getIntero());
-		spettacoloGuiDaInserire.setPagantiRiduzione2(pagantiRidotto2Spinner.getIntero());
-		spettacoloGuiDaInserire.setPagantiRiduzione3(pagantiRidotto3Spinner.getIntero());
+		spettacoloGuiDaInserire = new SpettacoloGUI(
+		    titoloFimlTF.getText(),
+			elencoSaleCB.getSelectedIndex(),
+		    mostraDataTF.getText()+"-"+oraJSpinner.getValue()+":"+minutoJSpinner.getValue(), 
+		    durataFilmSpinner.getIntero()+margineSpinner.getIntero(),
+			Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero()+"."
+			                   +prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
+			Double.parseDouble(prezzoBigliettoRidotto1EuroSpinner.getIntero()+"."
+	                   +prezzoBigliettoRidotto1CentesimiSpinner.getIntero()), 
+			Double.parseDouble(prezzoBigliettoRidotto2EuroSpinner.getIntero()+"."
+	                   +prezzoBigliettoRidotto2CentesimiSpinner.getIntero()),
+			Double.parseDouble(prezzoBigliettoRidotto3EuroSpinner.getIntero()+"."
+	                   +prezzoBigliettoRidotto3CentesimiSpinner.getIntero()),
+			pagantiRegolariSpinner.getIntero(),
+			pagantiRidotto1Spinner.getIntero(),
+			pagantiRidotto2Spinner.getIntero(),
+			pagantiRidotto3Spinner.getIntero()
+			);	
 	}
 
 	public SpettacoloGUI getSpettacoloGuiDaInserire() {
@@ -215,6 +214,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 
 		oraJSpinner = new IntegerSpinner();
 		oraJSpinner.setModel(new SpinnerNumberModel(20, 0, 23, 1));
+		oraJSpinner.setEditor(new JSpinner.NumberEditor(oraJSpinner,"00"));
 		oraJSpinner.setBounds(145, 133, 64, 34);
 		oraJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.add(oraJSpinner);
@@ -227,6 +227,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		minutoJSpinner = new IntegerSpinner();
 		minutoJSpinner.setToolTipText("doppio click per modificare lo step"); //TODO eventuale funzionalita' da implementare
 		minutoJSpinner.setModel(new SpinnerNumberModel(30, 0, 59, 5));
+		minutoJSpinner.setEditor(new JSpinner.NumberEditor(minutoJSpinner,"00"));
 		minutoJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
 		minutoJSpinner.setBounds(235, 133, 64, 34);
 		schedulingPanel.add(minutoJSpinner);
@@ -490,11 +491,10 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		virgola3Label.setFont(new Font("Calibri", Font.PLAIN, 22));
 		virgola3Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto2Panel.add(virgola3Label);
-
-		IntegerSpinner prezzoBigliettoRidotto2CentesimiSpinner = new IntegerSpinner();
-		prezzoBigliettoRidotto2CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
-		prezzoBigliettoRidotto2CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
+		
+		prezzoBigliettoRidotto2CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto2CentesimiSpinner.setBounds(88, 4, 47, 30);
+		prezzoBigliettoRidotto2CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto2Panel.add(prezzoBigliettoRidotto2CentesimiSpinner);
 		rendiTestoNonEditabile(prezzoBigliettoRidotto2CentesimiSpinner);
 

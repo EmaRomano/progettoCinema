@@ -49,7 +49,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton statisticheButton = new JButton("");
 		statisticheButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneStatisticheDaAvvioPremuto();
+				controllerGUI.bottoneStatisticheDaAvvio();
 			}
 		});
 		statisticheButton.setToolTipText("calcola statistiche");
@@ -65,7 +65,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton inserisciSpettacoloButton = new JButton("");
 		inserisciSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneInserisciSpettacoloPremuto();
+				controllerGUI.bottoneInserisciSpettacolo();
 			}
 		});
 		inserisciSpettacoloButton.setToolTipText("aggiungi spettacolo");
@@ -81,7 +81,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton modificaSpettacoloButton = new JButton("");
 		modificaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneModificaSpettacoloPremuto();
+				controllerGUI.cercaDaAvvioPerModificare(true);
 			}
 		});
 		modificaSpettacoloButton.setToolTipText("modifica spettacolo");
@@ -102,8 +102,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton cancellaSpettacoloButton = new JButton("");
 		cancellaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO: provvisorio, solo per testing
-				controllerGUI.bottoneCancellaSpettacoloPremuto();
+				controllerGUI.cercaDaAvvioPerModificare(false);
 			}
 		});
 		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");

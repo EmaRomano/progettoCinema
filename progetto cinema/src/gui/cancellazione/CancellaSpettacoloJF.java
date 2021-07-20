@@ -63,7 +63,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO temporaneo: solo per testing
-				controllerGUI.tornaAllAvvioDa(questaFinestra);
+				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});

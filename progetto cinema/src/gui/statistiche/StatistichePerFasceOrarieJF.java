@@ -286,10 +286,10 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		calcolaPerSaleOSpettacoliButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(affluenzaPerSaleRB.isSelected()) {
-					controllerGUI.bottoneStatistichePerSalePremuto(dataDiRiferimento);
+					controllerGUI.bottoneStatistichePerSale(dataDiRiferimento);
 				} else {
 					int numeroSpettacoli=(Integer)primiPerIncassoSpinner.getValue();
-					controllerGUI.bottoneSpettacoliPerIncassoPremuto(dataDiRiferimento, numeroSpettacoli);	
+					controllerGUI.bottoneSpettacoliPerIncasso(dataDiRiferimento, numeroSpettacoli);	
 				}
 			}
 		});

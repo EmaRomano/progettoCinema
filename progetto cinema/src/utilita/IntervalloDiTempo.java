@@ -4,49 +4,39 @@ import java.time.*;
 
 
 public class IntervalloDiTempo {
-	private LocalDateTime inizioIntervallo;
-	private LocalDateTime fineIntervallo;
+	private LocalDateTime dataOraInizio;
+	private LocalDateTime dataOraFine;
 	private Duration ampiezzaIntervallo;
+	
+	public IntervalloDiTempo() {};
 
-	public IntervalloDiTempo(LocalDateTime inizioIntervallo, Duration ampiezzaIntervallo) {
-		this.inizioIntervallo = inizioIntervallo;
+	public IntervalloDiTempo(LocalDateTime dataOraInizio, Duration ampiezzaIntervallo) {
+		this.dataOraInizio = dataOraInizio;
 		this.ampiezzaIntervallo = ampiezzaIntervallo;
-		this.fineIntervallo = inizioIntervallo.plus(ampiezzaIntervallo);
+		this.dataOraFine = dataOraInizio.plus(ampiezzaIntervallo);
+	}
+
+	
+	/*******************************getters ************************************/
+	
+	public LocalDateTime getDataOraInizio() {
+		return dataOraInizio;
 	}
 	
-	/*******************************getters e setters ************************************/
-	public LocalDateTime getInizioIntervallo() {
-		return inizioIntervallo;
+	public LocalDateTime getDataOraFine() {
+		return dataOraFine;
 	}
-
-	public void setInizioIntervallo(LocalDateTime inizioIntervallo) {
-		this.inizioIntervallo = inizioIntervallo;
-	}
-
-	public LocalDateTime getFineIntervallo() {
-		return fineIntervallo;
-	}
-
-	public void setFineIntervallo(LocalDateTime fineIntervallo) {
-		this.fineIntervallo = fineIntervallo;
-	}
-
-	public Duration getAmpiezzaIntervallo() {
-		return ampiezzaIntervallo;
-	}
-
-	public void setAmpiezzaIntervallo(Duration ampiezzaIntervallo) {
-		this.ampiezzaIntervallo = ampiezzaIntervallo;
-	}
+	
 
 	/*******************************altri metodi************************************/
+	
 	public boolean contiene(LocalDateTime evento) {
-		return (evento.isAfter(inizioIntervallo) && evento.isBefore(fineIntervallo));
+		return (evento.isAfter(dataOraInizio) && evento.isBefore(dataOraFine));
 	}
 	
 	public boolean siSovrapponeA(IntervalloDiTempo intervallo) {
-		return getFineIntervallo().isAfter(intervallo.getInizioIntervallo()) &&
-				intervallo.getFineIntervallo().isAfter(getInizioIntervallo());
+		return dataOraFine.isAfter(intervallo.getDataOraInizio()) &&
+				intervallo.getDataOraFine().isAfter(dataOraInizio);
 	}
 	
 	

@@ -1,8 +1,10 @@
 package gui;
 
+import controllers.ControllerCentrale;
+
 public class SpettacoloGUI {
 	private String titoloFilm;
-	private String salaId;
+	private int numeroSala;
 	private String dataEOra;
 	
 	private int durataSpettacoloInMinuti;
@@ -16,52 +18,29 @@ public class SpettacoloGUI {
 	private int pagantiRiduzione2;
 	private int pagantiRiduzione3;
 	
-	
-	/************************setters************************/
-	
-	public void setTitoloFilm(String titoloFilm) {
+	public SpettacoloGUI(String titoloFilm, int numeroSala, String dataEOra, int durataSpettacoloInMinuti,
+			double prezzoBigliettoRegolare, double prezzoBigliettoRidotto1, double prezzoBigliettoRidotto2,
+			double prezzoBigliettoRidotto3, int pagantiRegolari, int pagantiRiduzione1, int pagantiRiduzione2,
+			int pagantiRiduzione3) {
 		this.titoloFilm = titoloFilm;
-	}
-	public void setSalaId(String salaId) {
-		this.salaId = salaId;
-	}
-	public void setDataEOra(String dataEOra) {
+		this.numeroSala = numeroSala;
 		this.dataEOra = dataEOra;
-	}
-	public void setDurataSpettacoloInMinuti(int durataSpettacoloInMinuti) {
 		this.durataSpettacoloInMinuti = durataSpettacoloInMinuti;
-	}
-	public void setPrezzoBigliettoRegolare(int euro, int centesimi) {
-		prezzoBigliettoRegolare = Double.parseDouble(euro+"."+centesimi);
-	}
-	public void setPrezzoBigliettoRidotto1(int euro, int centesimi) {
-		prezzoBigliettoRidotto1 = Double.parseDouble(euro+"."+centesimi);
-	}
-	public void setPrezzoBigliettoRidotto2(int euro, int centesimi) {
-		prezzoBigliettoRidotto2 = Double.parseDouble(euro+"."+centesimi);
-	}
-	public void setPrezzoBigliettoRidotto3(int euro, int centesimi) {
-		prezzoBigliettoRidotto3 = Double.parseDouble(euro+"."+centesimi);
-	}
-	public void setPagantiRegolari(int pagantiRegolari) {
+		this.prezzoBigliettoRegolare = prezzoBigliettoRegolare;
+		this.prezzoBigliettoRidotto1 = prezzoBigliettoRidotto1;
+		this.prezzoBigliettoRidotto2 = prezzoBigliettoRidotto2;
+		this.prezzoBigliettoRidotto3 = prezzoBigliettoRidotto3;
 		this.pagantiRegolari = pagantiRegolari;
-	}
-	public void setPagantiRiduzione1(int pagantiRiduzione1) {
 		this.pagantiRiduzione1 = pagantiRiduzione1;
-	}
-	public void setPagantiRiduzione2(int pagantiRiduzione2) {
 		this.pagantiRiduzione2 = pagantiRiduzione2;
-	}
-	public void setPagantiRiduzione3(int pagantiRiduzione3) {
 		this.pagantiRiduzione3 = pagantiRiduzione3;
 	}
-	
-	/**************************getters****************************/
+
 	public String getTitoloFilm() {
 		return titoloFilm;
 	}
-	public String getSalaId() {
-		return salaId;
+	public int getNumeroSala() {
+		return numeroSala;
 	}
 	public String getDataEOra() {
 		return dataEOra;

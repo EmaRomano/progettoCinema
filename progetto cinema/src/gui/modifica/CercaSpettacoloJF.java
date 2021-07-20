@@ -35,6 +35,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
+	private boolean cercaPerModifica;
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -47,8 +48,9 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		}	
 	}
 
-	public CercaSpettacoloJF(ControllerGUI controllerGUI) {
+	public CercaSpettacoloJF(ControllerGUI controllerGUI, boolean cercaPerModifica) {
 		super(controllerGUI);
+		this.cercaPerModifica=cercaPerModifica;
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setSize(568, 439);
 		impostaAlCentro(this);
@@ -81,7 +83,10 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		JButton cercaButton = new JButton("");
 		cercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneCercaSpettacoloPremuto();
+				if(cercaPerModifica)
+					controllerGUI.cercaPerModifica();
+				else
+					controllerGUI.cercaPerCancellazione();
 				finestraCalendario.dispose();
 			}
 		});
