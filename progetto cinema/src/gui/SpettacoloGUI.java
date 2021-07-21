@@ -1,7 +1,5 @@
 package gui;
 
-import controllers.ControllerCentrale;
-
 public class SpettacoloGUI {
 	private String titoloFilm;
 	private int numeroSala;
@@ -9,14 +7,8 @@ public class SpettacoloGUI {
 	
 	private int durataSpettacoloInMinuti;
 	
-	private double prezzoBigliettoRegolare;
-	private double prezzoBigliettoRidotto1;
-	private double prezzoBigliettoRidotto2;
-	private double prezzoBigliettoRidotto3;
-	private int pagantiRegolari;
-	private int pagantiRiduzione1;
-	private int pagantiRiduzione2;
-	private int pagantiRiduzione3;
+	private double prezziSpettacolo[] = new double[4];
+	private int pagantiSpettacolo[] = new int[4];
 	
 	public SpettacoloGUI(String titoloFilm, int numeroSala, String dataEOra, int durataSpettacoloInMinuti,
 			double prezzoBigliettoRegolare, double prezzoBigliettoRidotto1, double prezzoBigliettoRidotto2,
@@ -26,14 +18,14 @@ public class SpettacoloGUI {
 		this.numeroSala = numeroSala;
 		this.dataEOra = dataEOra;
 		this.durataSpettacoloInMinuti = durataSpettacoloInMinuti;
-		this.prezzoBigliettoRegolare = prezzoBigliettoRegolare;
-		this.prezzoBigliettoRidotto1 = prezzoBigliettoRidotto1;
-		this.prezzoBigliettoRidotto2 = prezzoBigliettoRidotto2;
-		this.prezzoBigliettoRidotto3 = prezzoBigliettoRidotto3;
-		this.pagantiRegolari = pagantiRegolari;
-		this.pagantiRiduzione1 = pagantiRiduzione1;
-		this.pagantiRiduzione2 = pagantiRiduzione2;
-		this.pagantiRiduzione3 = pagantiRiduzione3;
+		this.prezziSpettacolo[0] = prezzoBigliettoRegolare;
+		this.prezziSpettacolo[1] = prezzoBigliettoRidotto1;
+		this.prezziSpettacolo[2] = prezzoBigliettoRidotto2;
+		this.prezziSpettacolo[3] = prezzoBigliettoRidotto3;
+		this.pagantiSpettacolo[0] = pagantiRegolari;
+		this.pagantiSpettacolo[1] = pagantiRiduzione1;
+		this.pagantiSpettacolo[2] = pagantiRiduzione2;
+		this.pagantiSpettacolo[3] = pagantiRiduzione3;
 	}
 
 	public String getTitoloFilm() {
@@ -48,33 +40,12 @@ public class SpettacoloGUI {
 	public int getDurataSpettacoloInMinuti() {
 		return durataSpettacoloInMinuti;
 	}
-	public double getPrezzoBigliettoRegolare() {
-		return prezzoBigliettoRegolare;
-	}
-	public double getPrezzoBigliettoRidotto1() {
-		return prezzoBigliettoRidotto1;
-	}
-	public double getPrezzoBigliettoRidotto2() {
-		return prezzoBigliettoRidotto2;
-	}
-	public double getPrezzoBigliettoRidotto3() {
-		return prezzoBigliettoRidotto3;
-	}
-	public int getPagantiRegolari() {
-		return pagantiRegolari;
-	}
-	public int getPagantiRiduzione1() {
-		return pagantiRiduzione1;
-	}
-	public int getPagantiRiduzione2() {
-		return pagantiRiduzione2;
-	}
-	public int getPagantiRiduzione3() {
-		return pagantiRiduzione3;
+	public double[] getPrezziSpettacolo() {
+		return prezziSpettacolo;
 	}
 	
-	
-	
-	
+	public int[] getPagantiSpettacolo() {
+		return pagantiSpettacolo;
+	}
 
 }

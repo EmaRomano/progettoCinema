@@ -1,11 +1,11 @@
-package entita;
+package entita.spettacolo;
 
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import utilita.IntervalloDiTempo;
+import entita.Spettacolo;
 
 public class FasciaOraria {
 	private String nome;
@@ -15,9 +15,9 @@ public class FasciaOraria {
 	
 	private ArrayList<Spettacolo> spettacoliPerFascia;
 
-	public FasciaOraria(String nome, String oraInizioTxt, DateTimeFormatter formattatoreOra) {
+	public FasciaOraria(String nome, String oraInizioTxt) {
 		this.nome = nome;
-		oraInizio=LocalTime.parse(oraInizioTxt, formattatoreOra);
+		oraInizio=LocalTime.parse(oraInizioTxt, DateTimeFormatter.ofPattern("HH:mm"));
 		oraFine=oraInizio.plus(ampiezzaFasciaInMinuti);
 	}
 	

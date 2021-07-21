@@ -1,24 +1,16 @@
 package controllers;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.text.DateFormatter;
-
-import entita.Sala;
 import entita.Spettacolo;
-import gui.*;
+import gui.AvvioJF;
+import gui.SuperJFrame;
 import gui.cancellazione.CancellaSpettacoloJF;
 import gui.inserimento.ChiediConfermaSalvataggioJD;
 import gui.inserimento.DaiConfermaSalvataggioJD;
 import gui.inserimento.InserisciSpettacoloJF;
-import gui.modifica.ModificaSpettacoloJF;
 import gui.modifica.CercaSpettacoloJF;
 import gui.modifica.ChiediConfermaCancellazioneJD;
 import gui.modifica.ChiediConfermaModificaJD;
+import gui.modifica.ModificaSpettacoloJF;
 import gui.statistiche.OpzioniStatisticheJF;
 import gui.statistiche.SpettacoliPerIncassoJF;
 import gui.statistiche.StatistichePerFasceOrarieJF;
@@ -164,7 +156,8 @@ public class ControllerGUI {
 
 	public void confermaSalvataggioSpettacolo() {
 		chiediConfermaSalvataggioJD.setVisible(false);
-		controllerCentrale.inviaSpettacoloADAO(inserisciSpettacoloJF.getSpettacoloGuiDaInserire());
+		Spettacolo daInserire = controllerCentrale.traduciInSpettacolo(inserisciSpettacoloJF.getSpettacoloGuiDaInserire());
+		controllerCentrale.getSpettacoloDAO().inserisciSpettacolo(daInserire);
 		daiConfermaSalvataggioJD.setVisible(true); //TODO solo per testing
 
 	}

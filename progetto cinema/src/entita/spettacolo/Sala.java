@@ -1,4 +1,4 @@
-package entita;
+package entita.spettacolo;
 
 import java.util.ArrayList;
 
