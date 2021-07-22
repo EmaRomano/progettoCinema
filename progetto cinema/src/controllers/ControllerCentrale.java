@@ -3,6 +3,7 @@ package controllers;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import dao.impl.SpettacoloDAOImpl;
@@ -65,7 +66,7 @@ public class ControllerCentrale {
 		return spettacoloDaSalvare=new Spettacolo(
 				sGui.getTitoloFilm(),
 				elencoSale[sGui.getNumeroSala()],
-				LocalDateTime.parse(sGui.getDataEOra(), formatoDataEOra), 
+				LocalDateTime.of(sGui.getData(), sGui.getOra()).truncatedTo(ChronoUnit.MINUTES),
 				Duration.ofMinutes(sGui.getDurataSpettacoloInMinuti()),
 				prezziSpettacolo,
 				numeroPaganti);

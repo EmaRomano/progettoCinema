@@ -1,50 +1,36 @@
 package gui.inserimento;
 
-
-//data=(LocalDate)mostraDataTF.getValue();
-//DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-//mostraDataTF.setText(data.format(formattatore));
-
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-
-import com.mindfusion.scheduling.Calendar;
 
 import controllers.ControllerGUI;
 import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
 import gui.utilita.IntegerSpinner;
+import gui.utilita.OraSpinner;
 
 public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
 	
@@ -53,8 +39,8 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 	
 	private JTextField titoloFimlTF;
 	private JComboBox elencoSaleCB;
-	private IntegerSpinner oraJSpinner;
-	private IntegerSpinner minutoJSpinner;
+	private Date data=new Date(System.currentTimeMillis());
+	private OraSpinner oraSpinner;
 	private IntegerSpinner durataFilmSpinner;
 	private IntegerSpinner margineSpinner;
 	private IntegerSpinner prezzoBigliettoRegolareEuroSpinner;
@@ -76,7 +62,8 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		spettacoloGuiDaInserire = new SpettacoloGUI(
 		    titoloFimlTF.getText(),
 			elencoSaleCB.getSelectedIndex(),
-		    mostraDataTF.getText()+"-"+oraJSpinner.getValue()+":"+minutoJSpinner.getValue(), 
+		    convertiInLocalDate(data),
+		    oraSpinner.getOra(),
 		    durataFilmSpinner.getIntero()+margineSpinner.getIntero(),
 			Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero()+"."
 			                   +prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
@@ -211,32 +198,11 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		oraLabel.setBounds(12, 136, 75, 28);
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
-
-		oraJSpinner = new IntegerSpinner();
-		oraJSpinner.setModel(new SpinnerNumberModel(20, 0, 23, 1));
-		oraJSpinner.setEditor(new JSpinner.NumberEditor(oraJSpinner,"00"));
-		oraJSpinner.setBounds(145, 133, 64, 34);
-		oraJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		schedulingPanel.add(oraJSpinner);
+		
 		schedulingPanel.add(oraLabel);
 		schedulingPanel.add(dataLabel);
 		schedulingPanel.add(salaLabel);
 		schedulingPanel.add(elencoSaleCB);
-		rendiTestoNonEditabile(oraJSpinner);
-
-		minutoJSpinner = new IntegerSpinner();
-		minutoJSpinner.setToolTipText("doppio click per modificare lo step"); //TODO eventuale funzionalita' da implementare
-		minutoJSpinner.setModel(new SpinnerNumberModel(30, 0, 59, 5));
-		minutoJSpinner.setEditor(new JSpinner.NumberEditor(minutoJSpinner,"00"));
-		minutoJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		minutoJSpinner.setBounds(235, 133, 64, 34);
-		schedulingPanel.add(minutoJSpinner);
-		rendiTestoNonEditabile(minutoJSpinner);
-
-		JLabel duePuntiLabel = new JLabel(":");
-		duePuntiLabel.setFont(new Font("Calibri", Font.BOLD, 22));
-		duePuntiLabel.setBounds(219, 133, 12, 34);
-		schedulingPanel.add(duePuntiLabel);
 		immaginePanel.setLayout(null);
 
 		JLabel immagineLabel = new JLabel("");
@@ -259,9 +225,9 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				Date d = (Date)mostraDataTF.getValue();	
+				data = (Date)mostraDataTF.getValue();	
 
-				finestraCalendario.resetSelection(d);				
+				finestraCalendario.resetSelection(data);				
 				if (!finestraCalendario.isVisible()) {
 					finestraCalendario.setUndecorated(true);
 				}
@@ -593,6 +559,10 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		pagantiRidotto3Spinner.setBounds(46, 4, 65, 30);
 		pagantiConRiduzione3Panel.add(pagantiRidotto3Spinner);
 		rendiTestoNonEditabile(pagantiRidotto3Spinner);
+		
+		oraSpinner = new OraSpinner();
+		oraSpinner.setBounds(145, 134, 97, 30);
+		schedulingPanel.add(oraSpinner);
 		/********************************fine blocco codice tabella prezzario*********************************/
 
 	}

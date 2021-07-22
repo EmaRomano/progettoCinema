@@ -2,6 +2,7 @@ package entita;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class Spettacolo {
 
 	private List<Prezzo> prezziSpettacolo = new ArrayList<>();
 	private int[] numeroPaganti = new int[4];
+	
+	//TODO 
+	private DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd/MM/yyyy-HH:mm");
 
 	public Spettacolo(
 			String titoloFilm, Sala sala, LocalDateTime dataEOra, Duration durataInMinuti,
@@ -105,8 +109,9 @@ public class Spettacolo {
 		for(int i : numeroPaganti)
 			prezzi += "#"+i;
 					
-		return titoloFilm + "#" + sala.getNome() + "#" + dataEOraInizio
-				+ "#" + durataInMinuti.toMinutes() + prezzi + paganti;
+		return titoloFilm + "#" + sala.getNome() + "#" +
+		       dataEOraInizio.format(formattatore)+
+		       "#" + durataInMinuti.toMinutes() + prezzi + paganti;
 	}
 	
 }
