@@ -3,8 +3,8 @@ package entita;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import entita.spettacolo.Prezzo;
 import entita.spettacolo.Sala;
@@ -17,26 +17,17 @@ public class Spettacolo {
 	private LocalDateTime dataEOraInizio;
 	private Duration durataInMinuti;
 
-	private List<Prezzo> prezziSpettacolo = new ArrayList<>();
-	private int[] numeroPaganti = new int[4];
-	
-	//TODO 
-	private DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd/MM/yyyy-HH:mm");
+	private Map<Prezzo,Integer> pagantiPerFasciaDiPrezzo;
 
 	public Spettacolo(
 			String titoloFilm, Sala sala, LocalDateTime dataEOra, Duration durataInMinuti,
-			List<Prezzo> prezziSpettacolo, int[] numeroPaganti) {
+			Map<Prezzo,Integer> pagantiPerFasciaDiPrezzo) {
 
 		this.titoloFilm = titoloFilm;
 		this.sala = sala;
 		this.dataEOraInizio = dataEOra;
 		this.durataInMinuti = durataInMinuti;
-		
-		for(Prezzo p : prezziSpettacolo)
-			this.prezziSpettacolo.add(p);
-		
-		for(int i = 0; i < 4; i++)
-			this.numeroPaganti[i] = numeroPaganti[i];
+		this.pagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
 	}
 	
 	
@@ -48,16 +39,21 @@ public class Spettacolo {
 		
 		double incasso = 0.0;
 		
-		for(Prezzo p : prezziSpettacolo)
-			incasso += numeroPaganti[p.getTipo().ordinal()] * p.getCosto();
+		for(Entry<Prezzo,Integer> e : pagantiPerFasciaDiPrezzo.entrySet()) {
+			int numeroPaganti = e.getValue();
+			double prezzo = e.getKey().getQuota();
+			incasso += numeroPaganti * prezzo;
+		}
 		
 		return incasso;
 	}
 	
 	public int getTotalePaganti() {
 		int totale = 0;
-		for(int i = 0; i < 4; i++)
-			totale += numeroPaganti[i];
+		
+		for(Integer paganti : pagantiPerFasciaDiPrezzo.values())
+			totale += paganti;
+		
 		return totale;
 	}
 
@@ -97,9 +93,16 @@ public class Spettacolo {
 
 	@Override
 	public String toString() {
+		
 		double prezziSpettacolo[] = new double[4];
-		for(Prezzo p : this.prezziSpettacolo)
-			prezziSpettacolo[p.getTipo().ordinal()] = p.getCosto();
+		int numeroPaganti[] = new int[4];
+		
+		for(Entry<Prezzo,Integer> e : pagantiPerFasciaDiPrezzo.entrySet()) {
+			Prezzo p = e.getKey();
+			
+			prezziSpettacolo[p.getTipo().ordinal()] = p.getQuota();
+			numeroPaganti[p.getTipo().ordinal()] = e.getValue();
+		}			
 		
 		String prezzi = "";
 		for(double d : prezziSpettacolo)
@@ -108,10 +111,12 @@ public class Spettacolo {
 		String paganti = "";
 		for(int i : numeroPaganti)
 			prezzi += "#"+i;
+		
+		DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd/MM/yyyy-HH:mm");
 					
 		return titoloFilm + "#" + sala.getNome() + "#" +
 		       dataEOraInizio.format(formattatore)+
-		       "#" + durataInMinuti.toMinutes() + prezzi + paganti;
+		       "#" + durataInMinuti.toMinutes() + prezzi + paganti + "\n";
 	}
 	
 }

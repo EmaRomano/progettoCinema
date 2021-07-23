@@ -5,11 +5,6 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -65,25 +60,5 @@ public class SuperJFrame extends JFrame {
 		spinnerTF.setEditable(false);
 	}
 	
-	
-	
-	public LocalDate convertiInLocalDate(Date data) {
-		return data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	}
-	
-	public Date convertiInDate(LocalDate data){
-		return Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-	
-	//TODO da cancellare dopo
-	public LocalTime convertiInLocalTime(Date orario) {
-		return orario.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-	}
-	//TODO da cancellare dopo
-	public Date convertiInDate(LocalTime ora){
-		Instant instant = ora.atDate(LocalDate.now()).
-		        atZone(ZoneId.systemDefault()).toInstant();
-		return Date.from(instant);
-	}
 
 }

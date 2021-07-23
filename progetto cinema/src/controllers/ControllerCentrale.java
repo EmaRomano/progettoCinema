@@ -4,7 +4,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import dao.impl.SpettacoloDAOImpl;
 import dao.interfaces.SpettacoloDAO;
@@ -22,7 +23,9 @@ public class ControllerCentrale {
 
 	private SpettacoloDAO spettacoloDAO = new SpettacoloDAOImpl();
 
-	private Sala[] elencoSale = new Sala[5];
+	//le sale non sono memorizzate su un file, ma in un array in quanto sono solo 5 e sono invariabili
+	private static final Sala[] elencoSale = new Sala[5];
+	
 	private FasciaOraria[] elencoFasce = new FasciaOraria[4];
 
 	private DateTimeFormatter formatoDataEOra=
@@ -34,6 +37,16 @@ public class ControllerCentrale {
 		elencoSale[2]=new Sala("Kubrick", 350, "HRF+dolby atmos");
 		elencoSale[3]=new Sala("Hitchcock", 300, "24fps+dolby classico");
 		elencoSale[4]= new Sala("Gilliam", 300, "24fps+dolby classico");
+	}
+	
+	public static Sala getSalaPerNome(String nomeSala) {
+		
+		for (Sala s : elencoSale) {
+			if(s.getNome().equals(nomeSala))
+				return s;
+		}
+		
+		return null;
 	}
 
 	public void creaElencoFasce() {
@@ -51,14 +64,14 @@ public class ControllerCentrale {
 
 	public Spettacolo traduciInSpettacolo(SpettacoloGUI sGui) {
 		
-		ArrayList<Prezzo> prezziSpettacolo = new ArrayList<Prezzo>();
-		int[] numeroPaganti = new int[4];
+		Map<Prezzo,Integer> pagantiPerFasciaDiPrezzo = new HashMap<>();
 		
 		for(int i = 0; i < 4; i++) {
 			double prezzoCorrente = sGui.getPrezziSpettacolo()[i];
 			if(prezzoCorrente != 0.0) {
-				prezziSpettacolo.add(new Prezzo(TipoPrezzo.values()[i],prezzoCorrente));
-				numeroPaganti[i] = sGui.getPagantiSpettacolo()[i];
+				Prezzo p = new Prezzo(TipoPrezzo.values()[i],prezzoCorrente);
+				int paganti = sGui.getPagantiSpettacolo()[i];
+				pagantiPerFasciaDiPrezzo.put(p, paganti);
 			}
 			
 		}
@@ -68,8 +81,7 @@ public class ControllerCentrale {
 				elencoSale[sGui.getNumeroSala()],
 				LocalDateTime.of(sGui.getData(), sGui.getOra()).truncatedTo(ChronoUnit.MINUTES),
 				Duration.ofMinutes(sGui.getDurataSpettacoloInMinuti()),
-				prezziSpettacolo,
-				numeroPaganti);
+				pagantiPerFasciaDiPrezzo);
 	}
 
 	public FasciaOraria[] getElencoFasce() {

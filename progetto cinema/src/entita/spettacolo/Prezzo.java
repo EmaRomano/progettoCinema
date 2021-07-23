@@ -5,19 +5,19 @@ import entita.spettacolo.enumeration.TipoPrezzo;
 public 	class Prezzo {
 	
 	private TipoPrezzo tipo;
-	private double costo;
+	private double quota;
 	
-	public Prezzo(TipoPrezzo tipo, double costo) {
+	public Prezzo(TipoPrezzo tipo, double quota) {
 		this.tipo = tipo;
-		this.costo = costo;
+		this.quota = quota;
 	}
 
 	public TipoPrezzo getTipo() {
 		return tipo;
 	}
 
-	public double getCosto() {
-		return costo;
+	public double getQuota() {
+		return quota;
 	}
 
 }

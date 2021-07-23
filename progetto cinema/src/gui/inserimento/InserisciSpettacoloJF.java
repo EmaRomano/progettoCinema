@@ -31,6 +31,7 @@ import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
 import gui.utilita.IntegerSpinner;
 import gui.utilita.OraSpinner;
+import utilita.ConversioniDateTime;
 
 public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
 	
@@ -62,7 +63,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		spettacoloGuiDaInserire = new SpettacoloGUI(
 		    titoloFimlTF.getText(),
 			elencoSaleCB.getSelectedIndex(),
-		    convertiInLocalDate(data),
+		    ConversioniDateTime.convertiInLocalDate(data),
 		    oraSpinner.getOra(),
 		    durataFilmSpinner.getIntero()+margineSpinner.getIntero(),
 			Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero()+"."

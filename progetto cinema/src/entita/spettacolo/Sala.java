@@ -1,7 +1,5 @@
 package entita.spettacolo;
 
-import java.util.ArrayList;
-
 public class Sala {
 	private String nome;
 	private int postiDisponibili;
@@ -23,12 +21,4 @@ public class Sala {
 		return nome;
 	}
 	
-	//TODO temporaneo
-	
-	
-	
-	
-	
-	
-
 }
