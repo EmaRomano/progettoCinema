@@ -1,50 +1,50 @@
-package gui.modifica;
+package gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
-import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
+import gui.utilita.OraSpinner;
+import utilita.ConversioniDateTime;
 
 public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 	private boolean cercaPerModifica;
+	
+	private JComboBox<String> elencoSaleCB;
+	private Date data=new Date(System.currentTimeMillis());
+	private OraSpinner oraSpinner;
+
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		//get the selected date from the calendar control and set it to the text field
 		if (event.getPropertyName().equals("selectedDate")) {
 
-			java.util.Calendar cal = (java.util.Calendar)event.getNewValue();
-			Date selDate =  cal.getTime();
-			mostraDataTF.setValue(selDate);
+			java.util.Calendar calendario = (java.util.Calendar)event.getNewValue();
+			Date selezionaData =  calendario.getTime();
+			mostraDataTF.setValue(selezionaData);
 		}	
 	}
 
@@ -65,7 +65,8 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 		JPanel immaginePanel = new JPanel();
 
-		JLabel introLabel = new JLabel("Cerca spettacolo da cancellare o modificare:");
+		JLabel introLabel = new JLabel("Cerca spettacolo da "+ 
+		                                (cercaPerModifica?"modificare:":"cancellare:"));
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JPanel schedulingPanel = new JPanel();
@@ -83,10 +84,10 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		JButton cercaButton = new JButton("");
 		cercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(cercaPerModifica)
-					controllerGUI.cercaPerModifica();
-				else
-					controllerGUI.cercaPerCancellazione();
+					controllerGUI.cercaSpettacolo(cercaPerModifica,
+							            (String)elencoSaleCB.getSelectedItem(),
+							            ConversioniDateTime.convertiInLocalDate(data),
+							            oraSpinner.getOra());
 				finestraCalendario.dispose();
 			}
 		});
@@ -137,12 +138,12 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		salaLabel.setBounds(45, 15, 75, 27);
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
-		JComboBox elencoSaleCB = new JComboBox();
+		elencoSaleCB = new JComboBox<>();
 		elencoSaleCB.setForeground(Color.BLACK);
 		elencoSaleCB.setBackground(new Color(230, 230, 250));
 		elencoSaleCB.setBounds(145, 11, 231, 34);
-		elencoSaleCB.setModel(new DefaultComboBoxModel(new String[] {
-				"1. LEONE", "2. BERGMAN", "3. KUBRICK", "4. HITCHCOCK", "5. GILLIAM"}));
+		elencoSaleCB.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"LEONE", "BERGMAN", "KUBRICK", "HITCHCOCK", "GILLIAM"}));
 		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel dataLabel = new JLabel("Data: ");
@@ -154,30 +155,10 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		oraLabel.setBounds(45, 176, 75, 28);
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
-
-		JSpinner oraJSpinner = new JSpinner();
-		oraJSpinner.setModel(new SpinnerNumberModel(20, 0, 23, 1));
-		oraJSpinner.setBounds(141, 173, 59, 34);
-		oraJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		schedulingPanel.add(oraJSpinner);
 		schedulingPanel.add(oraLabel);
 		schedulingPanel.add(dataLabel);
 		schedulingPanel.add(salaLabel);
 		schedulingPanel.add(elencoSaleCB);
-		rendiTestoNonEditabile(oraJSpinner);
-
-		JSpinner minutoJSpinner = new JSpinner();
-		minutoJSpinner.setToolTipText("doppio click per modificare lo step"); //TODO eventuale funzionalita' da implementare
-		minutoJSpinner.setModel(new SpinnerNumberModel(30, 0, 59, 5));
-		minutoJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		minutoJSpinner.setBounds(227, 173, 59, 34);
-		schedulingPanel.add(minutoJSpinner);
-		rendiTestoNonEditabile(minutoJSpinner);
-
-		JLabel duePuntiLabel = new JLabel(":");
-		duePuntiLabel.setFont(new Font("Calibri", Font.BOLD, 22));
-		duePuntiLabel.setBounds(210, 173, 12, 34);
-		schedulingPanel.add(duePuntiLabel);
 		immaginePanel.setLayout(null);
 
 		JLabel immagineLabel = new JLabel("");
@@ -185,6 +166,10 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		immaginePanel.add(immagineLabel);
 		getContentPane().setLayout(groupLayout);
 		creaSfondoScalatoSu(immagineLabel, "hitchcockStack.png");
+		
+		oraSpinner = new OraSpinner();
+		oraSpinner.setBounds(145, 173, 85, 34);
+		schedulingPanel.add(oraSpinner);
 
 
 
@@ -200,20 +185,21 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				Date d = (Date)mostraDataTF.getValue();				
+				data = (Date)mostraDataTF.getValue();				
 
-				finestraCalendario.resetSelection(d);				
+				finestraCalendario.resetSelection(data);				
 				if (!finestraCalendario.isVisible()) {
 					finestraCalendario.setUndecorated(true);
 				}
 				finestraCalendario.setVisible(true);
 			}
 		});
-
-		mostraDataTF.setBounds(140, 89, 146, 28);
+		
+		mostraDataTF.setBounds(145, 89, 146, 28);
 		schedulingPanel.add(mostraDataTF);
-		scegliDataButton.setBounds(296, 89, 139, 28);
+		scegliDataButton.setBounds(310, 89, 139, 28);
 		schedulingPanel.add(scegliDataButton);
+
 		/***********************************fine blocco codice per DatePicker**************************/	
 
 	}

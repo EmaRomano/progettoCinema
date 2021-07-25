@@ -81,7 +81,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton modificaSpettacoloButton = new JButton("");
 		modificaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.cercaDaAvvioPerModificare(true);
+				controllerGUI.apriFinestraCercaSpettacolo(true);
 			}
 		});
 		modificaSpettacoloButton.setToolTipText("modifica spettacolo");
@@ -102,7 +102,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton cancellaSpettacoloButton = new JButton("");
 		cancellaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.cercaDaAvvioPerModificare(false);
+				controllerGUI.apriFinestraCercaSpettacolo(false);
 			}
 		});
 		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");

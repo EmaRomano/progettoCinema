@@ -39,7 +39,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 	
 	private JTextField titoloFimlTF;
-	private JComboBox elencoSaleCB;
+	private JComboBox<String> elencoSaleCB;
 	private Date data=new Date(System.currentTimeMillis());
 	private OraSpinner oraSpinner;
 	private IntegerSpinner durataFilmSpinner;
@@ -182,12 +182,12 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		salaLabel.setBounds(12, 49, 75, 27);
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
-		elencoSaleCB = new JComboBox();
+		elencoSaleCB = new JComboBox<String>();
 		elencoSaleCB.setForeground(Color.BLACK);
 		elencoSaleCB.setBackground(new Color(230, 230, 250));
 		elencoSaleCB.setBounds(145, 45, 231, 34);
-		elencoSaleCB.setModel(new DefaultComboBoxModel(new String[] {
-				"1. LEONE", "2. BERGMAN", "3. KUBRICK", "4. HITCHCOCK", "5. GILLIAM"}));
+		elencoSaleCB.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"LEONE", "BERGMAN", "KUBRICK", "HITCHCOCK", "GILLIAM"}));
 		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel dataLabel = new JLabel("Data: ");

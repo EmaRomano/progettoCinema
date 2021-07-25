@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
-import entita.spettacolo.Prezzo;
+import entita.spettacolo.FasciaDiPrezzo;
 import entita.spettacolo.Sala;
 
 public class Spettacolo {
@@ -17,19 +18,27 @@ public class Spettacolo {
 	private LocalDateTime dataEOraInizio;
 	private Duration durataInMinuti;
 
-	private Map<Prezzo,Integer> pagantiPerFasciaDiPrezzo;
+	private Map<FasciaDiPrezzo,Integer> numeroDiPagantiPerFasciaDiPrezzo;
 
 	public Spettacolo(
 			String titoloFilm, Sala sala, LocalDateTime dataEOra, Duration durataInMinuti,
-			Map<Prezzo,Integer> pagantiPerFasciaDiPrezzo) {
+			Map<FasciaDiPrezzo,Integer> pagantiPerFasciaDiPrezzo) {
 
 		this.titoloFilm = titoloFilm;
 		this.sala = sala;
 		this.dataEOraInizio = dataEOra;
 		this.durataInMinuti = durataInMinuti;
-		this.pagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
+		this.numeroDiPagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
 	}
 	
+	//TODO da cancellare, e' solo per provare la modifica di uno spettacolo.
+	public Spettacolo prova() {
+		return new Spettacolo("Il gladiatore",
+		this.sala,
+		this.dataEOraInizio.plusMinutes(10),
+		this.durataInMinuti,
+		this.numeroDiPagantiPerFasciaDiPrezzo);
+	}
 	
 	public double getTassoAffluenza() {
 		return ((double)getTotalePaganti()/sala.getPostiDisponibili())*100;
@@ -39,9 +48,9 @@ public class Spettacolo {
 		
 		double incasso = 0.0;
 		
-		for(Entry<Prezzo,Integer> e : pagantiPerFasciaDiPrezzo.entrySet()) {
+		for(Entry<FasciaDiPrezzo,Integer> e : numeroDiPagantiPerFasciaDiPrezzo.entrySet()) {
 			int numeroPaganti = e.getValue();
-			double prezzo = e.getKey().getQuota();
+			double prezzo = e.getKey().getPrezzo();
 			incasso += numeroPaganti * prezzo;
 		}
 		
@@ -51,7 +60,7 @@ public class Spettacolo {
 	public int getTotalePaganti() {
 		int totale = 0;
 		
-		for(Integer paganti : pagantiPerFasciaDiPrezzo.values())
+		for(Integer paganti : numeroDiPagantiPerFasciaDiPrezzo.values())
 			totale += paganti;
 		
 		return totale;
@@ -61,26 +70,18 @@ public class Spettacolo {
 		return dataEOraInizio.plusMinutes(durataInMinuti.toMinutes());		
 	}
 	
-//	//TODO temporaneo, solo per testing
-//	public void stampaSpettacolo() {
-//		System.out.println(titoloFilm);
-//		System.out.println(this.sala.getNome());
-//		System.out.println(dataEOraInizio);
-//		System.out.println(durataInMinuti.toMinutes());
-//		System.out.println(prezzoBigliettoRegolare);
-//		System.out.println(prezzoBigliettoRidotto1);
-//		System.out.println(prezzoBigliettoRidotto2);
-//		System.out.println(prezzoBigliettoRidotto3);
-//		System.out.println(pagantiRegolari);
-//		System.out.println(pagantiRidotto1);
-//		System.out.println(pagantiRidotto2);
-//		System.out.println(pagantiRidotto3);
-//		System.out.println(incasso);
-//		System.out.printf("%f%n", tassoAffluenza);
-//		System.out.println(fasciaOraria.getNome());
-//	}
-
+	public boolean siSovrapponeA(Spettacolo altroSpettacolo) {
+		return this.sala.equals(altroSpettacolo.getSala()) &&
+				this.getDataEOraFine().isAfter(altroSpettacolo.getDataEOraInizio()) &&
+				altroSpettacolo.getDataEOraFine().isAfter(this.dataEOraInizio);
+	}
 	
+	public boolean siStaProiettandoIn(LocalDateTime dataEOra, Sala sala) {
+		return	this.sala.equals(sala) &&
+				dataEOra.equals(this.dataEOraInizio) ||
+				(dataEOra.isAfter(this.dataEOraInizio) && dataEOra.isBefore(this.getDataEOraFine()));
+	}
+
 	public Sala getSala() {
 		return sala;
 	}
@@ -97,11 +98,11 @@ public class Spettacolo {
 		double prezziSpettacolo[] = new double[4];
 		int numeroPaganti[] = new int[4];
 		
-		for(Entry<Prezzo,Integer> e : pagantiPerFasciaDiPrezzo.entrySet()) {
-			Prezzo p = e.getKey();
+		for(Entry<FasciaDiPrezzo,Integer> e : numeroDiPagantiPerFasciaDiPrezzo.entrySet()) {
+			FasciaDiPrezzo p = e.getKey();
 			
-			prezziSpettacolo[p.getTipo().ordinal()] = p.getQuota();
-			numeroPaganti[p.getTipo().ordinal()] = e.getValue();
+			prezziSpettacolo[p.getFascia().ordinal()] = p.getPrezzo();
+			numeroPaganti[p.getFascia().ordinal()] = e.getValue();
 		}			
 		
 		String prezzi = "";
@@ -118,6 +119,21 @@ public class Spettacolo {
 		       dataEOraInizio.format(formattatore)+
 		       "#" + durataInMinuti.toMinutes() + prezzi + paganti + "\n";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Spettacolo other = (Spettacolo) obj;
+		return Objects.equals(dataEOraInizio, other.dataEOraInizio)
+				&& Objects.equals(durataInMinuti, other.durataInMinuti)
+				&& Objects.equals(sala, other.sala) && Objects.equals(titoloFilm, other.titoloFilm);
+	}
+
 	
 }
 

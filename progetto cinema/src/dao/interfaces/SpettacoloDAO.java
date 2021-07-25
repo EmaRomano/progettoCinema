@@ -1,12 +1,16 @@
 package dao.interfaces;
 
+import java.util.List;
+
 import entita.Spettacolo;
 
 public interface SpettacoloDAO {
 	
-	boolean inserisciSpettacolo(Spettacolo nuovoSpettacolo);
+	List<Spettacolo> getAllSpettacoli();
 	
-	boolean rimuoviSpettacolo(Spettacolo spettacoloDaRimuovere);
+	boolean inserisciSpettacolo(Spettacolo daInserire);
 	
-	boolean modificaSpettacolo(Spettacolo spettacoloDaModificare);
+	boolean rimuoviSpettacolo(Spettacolo daRimuovere);
+	
+	boolean modificaSpettacolo(Spettacolo daModificare, Spettacolo modificato);
 }

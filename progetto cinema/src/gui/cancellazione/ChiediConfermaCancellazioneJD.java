@@ -1,4 +1,4 @@
-package gui.modifica;
+package gui.cancellazione;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

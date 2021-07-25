@@ -1,6 +1,6 @@
 package entita.spettacolo.enumeration;
 
-public enum TipoPrezzo{
+public enum Fascia{
 	Regolare,
 	Ridotto1,
 	Ridotto2,

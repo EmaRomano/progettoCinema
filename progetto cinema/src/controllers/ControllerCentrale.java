@@ -7,21 +7,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
-import dao.impl.SpettacoloDAOImpl;
+import dao.impl.SpettacoloDAOImplFile;
 import dao.interfaces.SpettacoloDAO;
 import entita.Spettacolo;
 import entita.spettacolo.FasciaOraria;
-import entita.spettacolo.Prezzo;
+import entita.spettacolo.FasciaDiPrezzo;
 import entita.spettacolo.Sala;
-import entita.spettacolo.enumeration.TipoPrezzo;
+import entita.spettacolo.enumeration.Fascia;
 import gui.SpettacoloGUI;
 
 public class ControllerCentrale {
+	
 	private ControllerGUI controllerGUI;
-
-	private Spettacolo spettacoloDaSalvare;
-
-	private SpettacoloDAO spettacoloDAO = new SpettacoloDAOImpl();
+	
+	private SpettacoloDAO spettacoloDAO = new SpettacoloDAOImplFile();
 
 	//le sale non sono memorizzate su un file, ma in un array in quanto sono solo 5 e sono invariabili
 	private static final Sala[] elencoSale = new Sala[5];
@@ -31,7 +30,7 @@ public class ControllerCentrale {
 	private DateTimeFormatter formatoDataEOra=
 			DateTimeFormatter.ofPattern("dd LLL yyyy-HH:mm");
 
-	public void creaElencoSale() {
+	public void creaElencoSale() {	//TODO mostrare tecnologia sale da qualche parte nella GUI
 		elencoSale[0]=new Sala("Leone", 450, "IMAX+dolby atmos" );
 		elencoSale[1]=new Sala("Bergman", 350, "HRF+dolby atmos");
 		elencoSale[2]=new Sala("Kubrick", 350, "HRF+dolby atmos");
@@ -42,7 +41,7 @@ public class ControllerCentrale {
 	public static Sala getSalaPerNome(String nomeSala) {
 		
 		for (Sala s : elencoSale) {
-			if(s.getNome().equals(nomeSala))
+			if(s.getNome().compareToIgnoreCase(nomeSala) == 0)
 				return s;
 		}
 		
@@ -64,19 +63,19 @@ public class ControllerCentrale {
 
 	public Spettacolo traduciInSpettacolo(SpettacoloGUI sGui) {
 		
-		Map<Prezzo,Integer> pagantiPerFasciaDiPrezzo = new HashMap<>();
+		Map<FasciaDiPrezzo,Integer> pagantiPerFasciaDiPrezzo = new HashMap<>();
 		
 		for(int i = 0; i < 4; i++) {
 			double prezzoCorrente = sGui.getPrezziSpettacolo()[i];
 			if(prezzoCorrente != 0.0) {
-				Prezzo p = new Prezzo(TipoPrezzo.values()[i],prezzoCorrente);
+				FasciaDiPrezzo p = new FasciaDiPrezzo(Fascia.values()[i],prezzoCorrente);
 				int paganti = sGui.getPagantiSpettacolo()[i];
 				pagantiPerFasciaDiPrezzo.put(p, paganti);
 			}
 			
 		}
 		
-		return spettacoloDaSalvare=new Spettacolo(
+		return new Spettacolo(
 				sGui.getTitoloFilm(),
 				elencoSale[sGui.getNumeroSala()],
 				LocalDateTime.of(sGui.getData(), sGui.getOra()).truncatedTo(ChronoUnit.MINUTES),
@@ -91,5 +90,15 @@ public class ControllerCentrale {
 	
 	public SpettacoloDAO getSpettacoloDAO() {
 		return spettacoloDAO;
+	}
+
+	public Spettacolo cercaSpettacolo(Sala sala, LocalDateTime dataEOra) {
+		
+		for(Spettacolo s : spettacoloDAO.getAllSpettacoli()) {
+			if(s.siStaProiettandoIn(dataEOra, sala))
+				return s;
+		}
+		
+		return null;
 	}
 }

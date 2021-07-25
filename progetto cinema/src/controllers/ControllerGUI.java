@@ -1,14 +1,19 @@
 package controllers;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import entita.Spettacolo;
+import entita.spettacolo.Sala;
 import gui.AvvioJF;
+import gui.CercaSpettacoloJF;
 import gui.SuperJFrame;
 import gui.cancellazione.CancellaSpettacoloJF;
+import gui.cancellazione.ChiediConfermaCancellazioneJD;
 import gui.inserimento.ChiediConfermaSalvataggioJD;
 import gui.inserimento.DaiConfermaSalvataggioJD;
 import gui.inserimento.InserisciSpettacoloJF;
-import gui.modifica.CercaSpettacoloJF;
-import gui.modifica.ChiediConfermaCancellazioneJD;
 import gui.modifica.ChiediConfermaModificaJD;
 import gui.modifica.ModificaSpettacoloJF;
 import gui.statistiche.OpzioniStatisticheJF;
@@ -83,20 +88,24 @@ public class ControllerGUI {
 		inserisciSpettacoloJF.setVisible(true);
 	}
 
-	public void cercaDaAvvioPerModificare(boolean b) {
-		cercaSpettacoloJF=new CercaSpettacoloJF(this, b);
+	public void apriFinestraCercaSpettacolo(boolean perModifica) {
+		cercaSpettacoloJF=new CercaSpettacoloJF(this, perModifica);
 		avvioJF.setVisible(false);
 		cercaSpettacoloJF.setVisible(true);
 	}
 
-	public void cercaPerModifica() {
+	public void cercaSpettacolo(boolean perModifica, String nomeSala, LocalDate data, LocalTime ora) {
+		Sala salaSpettacolo = controllerCentrale.getSalaPerNome(nomeSala);
+		Spettacolo spettacoloDaCercare = controllerCentrale.cercaSpettacolo(salaSpettacolo, LocalDateTime.of(data, ora));
+		//TODO mettere schermate GUI
+		if(spettacoloDaCercare == null)
+			System.out.println("NON TROVATO");
+		else
+			System.out.println(controllerCentrale.getSpettacoloDAO().modificaSpettacolo(spettacoloDaCercare,spettacoloDaCercare.prova()));
+			//System.out.println(spettacoloDaCercare);
 		cercaSpettacoloJF.setVisible(false);
-		modificaSpettacoloJF.setVisible(true);
-	}
-
-	public void cercaPerCancellazione() {
-		cercaSpettacoloJF.setVisible(false);
-		cancellaSpettacoloJF.setVisible(true);
+		modificaSpettacoloJF.setVisible(perModifica);
+		cancellaSpettacoloJF.setVisible(!perModifica);
 	}
 
 	public void bottoneStatisticheAPartireDa(String data) {
@@ -157,9 +166,10 @@ public class ControllerGUI {
 	public void confermaSalvataggioSpettacolo() {
 		chiediConfermaSalvataggioJD.setVisible(false);
 		Spettacolo daInserire = controllerCentrale.traduciInSpettacolo(inserisciSpettacoloJF.getSpettacoloGuiDaInserire());
-		controllerCentrale.getSpettacoloDAO().inserisciSpettacolo(daInserire);
-		daiConfermaSalvataggioJD.setVisible(true); //TODO solo per testing
-
+		if(controllerCentrale.getSpettacoloDAO().inserisciSpettacolo(daInserire))
+			daiConfermaSalvataggioJD.setVisible(true);
+		else
+			System.out.println("ERRORE SOVRAPPOSIZIONE SPETTACOLO");//TODO dialog errore
 	}
 
 	/*******************************metodi di comunicazione GUI-Logica*******************************/
