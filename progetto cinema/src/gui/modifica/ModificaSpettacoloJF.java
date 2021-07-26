@@ -1,46 +1,118 @@
 package gui.modifica;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.BevelBorder;
-
-import controllers.ControllerGUI;
-import gui.SuperJFrame;
-import gui.utilita.FinestraCalendario;
-
-import javax.swing.JTextField;
-import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 
-public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
+import controllers.ControllerGUI;
+import gui.SpettacoloGUI;
+import gui.SuperJFrame;
+import gui.utilita.FinestraCalendario;
+import gui.utilita.IntegerSpinner;
+import gui.utilita.OraSpinner;
+import utilita.ConversioniDateTime;
 
+public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeListener {
+	
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 	
-	private JTextField titoloFimlmTF;
+	private JTextField titoloFimlTF;
+	private JComboBox<String> elencoSaleCB;
+	private Date data;
+	private OraSpinner oraSpinner;
+	private IntegerSpinner durataFilmSpinner;
+	private IntegerSpinner margineSpinner;
+	private IntegerSpinner prezzoBigliettoRegolareEuroSpinner;
+	private IntegerSpinner prezzoBigliettoRegolareCentesimiSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto1EuroSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto1CentesimiSpinner;
+	private	IntegerSpinner prezzoBigliettoRidotto2EuroSpinner;
+    private IntegerSpinner prezzoBigliettoRidotto2CentesimiSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto3EuroSpinner;
+	private IntegerSpinner prezzoBigliettoRidotto3CentesimiSpinner;
+	private IntegerSpinner pagantiRegolariSpinner;
+	private IntegerSpinner pagantiRidotto1Spinner;
+	private IntegerSpinner pagantiRidotto2Spinner;
+	private IntegerSpinner pagantiRidotto3Spinner;
+
+	private SpettacoloGUI spettacoloGuiModificato;
+
+	public void creaSpettacoloGuiModificato() {
+		data = (Date)mostraDataTF.getValue();
+		LocalDateTime dataEOra= 
+				LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data), oraSpinner.getOra());
+		
+		if (dataEOra.isBefore(LocalDateTime.now())) {
+			spettacoloGuiModificato = new SpettacoloGUI(titoloFimlTF.getText(), 
+					elencoSaleCB.getSelectedIndex(), dataEOra,
+					durataFilmSpinner.getIntero(), margineSpinner.getIntero(),
+					Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
+					Double.parseDouble(prezzoBigliettoRidotto1EuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRidotto1CentesimiSpinner.getIntero()),
+					Double.parseDouble(prezzoBigliettoRidotto2EuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRidotto2CentesimiSpinner.getIntero()),
+					Double.parseDouble(prezzoBigliettoRidotto3EuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRidotto3CentesimiSpinner.getIntero()),
+					pagantiRegolariSpinner.getIntero(), pagantiRidotto1Spinner.getIntero(),
+					pagantiRidotto2Spinner.getIntero(), pagantiRidotto3Spinner.getIntero());
+		}	
+	}
+	
+	public SpettacoloGUI getSpettacoloGuiModificato() {
+		spettacoloGuiModificato=null;
+		creaSpettacoloGuiModificato();
+		return spettacoloGuiModificato;
+	}
+	
+	public void importaSpettacoloGui(SpettacoloGUI sGUI) {
+		DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd LLL yyyy");
+		
+		titoloFimlTF.setText(sGUI.getTitoloFilm());
+		elencoSaleCB.setSelectedIndex(sGUI.getNumeroSala());
+		data = ConversioniDateTime.convertiInDate(sGUI.getDataEOra().toLocalDate());
+		mostraDataTF.setValue(data);			
+		oraSpinner.setOra(sGUI.getDataEOra().toLocalTime());
+		durataFilmSpinner.setValue(sGUI.getDurataFilmInMinuti());
+		margineSpinner.setValue(sGUI.getMargineInMinuti());
+		prezzoBigliettoRegolareEuroSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[0])[0]);
+		prezzoBigliettoRegolareCentesimiSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[0])[1]);
+		prezzoBigliettoRidotto1EuroSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[1])[0]);
+		prezzoBigliettoRidotto1CentesimiSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[1])[1]);
+		prezzoBigliettoRidotto2EuroSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[2])[0]);
+		prezzoBigliettoRidotto2CentesimiSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[2])[1]);
+		prezzoBigliettoRidotto3EuroSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[3])[0]);
+		prezzoBigliettoRidotto3CentesimiSpinner.setValue(splittaDouble(sGUI.getPrezziSpettacolo()[3])[1]);
+		pagantiRegolariSpinner.setValue(sGUI.getPagantiSpettacolo()[0]);
+		pagantiRidotto1Spinner.setValue(sGUI.getPagantiSpettacolo()[1]);
+		pagantiRidotto2Spinner.setValue(sGUI.getPagantiSpettacolo()[2]);
+		pagantiRidotto3Spinner.setValue(sGUI.getPagantiSpettacolo()[3]);	
+	}
+
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -56,13 +128,12 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 	public ModificaSpettacoloJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
-		setBounds(200, 20, 887, 697);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SuperJFrame questaFinestra = this;
-		this.setTitle("Modifica spettacolo");
+		this.setTitle("Inserisci spettacolo");
 		mostraDataTF.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
-		
+
 		mostraDataTF.setValue(new Date());
 		FinestraCalendario finestraCalendario = new FinestraCalendario(); 
 
@@ -83,8 +154,8 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 			}
 		});
 
-		JButton salvaModificheButton = new JButton("");
-		salvaModificheButton.addActionListener(new ActionListener() {
+		JButton salvaSpettacoloButton = new JButton("");
+		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controllerGUI.richiestaModificaSpettacolo();
 				finestraCalendario.dispose();
@@ -104,7 +175,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(introLabel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+									.addComponent(salvaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 									.addComponent(schedulingPanel, GroupLayout.PREFERRED_SIZE, 527, GroupLayout.PREFERRED_SIZE)))))
 					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
 					.addComponent(immaginePanel, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
@@ -119,7 +190,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(indietroButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-						.addComponent(salvaModificheButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+						.addComponent(salvaSpettacoloButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 				.addComponent(immaginePanel, GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
 		);
@@ -129,21 +200,21 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		indietroButton.setSize(87,83);
 		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
 
-		salvaModificheButton.setToolTipText("salva modifiche");
-		salvaModificheButton.setOpaque(false);
-		salvaModificheButton.setSize(87, 83);
-		creaSfondoScalatoSu(salvaModificheButton, "iconaSalva.png");
+		salvaSpettacoloButton.setToolTipText("salva modifiche");
+		salvaSpettacoloButton.setOpaque(false);
+		salvaSpettacoloButton.setSize(87, 83);
+		creaSfondoScalatoSu(salvaSpettacoloButton, "iconaSalva.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(12, 49, 75, 27);
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
-		JComboBox elencoSaleCB = new JComboBox();
+		elencoSaleCB = new JComboBox<String>();
 		elencoSaleCB.setForeground(Color.BLACK);
 		elencoSaleCB.setBackground(new Color(230, 230, 250));
 		elencoSaleCB.setBounds(145, 45, 231, 34);
-		elencoSaleCB.setModel(new DefaultComboBoxModel(new String[] {
-				"1. LEONE", "2. BERGMAN", "3. KUBRICK", "4. HITCHCOCK", "5. GILLIAM"}));
+		elencoSaleCB.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"LEONE", "BERGMAN", "KUBRICK", "HITCHCOCK", "GILLIAM"}));
 		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel dataLabel = new JLabel("Data: ");
@@ -155,30 +226,11 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		oraLabel.setBounds(12, 136, 75, 28);
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
-
-		JSpinner oraJSpinner = new JSpinner();
-		oraJSpinner.setModel(new SpinnerNumberModel(20, 0, 23, 1));
-		oraJSpinner.setBounds(145, 133, 64, 34);
-		oraJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		schedulingPanel.add(oraJSpinner);
+		
 		schedulingPanel.add(oraLabel);
 		schedulingPanel.add(dataLabel);
 		schedulingPanel.add(salaLabel);
 		schedulingPanel.add(elencoSaleCB);
-		rendiTestoNonEditabile(oraJSpinner);
-
-		JSpinner minutoJSpinner = new JSpinner();
-		minutoJSpinner.setToolTipText("doppio click per modificare lo step"); //TODO eventuale funzionalita' da implementare
-		minutoJSpinner.setModel(new SpinnerNumberModel(30, 0, 59, 5));
-		minutoJSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		minutoJSpinner.setBounds(235, 133, 64, 34);
-		schedulingPanel.add(minutoJSpinner);
-		rendiTestoNonEditabile(minutoJSpinner);
-
-		JLabel duePuntiLabel = new JLabel(":");
-		duePuntiLabel.setFont(new Font("Calibri", Font.BOLD, 22));
-		duePuntiLabel.setBounds(219, 133, 12, 34);
-		schedulingPanel.add(duePuntiLabel);
 		immaginePanel.setLayout(null);
 
 		JLabel immagineLabel = new JLabel("");
@@ -201,9 +253,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				Date d = (Date)mostraDataTF.getValue();				
-
-				finestraCalendario.resetSelection(d);				
+				finestraCalendario.resetSelection(data);				
 				if (!finestraCalendario.isVisible()) {
 					finestraCalendario.setUndecorated(true);
 				}
@@ -223,24 +273,24 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		titoloFilmLabel.setBounds(12, 13, 108, 25);
 		schedulingPanel.add(titoloFilmLabel);
 
-		titoloFimlmTF = new JTextField();
-		titoloFimlmTF.setText("Non e' un paese per C++");
-		titoloFimlmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
-		titoloFimlmTF.setColumns(10);
-		titoloFimlmTF.setBounds(145, 11, 372, 28);
-		schedulingPanel.add(titoloFimlmTF);
+		titoloFimlTF = new JTextField();
+		titoloFimlTF.setText("Non e' un paese per C++");
+		titoloFimlTF.setFont(new Font("Calibri", Font.PLAIN, 21));
+		titoloFimlTF.setColumns(10);
+		titoloFimlTF.setBounds(145, 11, 372, 28);
+		schedulingPanel.add(titoloFimlTF);
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
 		durataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		durataFilmLabel.setBounds(12, 179, 121, 25);
 		schedulingPanel.add(durataFilmLabel);
 
-		JSpinner durataSpinner = new JSpinner();
-		durataSpinner.setModel(new SpinnerNumberModel(100, 0, null, 1));
-		durataSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		durataSpinner.setBounds(145, 174, 64, 34);
-		schedulingPanel.add(durataSpinner);
-		rendiTestoNonEditabile(durataSpinner);
+		durataFilmSpinner = new IntegerSpinner();
+		durataFilmSpinner.setModel(new SpinnerNumberModel(100, 0, null, 1));
+		durataFilmSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
+		durataFilmSpinner.setBounds(145, 174, 64, 34);
+		schedulingPanel.add(durataFilmSpinner);
+		rendiTestoNonEditabile(durataFilmSpinner);
 
 		JLabel margineDurataLabel = new JLabel(";    margine:");
 		margineDurataLabel.setToolTipText("durata spettacolo = durata film + margine");
@@ -248,7 +298,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		margineDurataLabel.setBounds(221, 178, 108, 25);
 		schedulingPanel.add(margineDurataLabel);
 
-		JSpinner margineSpinner = new JSpinner();
+		margineSpinner = new IntegerSpinner();
 		margineSpinner.setModel(new SpinnerNumberModel(20, 5, null, 5));
 		margineSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
 		margineSpinner.setBounds(339, 174, 53, 34);
@@ -369,7 +419,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		prezzoBigliettoRegolarePanel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRegolarePanel);
 
-		JSpinner prezzoBigliettoRegolareEuroSpinner = new JSpinner();
+		prezzoBigliettoRegolareEuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRegolareEuroSpinner.setModel(new SpinnerNumberModel(6, 0, null, 1));
 		prezzoBigliettoRegolareEuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRegolareEuroSpinner.setBounds(23, 4, 47, 30);
@@ -382,7 +432,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		virgola1Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRegolarePanel.add(virgola1Label);
 
-		JSpinner prezzoBigliettoRegolareCentesimiSpinner = new JSpinner();
+		prezzoBigliettoRegolareCentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRegolareCentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRegolareCentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRegolareCentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -395,7 +445,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		prezzoBigliettoRidotto1Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto1Panel);
 
-		JSpinner prezzoBigliettoRidotto1EuroSpinner = new JSpinner();
+		prezzoBigliettoRidotto1EuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto1EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		prezzoBigliettoRidotto1EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto1EuroSpinner.setBounds(23, 4, 47, 30);
@@ -408,7 +458,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		virgola2Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto1Panel.add(virgola2Label);
 
-		JSpinner prezzoBigliettoRidotto1CentesimiSpinner = new JSpinner();
+		prezzoBigliettoRidotto1CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto1CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRidotto1CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto1CentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -421,7 +471,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		prezzoBigliettoRidotto2Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto2Panel);
 
-		JSpinner prezzoBigliettoRidotto2EuroSpinner = new JSpinner();
+		prezzoBigliettoRidotto2EuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto2EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		prezzoBigliettoRidotto2EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto2EuroSpinner.setBounds(23, 4, 47, 30);
@@ -433,11 +483,10 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		virgola3Label.setFont(new Font("Calibri", Font.PLAIN, 22));
 		virgola3Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto2Panel.add(virgola3Label);
-
-		JSpinner prezzoBigliettoRidotto2CentesimiSpinner = new JSpinner();
-		prezzoBigliettoRidotto2CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
-		prezzoBigliettoRidotto2CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
+		
+		prezzoBigliettoRidotto2CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto2CentesimiSpinner.setBounds(88, 4, 47, 30);
+		prezzoBigliettoRidotto2CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto2Panel.add(prezzoBigliettoRidotto2CentesimiSpinner);
 		rendiTestoNonEditabile(prezzoBigliettoRidotto2CentesimiSpinner);
 
@@ -447,7 +496,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		prezzoBigliettoRidotto3Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto3Panel);
 
-		JSpinner prezzoBigliettoRidotto3EuroSpinner = new JSpinner();
+		prezzoBigliettoRidotto3EuroSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto3EuroSpinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		prezzoBigliettoRidotto3EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto3EuroSpinner.setBounds(23, 4, 47, 30);
@@ -460,7 +509,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		virgola4Label.setBounds(75, 10, 9, 34);
 		prezzoBigliettoRidotto3Panel.add(virgola4Label);
 
-		JSpinner prezzoBigliettoRidotto3CentesimiSpinner = new JSpinner();
+		prezzoBigliettoRidotto3CentesimiSpinner = new IntegerSpinner();
 		prezzoBigliettoRidotto3CentesimiSpinner.setModel(new SpinnerNumberModel(0, 0, 95, 5));
 		prezzoBigliettoRidotto3CentesimiSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		prezzoBigliettoRidotto3CentesimiSpinner.setBounds(88, 4, 47, 30);
@@ -491,7 +540,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		pagantiRegolariPanel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiRegolariPanel);
 
-		JSpinner pagantiRegolariSpinner = new JSpinner();
+		pagantiRegolariSpinner = new IntegerSpinner();
 		pagantiRegolariSpinner.setModel(new SpinnerNumberModel(250, 0, null, 1));
 		pagantiRegolariSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRegolariSpinner.setBounds(46, 4, 65, 30);
@@ -504,7 +553,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		pagantiConRiduzione1Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione1Panel);
 
-		JSpinner pagantiRidotto1Spinner = new JSpinner();
+		pagantiRidotto1Spinner = new IntegerSpinner();
 		pagantiRidotto1Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		pagantiRidotto1Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto1Spinner.setBounds(46, 4, 65, 30);
@@ -517,7 +566,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		pagantiConRiduzione2Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione2Panel);
 
-		JSpinner pagantiRidotto2Spinner = new JSpinner();
+		pagantiRidotto2Spinner = new IntegerSpinner();
 		pagantiRidotto2Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		pagantiRidotto2Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto2Spinner.setBounds(46, 4, 65, 30);
@@ -530,16 +579,24 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		pagantiConRiduzione3Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione3Panel);
 
-		JSpinner pagantiRidotto3Spinner = new JSpinner();
+		pagantiRidotto3Spinner = new IntegerSpinner();
 		pagantiRidotto3Spinner.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		pagantiRidotto3Spinner.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto3Spinner.setBounds(46, 4, 65, 30);
 		pagantiConRiduzione3Panel.add(pagantiRidotto3Spinner);
 		rendiTestoNonEditabile(pagantiRidotto3Spinner);
+		
+		oraSpinner = new OraSpinner();
+		oraSpinner.setBounds(145, 134, 97, 30);
+		schedulingPanel.add(oraSpinner);
 		/********************************fine blocco codice tabella prezzario*********************************/
-
-
-
-
+	}
+	
+	public Integer[] splittaDouble(double d){
+		String stringaNumero = String.valueOf(d);
+		int indiceVirgola = stringaNumero.indexOf(".");
+	    Integer[] numeroSplittato = {Integer.valueOf((stringaNumero.substring(0, indiceVirgola))),
+	    		                     Integer.valueOf((stringaNumero.substring(indiceVirgola+1)))};
+		return numeroSplittato;
 	}
 }

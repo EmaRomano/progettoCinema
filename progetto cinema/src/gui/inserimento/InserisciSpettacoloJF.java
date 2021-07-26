@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -60,28 +61,29 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 	private SpettacoloGUI spettacoloGuiDaInserire;
 
 	public void creaSpettacoloGuiDaInserire() {
-		spettacoloGuiDaInserire = new SpettacoloGUI(
-		    titoloFimlTF.getText(),
-			elencoSaleCB.getSelectedIndex(),
-		    ConversioniDateTime.convertiInLocalDate(data),
-		    oraSpinner.getOra(),
-		    durataFilmSpinner.getIntero()+margineSpinner.getIntero(),
-			Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero()+"."
-			                   +prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
-			Double.parseDouble(prezzoBigliettoRidotto1EuroSpinner.getIntero()+"."
-	                   +prezzoBigliettoRidotto1CentesimiSpinner.getIntero()), 
-			Double.parseDouble(prezzoBigliettoRidotto2EuroSpinner.getIntero()+"."
-	                   +prezzoBigliettoRidotto2CentesimiSpinner.getIntero()),
-			Double.parseDouble(prezzoBigliettoRidotto3EuroSpinner.getIntero()+"."
-	                   +prezzoBigliettoRidotto3CentesimiSpinner.getIntero()),
-			pagantiRegolariSpinner.getIntero(),
-			pagantiRidotto1Spinner.getIntero(),
-			pagantiRidotto2Spinner.getIntero(),
-			pagantiRidotto3Spinner.getIntero()
-			);	
+		data = (Date)mostraDataTF.getValue();
+		LocalDateTime dataEOra= 
+				LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data), oraSpinner.getOra());
+		
+		if (dataEOra.isBefore(LocalDateTime.now())) {
+			spettacoloGuiDaInserire = new SpettacoloGUI(titoloFimlTF.getText(), 
+					elencoSaleCB.getSelectedIndex(), dataEOra,
+					durataFilmSpinner.getIntero(), margineSpinner.getIntero(),
+					Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
+					Double.parseDouble(prezzoBigliettoRidotto1EuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRidotto1CentesimiSpinner.getIntero()),
+					Double.parseDouble(prezzoBigliettoRidotto2EuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRidotto2CentesimiSpinner.getIntero()),
+					Double.parseDouble(prezzoBigliettoRidotto3EuroSpinner.getIntero() + "."
+							+ prezzoBigliettoRidotto3CentesimiSpinner.getIntero()),
+					pagantiRegolariSpinner.getIntero(), pagantiRidotto1Spinner.getIntero(),
+					pagantiRidotto2Spinner.getIntero(), pagantiRidotto3Spinner.getIntero());
+		}	
 	}
 
 	public SpettacoloGUI getSpettacoloGuiDaInserire() {
+		spettacoloGuiDaInserire=null;
 		creaSpettacoloGuiDaInserire();
 		return spettacoloGuiDaInserire;
 	}
@@ -226,8 +228,6 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				data = (Date)mostraDataTF.getValue();	
-
 				finestraCalendario.resetSelection(data);				
 				if (!finestraCalendario.isVisible()) {
 					finestraCalendario.setUndecorated(true);
@@ -565,6 +565,5 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		oraSpinner.setBounds(145, 134, 97, 30);
 		schedulingPanel.add(oraSpinner);
 		/********************************fine blocco codice tabella prezzario*********************************/
-
 	}
 }

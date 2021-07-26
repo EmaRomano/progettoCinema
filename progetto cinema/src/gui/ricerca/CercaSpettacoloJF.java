@@ -1,4 +1,4 @@
-package gui;
+package gui.ricerca;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
+import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
 import gui.utilita.OraSpinner;
 import utilita.ConversioniDateTime;
@@ -84,10 +85,11 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		JButton cercaButton = new JButton("");
 		cercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					controllerGUI.cercaSpettacolo(cercaPerModifica,
-							            (String)elencoSaleCB.getSelectedItem(),
-							            ConversioniDateTime.convertiInLocalDate(data),
-							            oraSpinner.getOra());
+				data = (Date)mostraDataTF.getValue();
+				controllerGUI.cercaSpettacolo(cercaPerModifica,
+						            (String)elencoSaleCB.getSelectedItem(),
+						            ConversioniDateTime.convertiInLocalDate(data),
+						            oraSpinner.getOra());
 				finestraCalendario.dispose();
 			}
 		});
@@ -185,7 +187,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-				data = (Date)mostraDataTF.getValue();				
+//				data = (Date)mostraDataTF.getValue();				
 
 				finestraCalendario.resetSelection(data);				
 				if (!finestraCalendario.isVisible()) {

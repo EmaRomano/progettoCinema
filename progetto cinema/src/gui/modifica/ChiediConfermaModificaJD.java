@@ -1,24 +1,16 @@
 package gui.modifica;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
 import gui.SuperJD;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import java.awt.Font;
-import java.awt.SystemColor;
 
 public class ChiediConfermaModificaJD extends SuperJD {
 
@@ -27,7 +19,7 @@ public class ChiediConfermaModificaJD extends SuperJD {
 	public ChiediConfermaModificaJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		JDialog questaJD = this;
-		setTitle("richiesta conferma salvataggio");
+		setTitle("richiesta conferma modifica");
 		getContentPane().setBackground(new Color(230, 230, 250));
 		getContentPane().setLayout(null);
 		
@@ -51,6 +43,7 @@ public class ChiediConfermaModificaJD extends SuperJD {
 		salvaButton.setToolTipText("salva");
 		salvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controllerGUI.confermaModificaSpettacolo();
 			}
 		});
 		salvaButton.setBounds(268, 125, 74, 70);

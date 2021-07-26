@@ -7,5 +7,5 @@ public class IntegerSpinner extends JSpinner {
 	public int getIntero() {
 		return (Integer)super.getValue();
 	}
-
+	
 }

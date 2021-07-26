@@ -1,19 +1,15 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import controllers.ControllerGUI;
 
@@ -44,6 +40,7 @@ public class SuperJD extends JDialog {
 		this.controllerGUI=controllerGUI;
 	    setSize(378, 290);
 	    impostaAlCentro(this);
+	    this.setResizable(false);
 		
 		ImageIcon iconaSigma = new ImageIcon(getClass().getResource("/iconaJDialog.png"));
 		setIconImage(iconaSigma.getImage());

@@ -1,41 +1,33 @@
 package gui.cancellazione;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
-import java.util.Date;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
 import controllers.ControllerGUI;
+import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
 
-import javax.swing.JTextField;
-import java.awt.GridLayout;
-import javax.swing.border.LineBorder;
-
 public class CancellaSpettacoloJF extends SuperJFrame {
+	
+	public void importaSpettacoloGui(SpettacoloGUI traduciInSpettacoloGui) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public CancellaSpettacoloJF(ControllerGUI controllerGUI) {
 		super(controllerGUI);
@@ -444,4 +436,6 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 
 
 	}
+
+
 }

@@ -16,18 +16,20 @@ public class Spettacolo {
 	private Sala sala;
 
 	private LocalDateTime dataEOraInizio;
-	private Duration durataInMinuti;
+	private Duration durataFilm;
+	private Duration margine;
 
 	private Map<FasciaDiPrezzo,Integer> numeroDiPagantiPerFasciaDiPrezzo;
 
 	public Spettacolo(
-			String titoloFilm, Sala sala, LocalDateTime dataEOra, Duration durataInMinuti,
-			Map<FasciaDiPrezzo,Integer> pagantiPerFasciaDiPrezzo) {
+			String titoloFilm, Sala sala, LocalDateTime dataEOra, Duration durataFilm,
+			Duration margine, Map<FasciaDiPrezzo,Integer> pagantiPerFasciaDiPrezzo) {
 
 		this.titoloFilm = titoloFilm;
 		this.sala = sala;
 		this.dataEOraInizio = dataEOra;
-		this.durataInMinuti = durataInMinuti;
+		this.durataFilm = durataFilm;
+		this.margine=margine;
 		this.numeroDiPagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
 	}
 	
@@ -36,7 +38,8 @@ public class Spettacolo {
 		return new Spettacolo("Il gladiatore",
 		this.sala,
 		this.dataEOraInizio.plusMinutes(10),
-		this.durataInMinuti,
+		this.durataFilm,
+		Duration.ofMinutes(0),
 		this.numeroDiPagantiPerFasciaDiPrezzo);
 	}
 	
@@ -67,7 +70,8 @@ public class Spettacolo {
 	}
 
 	public LocalDateTime getDataEOraFine() {
-		return dataEOraInizio.plusMinutes(durataInMinuti.toMinutes());		
+		return dataEOraInizio.plusMinutes(
+				durataFilm.toMinutes()).plusMinutes(margine.toMinutesPart());		
 	}
 	
 	public boolean siSovrapponeA(Spettacolo altroSpettacolo) {
@@ -117,7 +121,7 @@ public class Spettacolo {
 					
 		return titoloFilm + "#" + sala.getNome() + "#" +
 		       dataEOraInizio.format(formattatore)+
-		       "#" + durataInMinuti.toMinutes() + prezzi + paganti + "\n";
+		       "#" + durataFilm.toMinutes()+ "#"+ margine.toMinutes()+ prezzi + paganti + "\n";
 	}
 	
 	@Override
@@ -130,8 +134,25 @@ public class Spettacolo {
 			return false;
 		Spettacolo other = (Spettacolo) obj;
 		return Objects.equals(dataEOraInizio, other.dataEOraInizio)
-				&& Objects.equals(durataInMinuti, other.durataInMinuti)
+				&& Objects.equals(durataFilm, other.durataFilm)
+				&& Objects.equals(margine, other.margine)
 				&& Objects.equals(sala, other.sala) && Objects.equals(titoloFilm, other.titoloFilm);
+	}
+
+	public String getTitoloFilm() {
+		return titoloFilm;
+	}
+
+	public Duration getDurataFilm() {
+		return durataFilm;
+	}
+	
+	public Duration getMargine() {
+		return margine;
+	}
+
+	public Map<FasciaDiPrezzo, Integer> getNumeroDiPagantiPerFasciaDiPrezzo() {
+		return numeroDiPagantiPerFasciaDiPrezzo;
 	}
 
 	

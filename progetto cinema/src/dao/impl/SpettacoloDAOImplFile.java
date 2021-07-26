@@ -90,29 +90,32 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 	@Override
 	public boolean modificaSpettacolo(Spettacolo daModificare, Spettacolo modificato) {
 
-		List<Spettacolo> spettacoli = getAllSpettacoli();
-		boolean trovato = false;
-
-		for(Spettacolo s : spettacoli) {
-			if(s.equals(daModificare)) {
-				spettacoli.set(spettacoli.indexOf(s), modificato);
-				trovato = true;
-				break;
-			}
-		}
-
-		if(!trovato)
-			return false;
-
-		try {
-			//riscrivo gli spettacoli sul file
-			ScritturaLetturaSuFile.scriviArrayListDiStringheSuFile(nomeFilePersistenza,
-					convertiSpettacoliInStringhe(spettacoli));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return true;
+		rimuoviSpettacolo(daModificare);
+		return inserisciSpettacolo(modificato);
+		
+		//effetto collaterale: lo spettacolo modificato me lo mette per ultimo
+		
+		//CODICE VECCHIO
+//			List<Spettacolo> spettacoli = getAllSpettacoli();
+//			boolean trovato = false;
+//			for (Spettacolo s : spettacoli) {
+//				if (s.equals(daModificare)) {
+//					spettacoli.set(spettacoli.indexOf(s), modificato);
+//					trovato = true;
+//					break;
+//				}
+//			}
+//			if (!trovato)
+//				return false;  //?????
+//			try {
+//				//riscrivo gli spettacoli sul file
+//				ScritturaLetturaSuFile.scriviArrayListDiStringheSuFile(nomeFilePersistenza,
+//						convertiSpettacoliInStringhe(spettacoli));
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} 
+//			
+//		return false;
 	}
 
 	
@@ -120,11 +123,11 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 	//METODI ACCESSORI
 	
 	//data una stringa del tipo: 
-	//"nomeSpettacolo#nomeSala#dataEoraInizio#durata#prezzo1#prezzo2#prezzo3#prezzo4#paganti1#paganti2#paganti3#paganti4"
+	//"nomeSpettacolo#nomeSala#dataEoraInizio#duratafilm#margine#prezzo1#prezzo2#prezzo3#prezzo4#paganti1#paganti2#paganti3#paganti4"
 	//ritorna un oggetto Spettacolo con i dati presi dalla stringa
 	private Spettacolo stringToSpettacolo(String spettacoloStringa) {
 
-		String campi[] = new String[12];
+		String campi[] = new String[13];
 		int indice = 0;
 
 		while(spettacoloStringa.contains("#")) {
@@ -140,25 +143,27 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 		DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd/MM/yyyy-HH:mm");
 		LocalDateTime dataOraInizio = LocalDateTime.parse(campi[2], formattatore);
 
-		Duration durata = Duration.ofMinutes(Integer.valueOf(campi[3]));
+		Duration durataFilm = Duration.ofMinutes(Integer.valueOf(campi[3]));
+		
+		Duration margine = Duration.ofMinutes(Integer.valueOf(campi[4]));
 
 		Map<FasciaDiPrezzo,Integer> pagantiPerFasciaDiPrezzo = new HashMap<>();
 
 		FasciaDiPrezzo[] prezzi = new FasciaDiPrezzo[4];
 
-		//indici 4,5,6,7 sono per i prezzi
-		for(indice = 4; indice < 8; indice++){
+		//indici 5,6,7,8 sono per i prezzi
+		for(indice = 5; indice < 9; indice++){
 			if(!campi[indice].equals("0.0"))
-				prezzi[indice-4] = new FasciaDiPrezzo(Fascia.values()[indice-4], Double.valueOf(campi[indice]));
+				prezzi[indice-5] = new FasciaDiPrezzo(Fascia.values()[indice-5], Double.valueOf(campi[indice]));
 		}
 
-		//indici 8,9,10,11 sono per i paganti
+		//indici 9,10,11,12 sono per i paganti
 		for(FasciaDiPrezzo p : prezzi) {
 			if(p != null)
-				pagantiPerFasciaDiPrezzo.put(p, Integer.valueOf(campi[p.getFascia().ordinal()+8]));
+				pagantiPerFasciaDiPrezzo.put(p, Integer.valueOf(campi[p.getFascia().ordinal()+9]));
 		}
 
-		return new Spettacolo(nome,sala,dataOraInizio,durata,pagantiPerFasciaDiPrezzo);
+		return new Spettacolo(nome,sala,dataOraInizio,durataFilm,margine,pagantiPerFasciaDiPrezzo);
 	}
 
 	private boolean siSovrapponeAUnoSpettacoloGiaPresente(Spettacolo daInserire) {

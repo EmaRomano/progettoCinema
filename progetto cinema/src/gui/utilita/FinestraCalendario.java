@@ -3,17 +3,15 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.swing.JFrame;
 
+import com.mindfusion.common.DateTime;
 import com.mindfusion.scheduling.Calendar;
 import com.mindfusion.scheduling.ThemeType;
-import com.mindfusion.common.*;
 
 //TODO cancella tutti i commenti
 public class FinestraCalendario extends JFrame {	
@@ -40,7 +38,7 @@ public class FinestraCalendario extends JFrame {
 
 		calendario.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1)
+				if (e.getClickCount() == 2)
 				{			
 					//clear the selection
 					calendario.getSelection().reset();

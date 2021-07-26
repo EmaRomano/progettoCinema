@@ -7,15 +7,19 @@ import java.time.LocalTime;
 import entita.Spettacolo;
 import entita.spettacolo.Sala;
 import gui.AvvioJF;
-import gui.CercaSpettacoloJF;
+import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.cancellazione.CancellaSpettacoloJF;
 import gui.cancellazione.ChiediConfermaCancellazioneJD;
 import gui.inserimento.ChiediConfermaSalvataggioJD;
 import gui.inserimento.DaiConfermaSalvataggioJD;
+import gui.inserimento.ErroreSpettacoliSovrappostiJD;
+import gui.inserimento.ErroreSpettacoloNonIniziatoJD;
 import gui.inserimento.InserisciSpettacoloJF;
 import gui.modifica.ChiediConfermaModificaJD;
 import gui.modifica.ModificaSpettacoloJF;
+import gui.ricerca.CercaSpettacoloJF;
+import gui.ricerca.SpettacoloNonTrovatoJD;
 import gui.statistiche.OpzioniStatisticheJF;
 import gui.statistiche.SpettacoliPerIncassoJF;
 import gui.statistiche.StatistichePerFasceOrarieJF;
@@ -41,6 +45,12 @@ public class ControllerGUI {
 	private ChiediConfermaModificaJD chiediConfermaModificaJD;
 	private ChiediConfermaCancellazioneJD chiediConfermaCancellazioneJD;
 	private DaiConfermaSalvataggioJD daiConfermaSalvataggioJD;
+	private ErroreSpettacoliSovrappostiJD erroreSpettacoliSovrappostiJD;
+	private ErroreSpettacoloNonIniziatoJD erroreSpettacoloNonIniziatoJD;
+	
+	private SpettacoloNonTrovatoJD spettacoloNonTrovatoJD;
+	
+	private Spettacolo spettacoloTrovato;
 	
 	
 	public ControllerGUI(ControllerCentrale controllerCentrale) {
@@ -58,8 +68,12 @@ public class ControllerGUI {
 		chiediConfermaSalvataggioJD= new ChiediConfermaSalvataggioJD(this);
 		chiediConfermaModificaJD=new ChiediConfermaModificaJD(this);
 		chiediConfermaCancellazioneJD=new ChiediConfermaCancellazioneJD(this);
-
 		daiConfermaSalvataggioJD=new DaiConfermaSalvataggioJD(this);
+		
+		erroreSpettacoliSovrappostiJD= new ErroreSpettacoliSovrappostiJD(this);
+		erroreSpettacoloNonIniziatoJD= new ErroreSpettacoloNonIniziatoJD(this);
+		
+		spettacoloNonTrovatoJD = new SpettacoloNonTrovatoJD(this);
 
 		avvioJF.setVisible(true);
 
@@ -71,16 +85,6 @@ public class ControllerGUI {
 	public void bottoneStatisticheDaAvvio() {
 		opzioniStatisticheJF.setVisible(true);
 		avvioJF.setVisible(false);	
-	}
-
-	public void bottoneModificaSpettacolo() {
-		avvioJF.setVisible(false);
-		cercaSpettacoloJF.setVisible(true);	
-	}
-
-	public void bottoneCancellaSpettacolo() {
-		avvioJF.setVisible(false);
-		cancellaSpettacoloJF.setVisible(true);
 	}
 
 	public void bottoneInserisciSpettacolo() {
@@ -97,15 +101,23 @@ public class ControllerGUI {
 	public void cercaSpettacolo(boolean perModifica, String nomeSala, LocalDate data, LocalTime ora) {
 		Sala salaSpettacolo = controllerCentrale.getSalaPerNome(nomeSala);
 		Spettacolo spettacoloDaCercare = controllerCentrale.cercaSpettacolo(salaSpettacolo, LocalDateTime.of(data, ora));
-		//TODO mettere schermate GUI
 		if(spettacoloDaCercare == null)
-			System.out.println("NON TROVATO");
-		else
-			System.out.println(controllerCentrale.getSpettacoloDAO().modificaSpettacolo(spettacoloDaCercare,spettacoloDaCercare.prova()));
+			spettacoloNonTrovatoJD.setVisible(true);
+		else if (perModifica){
+			spettacoloTrovato=spettacoloDaCercare; 
+			SpettacoloGUI spettacoloGuiDaImportare =controllerCentrale.traduciInSpettacoloGui(spettacoloTrovato);
+			modificaSpettacoloJF.importaSpettacoloGui(spettacoloGuiDaImportare);
+
+			//System.out.println(controllerCentrale.getSpettacoloDAO().modificaSpettacolo(spettacoloTrovato,spettacoloModificato));
 			//System.out.println(spettacoloDaCercare);
-		cercaSpettacoloJF.setVisible(false);
-		modificaSpettacoloJF.setVisible(perModifica);
-		cancellaSpettacoloJF.setVisible(!perModifica);
+
+			cercaSpettacoloJF.setVisible(false);
+			modificaSpettacoloJF.setVisible(perModifica);
+		}
+		else {
+			cancellaSpettacoloJF.importaSpettacoloGui(controllerCentrale.traduciInSpettacoloGui(spettacoloDaCercare));
+			cancellaSpettacoloJF.setVisible(!perModifica);
+		}
 	}
 
 	public void bottoneStatisticheAPartireDa(String data) {
@@ -152,52 +164,45 @@ public class ControllerGUI {
 
 
 	public void richiestaSalvataggioSpettacolo() {
-		chiediConfermaSalvataggioJD.setVisible(true);
-	}
-
+		if (inserisciSpettacoloJF.getSpettacoloGuiDaInserire()!=null) {
+			chiediConfermaSalvataggioJD.setVisible(true);
+		}else
+			erroreSpettacoloNonIniziatoJD.setVisible(true);	
+		}
+	
 	public void richiestaModificaSpettacolo() {
-		chiediConfermaModificaJD.setVisible(true);
+		if (modificaSpettacoloJF.getSpettacoloGuiModificato()!=null)
+			chiediConfermaModificaJD.setVisible(true);
+		else
+			erroreSpettacoloNonIniziatoJD.setVisible(true);	
+		
 	}
 
 	public void richiestaCancellazioneSpettacolo() {
 		chiediConfermaCancellazioneJD.setVisible(true);
 	}
 
+	//INSERIMENTO, MODIFICA ED ELIMINAZIONE
 	public void confermaSalvataggioSpettacolo() {
 		chiediConfermaSalvataggioJD.setVisible(false);
 		Spettacolo daInserire = controllerCentrale.traduciInSpettacolo(inserisciSpettacoloJF.getSpettacoloGuiDaInserire());
 		if(controllerCentrale.getSpettacoloDAO().inserisciSpettacolo(daInserire))
 			daiConfermaSalvataggioJD.setVisible(true);
 		else
-			System.out.println("ERRORE SOVRAPPOSIZIONE SPETTACOLO");//TODO dialog errore
-	}
+			erroreSpettacoliSovrappostiJD.setVisible(true);
+		}
+	
+	public void confermaModificaSpettacolo() {
+		chiediConfermaModificaJD.setVisible(false);
+		
+		Spettacolo spettacoloModificato = controllerCentrale.traduciInSpettacolo(modificaSpettacoloJF.getSpettacoloGuiModificato());
+		if(controllerCentrale.getSpettacoloDAO().modificaSpettacolo(spettacoloTrovato,spettacoloModificato))
+			daiConfermaSalvataggioJD.setVisible(true); // TODO CREARE UNA JD DIVERSA
+		else
+			erroreSpettacoliSovrappostiJD.setVisible(true);
+		}
 
 	/*******************************metodi di comunicazione GUI-Logica*******************************/
-
-
-
-
-
-//		return spettacolo;
-//	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
