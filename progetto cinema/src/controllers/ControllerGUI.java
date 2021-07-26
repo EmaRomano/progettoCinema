@@ -11,6 +11,7 @@ import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.cancellazione.CancellaSpettacoloJF;
 import gui.cancellazione.ChiediConfermaCancellazioneJD;
+import gui.cancellazione.DaiConfermaCancellazioneJD;
 import gui.inserimento.ChiediConfermaSalvataggioJD;
 import gui.inserimento.DaiConfermaSalvataggioJD;
 import gui.inserimento.ErroreSpettacoliSovrappostiJD;
@@ -47,6 +48,7 @@ public class ControllerGUI {
 	private DaiConfermaSalvataggioJD daiConfermaSalvataggioJD;
 	private ErroreSpettacoliSovrappostiJD erroreSpettacoliSovrappostiJD;
 	private ErroreSpettacoloNonIniziatoJD erroreSpettacoloNonIniziatoJD;
+	private DaiConfermaCancellazioneJD daiConfermaCancellazioneJD;
 	
 	private SpettacoloNonTrovatoJD spettacoloNonTrovatoJD;
 	
@@ -69,6 +71,7 @@ public class ControllerGUI {
 		chiediConfermaModificaJD=new ChiediConfermaModificaJD(this);
 		chiediConfermaCancellazioneJD=new ChiediConfermaCancellazioneJD(this);
 		daiConfermaSalvataggioJD=new DaiConfermaSalvataggioJD(this);
+		daiConfermaCancellazioneJD=new DaiConfermaCancellazioneJD(this);
 		
 		erroreSpettacoliSovrappostiJD= new ErroreSpettacoliSovrappostiJD(this);
 		erroreSpettacoloNonIniziatoJD= new ErroreSpettacoloNonIniziatoJD(this);
@@ -103,22 +106,20 @@ public class ControllerGUI {
 		Spettacolo spettacoloDaCercare = controllerCentrale.cercaSpettacolo(salaSpettacolo, LocalDateTime.of(data, ora));
 		if(spettacoloDaCercare == null)
 			spettacoloNonTrovatoJD.setVisible(true);
-		else if (perModifica){
+		else {
 			spettacoloTrovato=spettacoloDaCercare; 
 			SpettacoloGUI spettacoloGuiDaImportare =controllerCentrale.traduciInSpettacoloGui(spettacoloTrovato);
-			modificaSpettacoloJF.importaSpettacoloGui(spettacoloGuiDaImportare);
-
-			//System.out.println(controllerCentrale.getSpettacoloDAO().modificaSpettacolo(spettacoloTrovato,spettacoloModificato));
-			//System.out.println(spettacoloDaCercare);
-
-			cercaSpettacoloJF.setVisible(false);
-			modificaSpettacoloJF.setVisible(perModifica);
-		}
-		else {
-			cancellaSpettacoloJF.importaSpettacoloGui(controllerCentrale.traduciInSpettacoloGui(spettacoloDaCercare));
-			cancellaSpettacoloJF.setVisible(!perModifica);
+			if (perModifica) {
+				modificaSpettacoloJF.importaSpettacoloGui(spettacoloGuiDaImportare);
+				cercaSpettacoloJF.setVisible(false);
+				modificaSpettacoloJF.setVisible(perModifica);
+			} else {
+				cancellaSpettacoloJF.importaSpettacoloGui(spettacoloGuiDaImportare);
+				cancellaSpettacoloJF.setVisible(!perModifica);
+			}
 		}
 	}
+		
 
 	public void bottoneStatisticheAPartireDa(String data) {
 		opzioniStatisticheJF.setVisible(false);
@@ -200,9 +201,18 @@ public class ControllerGUI {
 			daiConfermaSalvataggioJD.setVisible(true); // TODO CREARE UNA JD DIVERSA
 		else
 			erroreSpettacoliSovrappostiJD.setVisible(true);
+		
+		spettacoloTrovato=null;
 		}
 
-	/*******************************metodi di comunicazione GUI-Logica*******************************/
 
+	public void confermaCancellazioneSpettacolo() {
+		chiediConfermaModificaJD.setVisible(false);
+		if(controllerCentrale.getSpettacoloDAO().rimuoviSpettacolo(spettacoloTrovato))
+			daiConfermaCancellazioneJD.setVisible(true);
+		
+		spettacoloTrovato=null;
+		
+	}
 
 }

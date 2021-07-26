@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -40,7 +39,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
 	
-	private JTextField titoloFimlTF;
+	private JTextField titoloFilmTF;
 	private JComboBox<String> elencoSaleCB;
 	private Date data;
 	private OraSpinner oraSpinner;
@@ -67,7 +66,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 				LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data), oraSpinner.getOra());
 		
 		if (dataEOra.isBefore(LocalDateTime.now())) {
-			spettacoloGuiModificato = new SpettacoloGUI(titoloFimlTF.getText(), 
+			spettacoloGuiModificato = new SpettacoloGUI(titoloFilmTF.getText(), 
 					elencoSaleCB.getSelectedIndex(), dataEOra,
 					durataFilmSpinner.getIntero(), margineSpinner.getIntero(),
 					Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero() + "."
@@ -89,10 +88,8 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		return spettacoloGuiModificato;
 	}
 	
-	public void importaSpettacoloGui(SpettacoloGUI sGUI) {
-		DateTimeFormatter formattatore = DateTimeFormatter.ofPattern("dd LLL yyyy");
-		
-		titoloFimlTF.setText(sGUI.getTitoloFilm());
+	public void importaSpettacoloGui(SpettacoloGUI sGUI) {		
+		titoloFilmTF.setText(sGUI.getTitoloFilm());
 		elencoSaleCB.setSelectedIndex(sGUI.getNumeroSala());
 		data = ConversioniDateTime.convertiInDate(sGUI.getDataEOra().toLocalDate());
 		mostraDataTF.setValue(data);			
@@ -273,12 +270,12 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		titoloFilmLabel.setBounds(12, 13, 108, 25);
 		schedulingPanel.add(titoloFilmLabel);
 
-		titoloFimlTF = new JTextField();
-		titoloFimlTF.setText("Non e' un paese per C++");
-		titoloFimlTF.setFont(new Font("Calibri", Font.PLAIN, 21));
-		titoloFimlTF.setColumns(10);
-		titoloFimlTF.setBounds(145, 11, 372, 28);
-		schedulingPanel.add(titoloFimlTF);
+		titoloFilmTF = new JTextField();
+		titoloFilmTF.setText("Non e' un paese per C++");
+		titoloFilmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
+		titoloFilmTF.setColumns(10);
+		titoloFilmTF.setBounds(145, 11, 372, 28);
+		schedulingPanel.add(titoloFilmTF);
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
 		durataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));

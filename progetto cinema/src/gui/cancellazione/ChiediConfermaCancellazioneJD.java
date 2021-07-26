@@ -1,24 +1,16 @@
 package gui.cancellazione;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
 import gui.SuperJD;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import java.awt.Font;
-import java.awt.SystemColor;
 
 public class ChiediConfermaCancellazioneJD extends SuperJD {
 
@@ -51,10 +43,12 @@ public class ChiediConfermaCancellazioneJD extends SuperJD {
 		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");
 		cancellaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controllerGUI.confermaCancellazioneSpettacolo();
 			}
 		});
 		cancellaSpettacoloButton.setBounds(268, 125, 74, 70);
 		creaSfondoScalatoSu(cancellaSpettacoloButton, "iconaCancella.png");
+		
 		getContentPane().add(cancellaSpettacoloButton);
 		annullaButton.setToolTipText("annulla");
 		annullaButton.setBounds(20, 125, 74, 70);

@@ -5,12 +5,16 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -24,9 +28,39 @@ import gui.utilita.FinestraCalendario;
 
 public class CancellaSpettacoloJF extends SuperJFrame {
 	
-	public void importaSpettacoloGui(SpettacoloGUI traduciInSpettacoloGui) {
-		// TODO Auto-generated method stub
+	private JLabel mostraTitoloFilmLabel;	
+	private JComboBox<String> elencoSaleCB;
+	private JLabel mostraDataLabel;
+	private JLabel mostraOraLabel;
+	private JLabel mostraDurataFilmLabel; 
+	private JLabel mostraMargineLabel;
+	private JLabel prezzoBigliettoRegolareLabel;
+	private JLabel prezzoBigliettoRidotto1Label;
+	private JLabel prezzoBigliettoRidotto2Label;
+	private JLabel prezzoBigliettoRidotto3Label;
+	private JLabel pagantiRegolariLabel;
+	private JLabel pagantiRidotto1Label;
+	private JLabel pagantiRidotto2Label;
+	private JLabel pagantiRidotto3Label;
+
+	public void importaSpettacoloGui(SpettacoloGUI sGui) {		
+		DateTimeFormatter formattatoreData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formattatoreOra = DateTimeFormatter.ofPattern("HH:mm");
 		
+		mostraTitoloFilmLabel.setText(sGui.getTitoloFilm());
+		elencoSaleCB.setSelectedIndex(sGui.getNumeroSala());
+		mostraDataLabel.setText(sGui.getDataEOra().toLocalDate().format(formattatoreData));
+		mostraOraLabel.setText(sGui.getDataEOra().toLocalTime().format(formattatoreOra));
+		mostraDurataFilmLabel.setText(String.valueOf(sGui.getDurataFilmInMinuti()));
+		mostraMargineLabel.setText(String.valueOf(sGui.getMargineInMinuti()));
+		prezzoBigliettoRegolareLabel.setText(String.valueOf(sGui.getPrezziSpettacolo()[0]));
+		prezzoBigliettoRidotto1Label.setText(String.valueOf(sGui.getPrezziSpettacolo()[1]));
+		prezzoBigliettoRidotto2Label.setText(String.valueOf(sGui.getPrezziSpettacolo()[2]));
+		prezzoBigliettoRidotto3Label.setText(String.valueOf(sGui.getPrezziSpettacolo()[3]));
+		pagantiRegolariLabel.setText(String.valueOf(sGui.getPagantiSpettacolo()[0]));
+		pagantiRidotto1Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[1]));
+		pagantiRidotto2Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[2]));
+		pagantiRidotto3Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[3]));
 	}
 
 	public CancellaSpettacoloJF(ControllerGUI controllerGUI) {
@@ -47,9 +81,10 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		JLabel introLabel = new JLabel("Cancella spettacolo:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
-		JPanel schedulingPanel = new JPanel();
+		JLayeredPane schedulingPanel = new JLayeredPane();
 		schedulingPanel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), null, null, null));
 		schedulingPanel.setBackground(new Color(176, 196, 222));
+		schedulingPanel.setOpaque(true);
 
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
@@ -63,7 +98,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		JButton cancellaButton = new JButton("");
 		cancellaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				controllerGUI.richiestaCancellazioneSpettacolo();
 				finestraCalendario.dispose();
 			}
 		});
@@ -109,7 +144,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		cancellaButton.setToolTipText("cancella spettacolo");
 		cancellaButton.setOpaque(false);
 		cancellaButton.setSize(87, 83);
-		creaSfondoScalatoSu(cancellaButton, "iconaCancellaPiccola.png");
+		creaSfondoScalatoSu(cancellaButton, "iconaCancella.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(12, 59, 75, 27);
@@ -125,11 +160,10 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
 
-		JLabel mostraOraLabel = new JLabel();
+		mostraOraLabel = new JLabel();
 		mostraOraLabel.setForeground(new Color(0, 0, 205));
 		mostraOraLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		mostraOraLabel.setText("20:30");
-		mostraOraLabel.setBounds(145, 133, 154, 34);
+		mostraOraLabel.setBounds(140, 133, 75, 34);
 		mostraOraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.add(mostraOraLabel);
 		schedulingPanel.add(oraLabel);
@@ -143,39 +177,36 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		getContentPane().setLayout(groupLayout);
 		creaSfondoScalatoSu(immagineLabel, "hitchcockStack.png");
 
-		JLabel mostraTitoloFilmLabel = new JLabel("Titolo film:");
-		mostraTitoloFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraTitoloFilmLabel.setBounds(10, 23, 108, 25);
-		schedulingPanel.add(mostraTitoloFilmLabel);
+		JLabel titoloFilmLabel = new JLabel("Titolo film:");
+		titoloFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		titoloFilmLabel.setBounds(10, 23, 108, 25);
+		schedulingPanel.add(titoloFilmLabel);
 
-		JLabel titoloFimlmTF = new JLabel();
-		titoloFimlmTF.setForeground(new Color(0, 0, 205));
-		titoloFimlmTF.setText("Non aprite quella finestra");
-		titoloFimlmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
-		titoloFimlmTF.setBounds(140, 21, 372, 28);
-		schedulingPanel.add(titoloFimlmTF);
+		mostraTitoloFilmLabel = new JLabel();
+		mostraTitoloFilmLabel.setForeground(new Color(0, 0, 205));
+		mostraTitoloFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 21));
+		mostraTitoloFilmLabel.setBounds(140, 21, 372, 28);
+		schedulingPanel.add(mostraTitoloFilmLabel);
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
 		durataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		durataFilmLabel.setBounds(12, 179, 121, 25);
 		schedulingPanel.add(durataFilmLabel);
 
-		JLabel mostraDurataLabel = new JLabel();
-		mostraDurataLabel.setForeground(new Color(0, 0, 205));
-		mostraDurataLabel.setText("100");
-		mostraDurataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraDurataLabel.setBounds(145, 174, 64, 34);
-		schedulingPanel.add(mostraDurataLabel);
+		mostraDurataFilmLabel = new JLabel(); 
+		mostraDurataFilmLabel.setForeground(new Color(0, 0, 205));
+		mostraDurataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraDurataFilmLabel.setBounds(145, 174, 64, 34);
+		schedulingPanel.add(mostraDurataFilmLabel);
 
-		JLabel margineDurataLabel = new JLabel(";    margine:");
-		margineDurataLabel.setToolTipText("durata spettacolo = durata film + margine");
-		margineDurataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		margineDurataLabel.setBounds(221, 178, 108, 25);
-		schedulingPanel.add(margineDurataLabel);
+		JLabel margineLabel = new JLabel(";    margine:");
+		margineLabel.setToolTipText("durata spettacolo = durata film + margine");
+		margineLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		margineLabel.setBounds(221, 178, 108, 25);
+		schedulingPanel.add(margineLabel);
 
-		JLabel mostraMargineLabel = new JLabel();
+		mostraMargineLabel = new JLabel();
 		mostraMargineLabel.setForeground(new Color(0, 0, 205));
-		mostraMargineLabel.setText("20");
 		mostraMargineLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		mostraMargineLabel.setBounds(339, 174, 53, 34);
 		schedulingPanel.add(mostraMargineLabel);
@@ -294,27 +325,25 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		prezzoBigliettoRegolarePanel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRegolarePanel);
 
-		JLabel prezzoBigliettoRegolareEuroSpinner = new JLabel();
-		prezzoBigliettoRegolareEuroSpinner.setForeground(new Color(0, 0, 205));
-		prezzoBigliettoRegolareEuroSpinner.setText("7,50");
-		prezzoBigliettoRegolareEuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
-		prezzoBigliettoRegolareEuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRegolareEuroSpinner.setBounds(23, 4, 128, 30);
-		prezzoBigliettoRegolarePanel.add(prezzoBigliettoRegolareEuroSpinner);
+		prezzoBigliettoRegolareLabel = new JLabel();
+		prezzoBigliettoRegolareLabel.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRegolareLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		prezzoBigliettoRegolareLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		prezzoBigliettoRegolareLabel.setBounds(23, 4, 128, 30);
+		prezzoBigliettoRegolarePanel.add(prezzoBigliettoRegolareLabel);
 
-		JPanel prezzoBigliettoRidotto1Panel = new JPanel();
+		JPanel prezzoBigliettoRidotto1Panel = new JPanel(); 
 		prezzoBigliettoRidotto1Panel.setBorder(null);
 		prezzoBigliettoRidotto1Panel.setLayout(null);
 		prezzoBigliettoRidotto1Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto1Panel);
 
-		JLabel prezzoBigliettoRidotto1EuroSpinner = new JLabel();
-		prezzoBigliettoRidotto1EuroSpinner.setForeground(new Color(0, 0, 205));
-		prezzoBigliettoRidotto1EuroSpinner.setText("4,00");
-		prezzoBigliettoRidotto1EuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
-		prezzoBigliettoRidotto1EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto1EuroSpinner.setBounds(23, 4, 128, 30);
-		prezzoBigliettoRidotto1Panel.add(prezzoBigliettoRidotto1EuroSpinner);
+		prezzoBigliettoRidotto1Label = new JLabel();
+		prezzoBigliettoRidotto1Label.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRidotto1Label.setHorizontalAlignment(SwingConstants.CENTER);
+		prezzoBigliettoRidotto1Label.setFont(new Font("Calibri", Font.PLAIN, 20));
+		prezzoBigliettoRidotto1Label.setBounds(23, 4, 128, 30);
+		prezzoBigliettoRidotto1Panel.add(prezzoBigliettoRidotto1Label);
 
 		JPanel prezzoBigliettoRidotto2Panel = new JPanel();
 		prezzoBigliettoRidotto2Panel.setBorder(null);
@@ -322,13 +351,12 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		prezzoBigliettoRidotto2Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto2Panel);
 
-		JLabel prezzoBigliettoRidotto2EuroSpinner = new JLabel();
-		prezzoBigliettoRidotto2EuroSpinner.setForeground(new Color(0, 0, 205));
-		prezzoBigliettoRidotto2EuroSpinner.setText("4,00");
-		prezzoBigliettoRidotto2EuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
-		prezzoBigliettoRidotto2EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto2EuroSpinner.setBounds(23, 4, 128, 30);
-		prezzoBigliettoRidotto2Panel.add(prezzoBigliettoRidotto2EuroSpinner);
+	    prezzoBigliettoRidotto2Label = new JLabel();
+		prezzoBigliettoRidotto2Label.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRidotto2Label.setHorizontalAlignment(SwingConstants.CENTER);
+		prezzoBigliettoRidotto2Label.setFont(new Font("Calibri", Font.PLAIN, 20));
+		prezzoBigliettoRidotto2Label.setBounds(23, 4, 128, 30);
+		prezzoBigliettoRidotto2Panel.add(prezzoBigliettoRidotto2Label);
 
 		JPanel prezzoBigliettoRidotto3Panel = new JPanel();
 		prezzoBigliettoRidotto3Panel.setBorder(null);
@@ -336,13 +364,12 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		prezzoBigliettoRidotto3Panel.setBackground(new Color(176, 196, 222));
 		colonnaPrezziBigliettiPanel.add(prezzoBigliettoRidotto3Panel);
 
-		JLabel prezzoBigliettoRidotto3EuroSpinner = new JLabel();
-		prezzoBigliettoRidotto3EuroSpinner.setForeground(new Color(0, 0, 205));
-		prezzoBigliettoRidotto3EuroSpinner.setText("4,00");
-		prezzoBigliettoRidotto3EuroSpinner.setHorizontalAlignment(SwingConstants.CENTER);
-		prezzoBigliettoRidotto3EuroSpinner.setFont(new Font("Calibri", Font.PLAIN, 20));
-		prezzoBigliettoRidotto3EuroSpinner.setBounds(23, 4, 128, 30);
-		prezzoBigliettoRidotto3Panel.add(prezzoBigliettoRidotto3EuroSpinner);
+		prezzoBigliettoRidotto3Label = new JLabel();
+		prezzoBigliettoRidotto3Label.setForeground(new Color(0, 0, 205));
+		prezzoBigliettoRidotto3Label.setHorizontalAlignment(SwingConstants.CENTER);
+		prezzoBigliettoRidotto3Label.setFont(new Font("Calibri", Font.PLAIN, 20));
+		prezzoBigliettoRidotto3Label.setBounds(23, 4, 128, 30);
+		prezzoBigliettoRidotto3Panel.add(prezzoBigliettoRidotto3Label);
 
 		JPanel colonnaNumeroPagantiPanel = new JPanel();
 		colonnaNumeroPagantiPanel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
@@ -368,10 +395,9 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		pagantiRegolariPanel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiRegolariPanel);
 
-		JLabel pagantiRegolariLabel = new JLabel();
+		pagantiRegolariLabel = new JLabel();
 		pagantiRegolariLabel.setForeground(new Color(0, 0, 205));
 		pagantiRegolariLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pagantiRegolariLabel.setText("250");
 		pagantiRegolariLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRegolariLabel.setBounds(46, 4, 65, 30);
 		pagantiRegolariPanel.add(pagantiRegolariLabel);
@@ -382,9 +408,8 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		pagantiConRiduzione1Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione1Panel);
 
-		JLabel pagantiRidotto1Label = new JLabel();
+		pagantiRidotto1Label = new JLabel();
 		pagantiRidotto1Label.setForeground(new Color(0, 0, 205));
-		pagantiRidotto1Label.setText("24");
 		pagantiRidotto1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		pagantiRidotto1Label.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto1Label.setBounds(46, 4, 65, 30);
@@ -396,7 +421,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		pagantiConRiduzione2Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione2Panel);
 
-		JLabel pagantiRidotto2Label = new JLabel();
+		pagantiRidotto2Label = new JLabel();
 		pagantiRidotto2Label.setForeground(new Color(0, 0, 205));
 		pagantiRidotto2Label.setHorizontalAlignment(SwingConstants.CENTER);
 		pagantiRidotto2Label.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -409,33 +434,32 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		pagantiConRiduzione3Panel.setBackground(new Color(176, 196, 222));
 		colonnaNumeroPagantiPanel.add(pagantiConRiduzione3Panel);
 
-		JLabel pagantiRidotto3Label = new JLabel();
+		pagantiRidotto3Label = new JLabel();
 		pagantiRidotto3Label.setForeground(new Color(0, 0, 205));
 		pagantiRidotto3Label.setHorizontalAlignment(SwingConstants.CENTER);
 		pagantiRidotto3Label.setFont(new Font("Calibri", Font.PLAIN, 20));
 		pagantiRidotto3Label.setBounds(46, 4, 65, 30);
 		pagantiConRiduzione3Panel.add(pagantiRidotto3Label);
 		
-		JLabel mostraSalaLabel = new JLabel("1. LEONE");
-		mostraSalaLabel.setForeground(new Color(0, 0, 205));
-		mostraSalaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraSalaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		mostraSalaLabel.setBounds(145, 55, 154, 34);
-		schedulingPanel.add(mostraSalaLabel);
-		
-		JLabel mostraDataLabel = new JLabel("11/11/2011");
+		mostraDataLabel = new JLabel();
 		mostraDataLabel.setForeground(new Color(0, 0, 205));
 		mostraDataLabel.setVerticalAlignment(SwingConstants.TOP);
 		mostraDataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		mostraDataLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		mostraDataLabel.setBounds(155, 97, 154, 20);
+		mostraDataLabel.setBounds(140, 97, 130, 20);
 		schedulingPanel.add(mostraDataLabel);
-		/********************************fine blocco codice tabella prezzario*********************************/
+		
+		elencoSaleCB = new JComboBox<String>();
+		elencoSaleCB.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"LEONE", "BERGMAN", "KUBRICK", "HITCHCOCK", "GILLIAM"}));
+		elencoSaleCB.setForeground(Color.BLUE);
+		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
+		elencoSaleCB.setBackground(new Color(230, 230, 250));
+		elencoSaleCB.setBounds(140, 55, 231, 34);
+		schedulingPanel.add(elencoSaleCB);
 
 
 
 
 	}
-
-
 }
