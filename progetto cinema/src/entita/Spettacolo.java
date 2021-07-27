@@ -33,16 +33,6 @@ public class Spettacolo {
 		this.numeroDiPagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
 	}
 	
-	//TODO da cancellare, e' solo per provare la modifica di uno spettacolo.
-	public Spettacolo prova() {
-		return new Spettacolo("Il gladiatore",
-		this.sala,
-		this.dataEOraInizio.plusMinutes(10),
-		this.durataFilm,
-		Duration.ofMinutes(0),
-		this.numeroDiPagantiPerFasciaDiPrezzo);
-	}
-	
 	public double getTassoAffluenza() {
 		return ((double)getTotalePaganti()/sala.getPostiDisponibili())*100;
 	}
@@ -82,8 +72,8 @@ public class Spettacolo {
 	
 	public boolean siStaProiettandoIn(LocalDateTime dataEOra, Sala sala) {
 		return	this.sala.equals(sala) &&
-				dataEOra.equals(this.dataEOraInizio) ||
-				(dataEOra.isAfter(this.dataEOraInizio) && dataEOra.isBefore(this.getDataEOraFine()));
+				( dataEOra.equals(this.dataEOraInizio) ||
+				  (dataEOra.isAfter(this.dataEOraInizio) && dataEOra.isBefore(this.getDataEOraFine()))  );
 	}
 
 	public Sala getSala() {

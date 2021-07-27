@@ -249,7 +249,6 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		schedulingPanel.add(titoloFilmLabel);
 
 		titoloFimlTF = new JTextField();
-		titoloFimlTF.setText("Non e' un paese per C++");
 		titoloFimlTF.setFont(new Font("Calibri", Font.PLAIN, 21));
 		titoloFimlTF.setColumns(10);
 		titoloFimlTF.setBounds(145, 11, 372, 28);

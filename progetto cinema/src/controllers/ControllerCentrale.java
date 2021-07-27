@@ -27,9 +27,6 @@ public class ControllerCentrale {
 	private static final Sala[] elencoSale = new Sala[5];
 	
 	private static final FasciaOraria[] elencoFasce = new FasciaOraria[4]; //TODO anche loro static e final?
-
-//	private DateTimeFormatter formatoDataEOra=
-//			DateTimeFormatter.ofPattern("dd LLL yyyy-HH:mm"); TODO cancella?
 	
 	public ControllerCentrale() {
 		controllerGUI=new ControllerGUI(this);
@@ -116,6 +113,7 @@ public class ControllerCentrale {
 	}
 
 	public Spettacolo cercaSpettacolo(Sala sala, LocalDateTime dataEOra) {
+		System.out.println(sala.getNome()); //TODO
 		
 		for(Spettacolo s : spettacoloDAO.getAllSpettacoli()) {
 			if(s.siStaProiettandoIn(dataEOra, sala))
