@@ -41,7 +41,7 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 	}
 
 	@Override
-	public boolean inserisciSpettacolo(Spettacolo daInserire) {
+	public boolean insertSpettacolo(Spettacolo daInserire) {
 
 		if(!siSovrapponeAUnoSpettacoloGiaPresente(daInserire)) {
 			try {
@@ -57,7 +57,7 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 	}
 
 	@Override
-	public boolean rimuoviSpettacolo(Spettacolo daRimuovere) {
+	public boolean removeSpettacolo(Spettacolo daRimuovere) {
 		
 		List<Spettacolo> spettacoli = getAllSpettacoli();
 		boolean trovato = false;
@@ -88,34 +88,12 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 	}
 
 	@Override
-	public boolean modificaSpettacolo(Spettacolo daModificare, Spettacolo modificato) {
+	public boolean updateSpettacolo(Spettacolo daModificare, Spettacolo modificato) {
 
-		rimuoviSpettacolo(daModificare);
-		return inserisciSpettacolo(modificato);
+		if(!removeSpettacolo(daModificare))
+			return false;
+		return insertSpettacolo(modificato);
 		
-		//effetto collaterale: lo spettacolo modificato me lo mette per ultimo
-		
-		//CODICE VECCHIO
-//			List<Spettacolo> spettacoli = getAllSpettacoli();
-//			boolean trovato = false;
-//			for (Spettacolo s : spettacoli) {
-//				if (s.equals(daModificare)) {
-//					spettacoli.set(spettacoli.indexOf(s), modificato);
-//					trovato = true;
-//					break;
-//				}
-//			}
-//			if (!trovato)
-//				return false;  //?????
-//			try {
-//				//riscrivo gli spettacoli sul file
-//				ScritturaLetturaSuFile.scriviArrayListDiStringheSuFile(nomeFilePersistenza,
-//						convertiSpettacoliInStringhe(spettacoli));
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			} 
-//			
-//		return false;
 	}
 
 	

@@ -1,4 +1,4 @@
-package gui.inserimento;
+package gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,12 +10,11 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
-import gui.SuperJD;
 
-public class ErroreSpettacoloNonIniziatoJD extends SuperJD {
+public class ErroreSpettacoliSovrappostiJD extends SuperJD {
 
 
-	public ErroreSpettacoloNonIniziatoJD(ControllerGUI controllerGUI) {
+	public ErroreSpettacoliSovrappostiJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		SuperJD questaJD =this;
 		setSize(378, 290);
@@ -32,7 +31,7 @@ public class ErroreSpettacoloNonIniziatoJD extends SuperJD {
 		contenitorePanel.add(messaggioTA);
 		messaggioTA.setEditable(false);
 		messaggioTA.setForeground(Color.BLACK);
-		messaggioTA.setText("  Impossibile inserire lo spettacolo:\r\n  non si possono inserire spettacoli\r\n  non ancora iniziati");
+		messaggioTA.setText("  Impossibile inserire lo spettacolo:\r\n  sala gia' occupata alla data e \r\n  all'orario inseriti");
 		messaggioTA.setFont(new Font("Calibri", Font.PLAIN, 22));
 		messaggioTA.setBackground(new Color(230, 230, 250));
 		

@@ -10,13 +10,14 @@ import javax.swing.JDialog;
 import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
+import gui.SpettacoloGUI;
 import gui.SuperJD;
 
 public class ChiediConfermaModificaJD extends SuperJD {
 
 	private ControllerGUI controllerGUI;
 
-	public ChiediConfermaModificaJD(ControllerGUI controllerGUI) {
+	public ChiediConfermaModificaJD(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiModificato) {
 		super(controllerGUI);
 		JDialog questaJD = this;
 		setTitle("richiesta conferma modifica");
@@ -35,7 +36,7 @@ public class ChiediConfermaModificaJD extends SuperJD {
 		JButton annullaButton = new JButton("");
 		annullaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				questaJD.setVisible(false);
+				controllerGUI.chiudiDialog(questaJD);
 			}
 		});
 		
@@ -43,7 +44,7 @@ public class ChiediConfermaModificaJD extends SuperJD {
 		salvaButton.setToolTipText("salva");
 		salvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.confermaModificaSpettacolo();
+				controllerGUI.confermaModificaSpettacolo(spettacoloGuiModificato);
 			}
 		});
 		salvaButton.setBounds(268, 125, 74, 70);

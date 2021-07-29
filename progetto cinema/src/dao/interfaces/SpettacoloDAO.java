@@ -8,9 +8,9 @@ public interface SpettacoloDAO {
 	
 	List<Spettacolo> getAllSpettacoli();
 	
-	boolean inserisciSpettacolo(Spettacolo daInserire);
+	boolean insertSpettacolo(Spettacolo daInserire);
 	
-	boolean rimuoviSpettacolo(Spettacolo daRimuovere);
+	boolean removeSpettacolo(Spettacolo daRimuovere);
 	
-	boolean modificaSpettacolo(Spettacolo daModificare, Spettacolo modificato);
+	boolean updateSpettacolo(Spettacolo daModificare, Spettacolo modificato);
 }

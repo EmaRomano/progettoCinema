@@ -1,46 +1,31 @@
 package gui.statistiche;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
 import gui.SuperJFrame;
-
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-import javax.swing.JCheckBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Color;
-import javax.swing.border.BevelBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import gui.utilita.IntegerSpinner;
 
 public class StatistichePerFasceOrarieJF extends SuperJFrame {
 	private String dataDiRiferimento;
-	private JLabel aPartireDaLabel = new JLabel();
 
-	public void setDataDiRiferimento(String data) {
-		dataDiRiferimento=String.valueOf(data);
-		aPartireDaLabel.setText(dataDiRiferimento);
-	}
-
-	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI) {
+	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI, String dataRiferimentoStatistiche) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;
@@ -55,6 +40,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		introLabel.setBounds(5, 11, 274, 29);
 		getContentPane().add(introLabel);
 		
+		JLabel aPartireDaLabel = new JLabel(dataRiferimentoStatistiche);
 		aPartireDaLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		aPartireDaLabel.setBounds(278, 11, 225, 29);
 		aPartireDaLabel.setForeground(new Color(138, 43, 226));
@@ -257,7 +243,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		spettacoliPerIncassoLabel.setBounds(175, 68, 232, 33);
 		opzioniPanel.add(spettacoliPerIncassoLabel);
 		
-		JSpinner primiPerIncassoSpinner = new JSpinner();
+		IntegerSpinner primiPerIncassoSpinner = new IntegerSpinner();
 		primiPerIncassoSpinner.setModel(new SpinnerNumberModel(10, 1, null, 1));
 		primiPerIncassoSpinner.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		primiPerIncassoSpinner.setBounds(104, 68, 61, 33);
@@ -268,7 +254,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 			}
 		});
 		indietroButton.setToolTipText("indietro");
@@ -286,10 +272,12 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		calcolaPerSaleOSpettacoliButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(affluenzaPerSaleRB.isSelected()) {
-					controllerGUI.bottoneStatistichePerSale(dataDiRiferimento);
+					controllerGUI.apriSchermata(questaFinestra,
+							new StatistichePerSaleJF(controllerGUI, dataRiferimentoStatistiche));
 				} else {
-					int numeroSpettacoli=(Integer)primiPerIncassoSpinner.getValue();
-					controllerGUI.bottoneSpettacoliPerIncasso(dataDiRiferimento, numeroSpettacoli);	
+					int numeroSpettacoli=primiPerIncassoSpinner.getIntero();
+					controllerGUI.apriSchermata(questaFinestra,
+							new SpettacoliPerIncassoJF(controllerGUI, dataRiferimentoStatistiche, numeroSpettacoli));
 				}
 			}
 		});

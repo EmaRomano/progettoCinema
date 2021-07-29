@@ -35,7 +35,7 @@ public class ChiediConfermaCancellazioneJD extends SuperJD {
 		JButton annullaButton = new JButton("");
 		annullaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				questaJD.setVisible(false);
+				controllerGUI.chiudiDialog(questaJD);
 			}
 		});
 		

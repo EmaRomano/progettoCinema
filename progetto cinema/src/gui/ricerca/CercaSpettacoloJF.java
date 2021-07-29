@@ -22,7 +22,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
+import entita.Spettacolo;
+import gui.SpettacoloGUI;
 import gui.SuperJFrame;
+import gui.cancellazione.CancellaSpettacoloJF;
+import gui.modifica.ModificaSpettacoloJF;
 import gui.utilita.FinestraCalendario;
 import gui.utilita.OraSpinner;
 import utilita.ConversioniDateTime;
@@ -31,11 +35,12 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 	private static final long serialVersionUID = 1L; 
 	private JFormattedTextField  mostraDataTF = new JFormattedTextField();
-	private boolean cercaPerModifica;
 	
 	private JComboBox<String> elencoSaleCB;
 	private Date data=new Date(System.currentTimeMillis());
 	private OraSpinner oraSpinner;
+	
+	private boolean cercaPerModifica;
 
 
 	@Override
@@ -51,7 +56,9 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 	public CercaSpettacoloJF(ControllerGUI controllerGUI, boolean cercaPerModifica) {
 		super(controllerGUI);
-		this.cercaPerModifica=cercaPerModifica;
+		
+		this.cercaPerModifica = cercaPerModifica;
+		
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setSize(568, 439);
 		impostaAlCentro(this);
@@ -77,7 +84,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});
@@ -85,12 +92,25 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 		JButton cercaButton = new JButton("");
 		cercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				data = (Date)mostraDataTF.getValue();
-				controllerGUI.cercaSpettacolo(cercaPerModifica,
-						            (String)elencoSaleCB.getSelectedItem(),
-						            ConversioniDateTime.convertiInLocalDate(data),
-						            oraSpinner.getOra());
 				finestraCalendario.dispose();
+				data = (Date)mostraDataTF.getValue();
+				Spettacolo spettacoloTrovato = controllerGUI.cercaSpettacolo(
+			            (String)elencoSaleCB.getSelectedItem(),
+			            ConversioniDateTime.convertiInLocalDate(data),
+			            oraSpinner.getOra());
+				controllerGUI.setSpettacoloTrovato(spettacoloTrovato);
+				if(spettacoloTrovato == null)
+					controllerGUI.apriDialog(CercaSpettacoloJF.this, new SpettacoloNonTrovatoJD(controllerGUI));
+				else {
+					SpettacoloGUI spettacoloGuiDaImportare=controllerGUI.traduciInSpettacoloGui(spettacoloTrovato);
+					if(cercaPerModifica)
+						controllerGUI.apriSchermata(questaFinestra, 
+								new ModificaSpettacoloJF(controllerGUI, spettacoloGuiDaImportare));
+					else
+						controllerGUI.apriSchermata(questaFinestra, 
+								new CancellaSpettacoloJF(controllerGUI, spettacoloGuiDaImportare));
+				}
+				
 			}
 		});
 		cercaButton.setToolTipText("cerca spettacolo");

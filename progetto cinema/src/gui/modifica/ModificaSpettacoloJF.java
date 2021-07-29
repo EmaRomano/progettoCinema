@@ -27,6 +27,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 import controllers.ControllerGUI;
+import gui.ErroreInputTitoloFilmJD;
+import gui.ErroreSpettacoloNonIniziatoJD;
 import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
@@ -67,7 +69,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		
 		if (dataEOra.isBefore(LocalDateTime.now())) {
 			spettacoloGuiModificato = new SpettacoloGUI(titoloFilmTF.getText(), 
-					elencoSaleCB.getSelectedIndex(), dataEOra,
+					(String)elencoSaleCB.getSelectedItem(), dataEOra,
 					durataFilmSpinner.getIntero(), margineSpinner.getIntero(),
 					Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero() + "."
 							+ prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
@@ -90,7 +92,8 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 	
 	public void importaSpettacoloGui(SpettacoloGUI sGUI) {		
 		titoloFilmTF.setText(sGUI.getTitoloFilm());
-		elencoSaleCB.setSelectedIndex(sGUI.getNumeroSala());
+		titoloFilmTF.setToolTipText(titoloFilmTF.getText());
+		elencoSaleCB.setSelectedItem(sGUI.getNomeSala().toUpperCase());
 		data = ConversioniDateTime.convertiInDate(sGUI.getDataEOra().toLocalDate());
 		mostraDataTF.setValue(data);			
 		oraSpinner.setOra(sGUI.getDataEOra().toLocalTime());
@@ -122,7 +125,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		}	
 	}
 
-	public ModificaSpettacoloJF(ControllerGUI controllerGUI) {
+	public ModificaSpettacoloJF(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiDaImportare) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,7 +149,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});
@@ -154,8 +157,19 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		JButton salvaSpettacoloButton = new JButton("");
 		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaModificaSpettacolo();
-				finestraCalendario.dispose();
+				
+				if (stringaLecita(titoloFilmTF.getText())) {
+					if (!titoloFilmTF.getText().replaceAll("\\s", "").equals("")) {
+						if (getSpettacoloGuiModificato() != null)
+							controllerGUI.apriDialog(questaFinestra,
+									new ChiediConfermaModificaJD(controllerGUI, getSpettacoloGuiModificato()));
+						else
+							controllerGUI.apriDialog(questaFinestra, new ErroreSpettacoloNonIniziatoJD(controllerGUI));
+						finestraCalendario.dispose();
+					}
+				} else {
+					controllerGUI.apriDialog(questaFinestra, new ErroreInputTitoloFilmJD(controllerGUI));
+				}
 			}
 		});
 
@@ -271,7 +285,6 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		schedulingPanel.add(titoloFilmLabel);
 
 		titoloFilmTF = new JTextField();
-		titoloFilmTF.setText("Non e' un paese per C++");
 		titoloFilmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
 		titoloFilmTF.setColumns(10);
 		titoloFilmTF.setBounds(145, 11, 372, 28);
@@ -587,6 +600,8 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		oraSpinner.setBounds(145, 134, 97, 30);
 		schedulingPanel.add(oraSpinner);
 		/********************************fine blocco codice tabella prezzario*********************************/
+	
+		this.importaSpettacoloGui(spettacoloGuiDaImportare);
 	}
 	
 	public Integer[] splittaDouble(double d){
@@ -595,5 +610,9 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 	    Integer[] numeroSplittato = {Integer.valueOf((stringaNumero.substring(0, indiceVirgola))),
 	    		                     Integer.valueOf((stringaNumero.substring(indiceVirgola+1)))};
 		return numeroSplittato;
+	}
+	
+	public boolean stringaLecita(String stringa) {
+		return !stringa.replaceAll("\\s","").equals("")&& !stringa.contains("#");
 	}
 }

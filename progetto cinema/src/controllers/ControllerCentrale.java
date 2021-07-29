@@ -3,10 +3,8 @@ package controllers;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import dao.impl.SpettacoloDAOImplFile;
 import dao.interfaces.SpettacoloDAO;
@@ -75,31 +73,11 @@ public class ControllerCentrale {
 		
 		return new Spettacolo(
 				sGui.getTitoloFilm(),
-				elencoSale[sGui.getNumeroSala()],
+				ControllerCentrale.getSalaPerNome(sGui.getNomeSala()),
 				sGui.getDataEOra().truncatedTo(ChronoUnit.MINUTES),
 				Duration.ofMinutes(sGui.getDurataFilmInMinuti()),
 				Duration.ofMinutes(sGui.getMargineInMinuti()),
 				pagantiPerFasciaDiPrezzo);
-	}
-	
-	public SpettacoloGUI traduciInSpettacoloGui(Spettacolo s) {
-		
-		double prezziSpettacolo[] = new double[4];
-		int numeroPaganti[] = new int[4];
-		
-		for(Entry<FasciaDiPrezzo,Integer> e : s.getNumeroDiPagantiPerFasciaDiPrezzo().entrySet()) {
-			FasciaDiPrezzo p = e.getKey();
-			
-			prezziSpettacolo[p.getFascia().ordinal()] = p.getPrezzo();
-			numeroPaganti[p.getFascia().ordinal()] = e.getValue();
-		}		
-		
-		return new SpettacoloGUI(s.getTitoloFilm(),
-				                Arrays.asList(elencoSale).indexOf(s.getSala()),
-								s.getDataEOraInizio(),
-								(int)s.getDurataFilm().toMinutes(),
-								(int)s.getMargine().toMinutes(),
-								prezziSpettacolo, numeroPaganti);
 	}
 	
 
@@ -113,7 +91,6 @@ public class ControllerCentrale {
 	}
 
 	public Spettacolo cercaSpettacolo(Sala sala, LocalDateTime dataEOra) {
-		System.out.println(sala.getNome()); //TODO
 		
 		for(Spettacolo s : spettacoloDAO.getAllSpettacoli()) {
 			if(s.siStaProiettandoIn(dataEOra, sala))

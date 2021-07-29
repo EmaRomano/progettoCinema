@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class SpettacoloGUI {
 	private String titoloFilm;
-	private int numeroSala;
+	private String nomeSala;
 	private LocalDateTime dataEOra;
 	
 	private int durataFilmInMinuti;
@@ -14,13 +14,13 @@ public class SpettacoloGUI {
 	private int pagantiSpettacolo[] = new int[4];
 	
 	//costruttore per acquisire dati dalla gui
-	public SpettacoloGUI(String titoloFilm, int numeroSala, LocalDateTime dataEOra, 
+	public SpettacoloGUI(String titoloFilm, String nomeSala, LocalDateTime dataEOra, 
 			int durataFilmInMinuti, int margineInMinuti, double prezzoBigliettoRegolare, double prezzoBigliettoRidotto1,
 			double prezzoBigliettoRidotto2, double prezzoBigliettoRidotto3, int pagantiRegolari,
 			int pagantiRiduzione1, int pagantiRiduzione2,int pagantiRiduzione3)
 	{
 		this.titoloFilm = titoloFilm;
-		this.numeroSala = numeroSala;
+		this.nomeSala = nomeSala;
 		this.dataEOra=dataEOra;
 		this.durataFilmInMinuti = durataFilmInMinuti;
 		this.margineInMinuti=margineInMinuti;
@@ -35,10 +35,10 @@ public class SpettacoloGUI {
 	}
 	
 	//costruttore per tradurre spettacolo in spettacoloGui
-	public SpettacoloGUI(String titoloFilm, int numeroSala, LocalDateTime dataEOra, int durataFilmInMinuti,
+	public SpettacoloGUI(String titoloFilm, String nomeSala, LocalDateTime dataEOra, int durataFilmInMinuti,
 			int margineInMinuti, double[] prezziSpettacolo, int[] pagantiSpettacolo) {
 		this.titoloFilm = titoloFilm;
-		this.numeroSala = numeroSala;
+		this.nomeSala = nomeSala;
 		this.dataEOra = dataEOra;
 		this.durataFilmInMinuti = durataFilmInMinuti;
 		this.margineInMinuti=margineInMinuti;
@@ -49,8 +49,8 @@ public class SpettacoloGUI {
 	public String getTitoloFilm() {
 		return titoloFilm;
 	}
-	public int getNumeroSala() {
-		return numeroSala;
+	public String getNomeSala() {
+		return nomeSala;
 	}
 	public LocalDateTime getDataEOra() {
 		return dataEOra;

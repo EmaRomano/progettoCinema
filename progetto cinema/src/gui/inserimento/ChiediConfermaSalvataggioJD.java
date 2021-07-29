@@ -1,31 +1,25 @@
 package gui.inserimento;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
+import gui.SpettacoloGUI;
 import gui.SuperJD;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import java.awt.Font;
-import java.awt.SystemColor;
 
 public class ChiediConfermaSalvataggioJD extends SuperJD {
 
 	private ControllerGUI controllerGUI;
 	private final JPanel contentPanel = new JPanel();
 
-	public ChiediConfermaSalvataggioJD(ControllerGUI controllerGUI) {
+	public ChiediConfermaSalvataggioJD(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiDaInserire) {
 		super(controllerGUI);
 		JDialog questaJD = this;
 		setTitle("richiesta conferma salvataggio");
@@ -44,7 +38,7 @@ public class ChiediConfermaSalvataggioJD extends SuperJD {
 		JButton annullaButton = new JButton("");
 		annullaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				questaJD.setVisible(false);
+				controllerGUI.chiudiDialog(questaJD);
 			}
 		});
 		
@@ -52,7 +46,7 @@ public class ChiediConfermaSalvataggioJD extends SuperJD {
 		salvaButton.setToolTipText("salva");
 		salvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.confermaSalvataggioSpettacolo();
+				controllerGUI.confermaSalvataggioSpettacolo(spettacoloGuiDaInserire);
 			}
 		});
 		salvaButton.setBounds(268, 125, 74, 70);

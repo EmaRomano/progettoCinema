@@ -38,7 +38,7 @@ public class SpettacoloNonTrovatoJD extends SuperJD {
 		JButton nuovaRicercaButton = new JButton("");
 		nuovaRicercaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				questaJD.setVisible(false);
+				controllerGUI.chiudiDialog(questaJD);
 			}
 		});
 		contenitorePanel.setLayer(nuovaRicercaButton, 1);

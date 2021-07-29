@@ -3,6 +3,8 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
@@ -42,6 +44,12 @@ public class SuperJD extends JDialog {
 	    impostaAlCentro(this);
 	    this.setResizable(false);
 		
+	    this.addWindowListener(new WindowAdapter() {
+	    	public void windowClosing(WindowEvent e) {
+	    		controllerGUI.chiudiDialog(SuperJD.this);
+	    	}
+		});
+	    
 		ImageIcon iconaSigma = new ImageIcon(getClass().getResource("/iconaJDialog.png"));
 		setIconImage(iconaSigma.getImage());
 	}

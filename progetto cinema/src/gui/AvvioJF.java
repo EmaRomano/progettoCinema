@@ -2,6 +2,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controllers.ControllerGUI;
+import gui.inserimento.InserisciSpettacoloJF;
+import gui.ricerca.CercaSpettacoloJF;
+import gui.statistiche.OpzioniStatisticheJF;
 
 public class AvvioJF extends SuperJFrame{
 
@@ -31,87 +35,81 @@ public class AvvioJF extends SuperJFrame{
 		
 		JPanel bottoniPanel = new JPanel();
 		bottoniPanel.setBackground(Color.WHITE);
-		bottoniPanel.setPreferredSize(new Dimension(100,690));
+		bottoniPanel.setPreferredSize(new Dimension(120,690));
 		contentPane.add(bottoniPanel, BorderLayout.EAST);
-		bottoniPanel.setLayout(null);
+		bottoniPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLayeredPane statistichePanel = new JLayeredPane();
 		statistichePanel.setBackground(Color.WHITE);
-		statistichePanel.setBounds(0, 0, 100, 128);
 		bottoniPanel.add(statistichePanel);
 		statistichePanel.setLayout(null);
 		
 		JButton statisticheButton = new JButton("");
 		statisticheButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneStatisticheDaAvvio();
+				controllerGUI.apriSchermata(AvvioJF.this, new OpzioniStatisticheJF(controllerGUI));
 			}
 		});
 		statisticheButton.setToolTipText("calcola statistiche");
-		statisticheButton.setBounds(0, 0, 100, 128);
+		statisticheButton.setBounds(0, 0, 120, 128);
 		statistichePanel.add(statisticheButton);
 		
 		JLayeredPane inserisciSpettacoloPanel = new JLayeredPane();
 		inserisciSpettacoloPanel.setBackground(Color.WHITE);
-		inserisciSpettacoloPanel.setBounds(0, 130, 100, 128);
 		bottoniPanel.add(inserisciSpettacoloPanel);
 		inserisciSpettacoloPanel.setLayout(null);
 		
 		JButton inserisciSpettacoloButton = new JButton("");
 		inserisciSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneInserisciSpettacolo();
+				controllerGUI.apriSchermata(questaFinestra, new InserisciSpettacoloJF(controllerGUI));
 			}
 		});
 		inserisciSpettacoloButton.setToolTipText("aggiungi spettacolo");
-		inserisciSpettacoloButton.setBounds(0, 0, 100, 128);
+		inserisciSpettacoloButton.setBounds(0, 0, 120, 128);
 		inserisciSpettacoloPanel.add(inserisciSpettacoloButton);
 		
 		JLayeredPane modificaSpettacoloPanel = new JLayeredPane();
 		modificaSpettacoloPanel.setBackground(Color.WHITE);
-		modificaSpettacoloPanel.setBounds(0, 260, 100, 128);
 		bottoniPanel.add(modificaSpettacoloPanel);
 		modificaSpettacoloPanel.setLayout(null);
 		
 		JButton modificaSpettacoloButton = new JButton("");
 		modificaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.apriFinestraCercaSpettacolo(true);
-			}
+				controllerGUI.apriSchermata(questaFinestra, new CercaSpettacoloJF(controllerGUI, true));			}
 		});
 		modificaSpettacoloButton.setToolTipText("modifica spettacolo");
-		modificaSpettacoloButton.setBounds(0, 0, 100, 128);
+		modificaSpettacoloButton.setBounds(0, 0, 120, 128);
 		modificaSpettacoloPanel.add(modificaSpettacoloButton);
 		
 		JLabel modificaLabel = new JLabel("");
 		modificaSpettacoloPanel.setLayer(modificaLabel, 1);
-		modificaLabel.setBounds(52, 11, 45, 45);
+		modificaLabel.setBounds(55, 11, 45, 45);
 		modificaSpettacoloPanel.add(modificaLabel);
 		
 		JLayeredPane cancellaSpettacoloPanel = new JLayeredPane();
 		cancellaSpettacoloPanel.setBackground(Color.WHITE);
-		cancellaSpettacoloPanel.setBounds(0, 390, 100, 128);
 		bottoniPanel.add(cancellaSpettacoloPanel);
 		cancellaSpettacoloPanel.setLayout(null);
 		
 		JButton cancellaSpettacoloButton = new JButton("");
 		cancellaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.apriFinestraCercaSpettacolo(false);
+				controllerGUI.apriSchermata(questaFinestra, new CercaSpettacoloJF(controllerGUI, false));			
 			}
 		});
 		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");
-		cancellaSpettacoloButton.setBounds(0, 0, 100, 128);
+		cancellaSpettacoloButton.setBounds(0, 0, 120, 128);
 		cancellaSpettacoloPanel.add(cancellaSpettacoloButton);
 		
 		JLabel cancellaLabel = new JLabel("");
 		cancellaSpettacoloPanel.setLayer(cancellaLabel, 1);
-		cancellaLabel.setBounds(40, 11, 60, 59);
+		cancellaLabel.setBounds(48, 11, 60, 59);
 		cancellaSpettacoloPanel.add(cancellaLabel);
 		
 		JLayeredPane esciPanel = new JLayeredPane();
 		esciPanel.setBackground(Color.WHITE);
-		esciPanel.setBounds(0, 520, 100, 128);
 		bottoniPanel.add(esciPanel);
 		esciPanel.setLayout(null);
 		
@@ -122,7 +120,7 @@ public class AvvioJF extends SuperJFrame{
 			}
 		});
 		esciButton.setToolTipText("esci");
-		esciButton.setBounds(0, 63, 100, 65);
+		esciButton.setBounds(0, 63, 120, 65);
 		esciPanel.add(esciButton);
 		
 		JPanel introPanel = new JPanel();
@@ -137,7 +135,7 @@ public class AvvioJF extends SuperJFrame{
 		
 		JLabel aggiungiLabel = new JLabel("");
 		inserisciSpettacoloPanel.setLayer(aggiungiLabel, 1);
-		aggiungiLabel.setBounds(52, 11, 48, 48);
+		aggiungiLabel.setBounds(55, 11, 48, 48);
 		inserisciSpettacoloPanel.add(aggiungiLabel);
 		
 		creaSfondoScalatoSu(introLabel, "shawshank.png");

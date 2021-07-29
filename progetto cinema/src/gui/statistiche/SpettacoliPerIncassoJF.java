@@ -1,35 +1,22 @@
 package gui.statistiche;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import controllers.ControllerGUI;
 import gui.SuperJFrame;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JFormattedTextField;
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.table.DefaultTableModel;
-import java.awt.Rectangle;
-import javax.swing.JProgressBar;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.JTextField;
 
 public class SpettacoliPerIncassoJF extends SuperJFrame {
 	private String dataDiRiferimento;
@@ -39,10 +26,10 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 	private JScrollPane scrollTabella;
 
 
-	public void setDataDiRiferimento(String data) {
-		dataDiRiferimento=String.valueOf(data);
-		dataRiferimentoLabel.setText(dataDiRiferimento);
-	}
+//	public void setDataDiRiferimento(String data) {
+//		dataDiRiferimento=String.valueOf(data);
+//		dataRiferimentoLabel.setText(dataDiRiferimento);
+//	}
 	
 	public void creaTabellaSpettacoli(int numeroRighe) {
 		if(getContentPane().isAncestorOf(scrollTabella))
@@ -62,7 +49,9 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		getContentPane().add(scrollTabella);
 	}
 
-	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI) {
+	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI,
+			String dataRiferimentoStatistiche, int primiSpettacoliPerIncasso)
+	{
 		super(controllerGUI);
 		SuperJFrame questaFinestra=this;
 		getContentPane().setBackground(new Color(230, 230, 250));
@@ -97,7 +86,7 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		getContentPane().add(indietroButton);
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 			}
 		});
 		indietroButton.setToolTipText("indietro");

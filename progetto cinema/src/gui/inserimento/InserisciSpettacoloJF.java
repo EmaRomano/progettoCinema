@@ -27,6 +27,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 import controllers.ControllerGUI;
+import gui.ErroreInputTitoloFilmJD;
+import gui.ErroreSpettacoloNonIniziatoJD;
 import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
@@ -67,7 +69,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		
 		if (dataEOra.isBefore(LocalDateTime.now())) {
 			spettacoloGuiDaInserire = new SpettacoloGUI(titoloFimlTF.getText(), 
-					elencoSaleCB.getSelectedIndex(), dataEOra,
+					(String)elencoSaleCB.getSelectedItem(), dataEOra,
 					durataFilmSpinner.getIntero(), margineSpinner.getIntero(),
 					Double.parseDouble(prezzoBigliettoRegolareEuroSpinner.getIntero() + "."
 							+ prezzoBigliettoRegolareCentesimiSpinner.getIntero()),
@@ -124,7 +126,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});
@@ -132,8 +134,20 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		JButton salvaSpettacoloButton = new JButton("");
 		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaSalvataggioSpettacolo();
-				finestraCalendario.dispose();
+				
+				if (stringaLecita(titoloFimlTF.getText())) {
+					data = (Date) mostraDataTF.getValue();
+					LocalDateTime dataEOra = LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data),
+							oraSpinner.getOra());
+					if (dataEOra.isBefore(LocalDateTime.now()))
+						controllerGUI.apriDialog(questaFinestra,
+								new ChiediConfermaSalvataggioJD(controllerGUI, getSpettacoloGuiDaInserire()));
+					else
+						controllerGUI.apriDialog(questaFinestra, new ErroreSpettacoloNonIniziatoJD(controllerGUI));
+					finestraCalendario.dispose();
+				} else {
+					controllerGUI.apriDialog(questaFinestra, new ErroreInputTitoloFilmJD(controllerGUI));
+				}
 			}
 		});
 
@@ -564,5 +578,9 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		oraSpinner.setBounds(145, 134, 97, 30);
 		schedulingPanel.add(oraSpinner);
 		/********************************fine blocco codice tabella prezzario*********************************/
+	}
+	
+	public boolean stringaLecita(String stringa) {
+		return !stringa.replaceAll("\\s","").equals("")&& !stringa.contains("#");
 	}
 }

@@ -7,11 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -29,7 +27,7 @@ import gui.utilita.FinestraCalendario;
 public class CancellaSpettacoloJF extends SuperJFrame {
 	
 	private JLabel mostraTitoloFilmLabel;	
-	private JComboBox<String> elencoSaleCB;
+	private JLabel mostraSalaLabel;
 	private JLabel mostraDataLabel;
 	private JLabel mostraOraLabel;
 	private JLabel mostraDurataFilmLabel; 
@@ -48,7 +46,8 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		DateTimeFormatter formattatoreOra = DateTimeFormatter.ofPattern("HH:mm");
 		
 		mostraTitoloFilmLabel.setText(sGui.getTitoloFilm());
-		elencoSaleCB.setSelectedIndex(sGui.getNumeroSala());
+		mostraTitoloFilmLabel.setToolTipText(mostraTitoloFilmLabel.getText());
+		mostraSalaLabel.setText(sGui.getNomeSala().toUpperCase());
 		mostraDataLabel.setText(sGui.getDataEOra().toLocalDate().format(formattatoreData));
 		mostraOraLabel.setText(sGui.getDataEOra().toLocalTime().format(formattatoreOra));
 		mostraDurataFilmLabel.setText(String.valueOf(sGui.getDurataFilmInMinuti()));
@@ -63,7 +62,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		pagantiRidotto3Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[3]));
 	}
 
-	public CancellaSpettacoloJF(ControllerGUI controllerGUI) {
+	public CancellaSpettacoloJF(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiDaImportare) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setBounds(200, 20, 887, 697);
@@ -82,6 +81,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLayeredPane schedulingPanel = new JLayeredPane();
+		schedulingPanel.setForeground(new Color(0, 0, 205));
 		schedulingPanel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), null, null, null));
 		schedulingPanel.setBackground(new Color(176, 196, 222));
 		schedulingPanel.setOpaque(true);
@@ -89,8 +89,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO temporaneo: solo per testing
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});
@@ -98,8 +97,9 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		JButton cancellaButton = new JButton("");
 		cancellaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.richiestaCancellazioneSpettacolo();
 				finestraCalendario.dispose();
+				controllerGUI.apriDialog(questaFinestra, new ChiediConfermaCancellazioneJD(controllerGUI));
+				
 			}
 		});
 
@@ -162,7 +162,6 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 
 		mostraOraLabel = new JLabel();
 		mostraOraLabel.setForeground(new Color(0, 0, 205));
-		mostraOraLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraOraLabel.setBounds(140, 133, 75, 34);
 		mostraOraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.add(mostraOraLabel);
@@ -445,21 +444,17 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		mostraDataLabel.setForeground(new Color(0, 0, 205));
 		mostraDataLabel.setVerticalAlignment(SwingConstants.TOP);
 		mostraDataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraDataLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraDataLabel.setBounds(140, 97, 130, 20);
 		schedulingPanel.add(mostraDataLabel);
 		
-		elencoSaleCB = new JComboBox<String>();
-		elencoSaleCB.setModel(new DefaultComboBoxModel<String>(new String[] {
-				"LEONE", "BERGMAN", "KUBRICK", "HITCHCOCK", "GILLIAM"}));
-		elencoSaleCB.setForeground(Color.BLUE);
-		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
-		elencoSaleCB.setBackground(new Color(230, 230, 250));
-		elencoSaleCB.setBounds(140, 55, 231, 34);
-		schedulingPanel.add(elencoSaleCB);
-
-
-
-
+		mostraSalaLabel = new JLabel();
+		mostraSalaLabel.setForeground(new Color(0, 0, 205));
+		mostraSalaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraSalaLabel.setBackground(new Color(230, 230, 250));
+		mostraSalaLabel.setBounds(140, 55, 231, 34);
+		schedulingPanel.add(mostraSalaLabel);
+		
+		
+		importaSpettacoloGui(spettacoloGuiDaImportare);
 	}
 }

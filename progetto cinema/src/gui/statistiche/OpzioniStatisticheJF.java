@@ -1,41 +1,25 @@
 package gui.statistiche;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
-import controllers.ControllerGUI;
-import gui.SuperJFrame;
-import gui.utilita.FinestraCalendario;
-
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
 import java.util.Date;
 
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
-
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+
+import controllers.ControllerGUI;
+import gui.SuperJFrame;
+import gui.utilita.FinestraCalendario;
 //TODO in tutte le finestre contenenti il datepicker si deve fare in modo che la finestrella calendario si chiuda quando viene aperta 
 //ma non cliccata
 public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeListener {
@@ -136,7 +120,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 		JButton indietroButton = new JButton("");
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.bottoneIndietroPremutoDa(questaFinestra);
+				controllerGUI.chiudiSchermata(questaFinestra);
 				finestraCalendario.dispose();
 			}
 		});
@@ -151,7 +135,8 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 			public void actionPerformed(ActionEvent e) {
 				String dataRiferimentoStatistiche =
 					   dataRiferimentoStatisticheRB.isSelected()? mostraDataTF.getText():"sempre";
-				controllerGUI.bottoneStatisticheAPartireDa(dataRiferimentoStatistiche);
+				controllerGUI.apriSchermata(questaFinestra,
+						new StatistichePerFasceOrarieJF(controllerGUI, dataRiferimentoStatistiche));
 				finestraCalendario.dispose();
 			}
 		});
