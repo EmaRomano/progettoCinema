@@ -38,7 +38,7 @@ public class ErroreSpettacoliSovrappostiJD extends SuperJD {
 		JButton riprovaButton = new JButton("");
 		riprovaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				questaJD.setVisible(false);
+				controllerGUI.chiudiDialog(questaJD);
 			}
 		});
 		contenitorePanel.setLayer(riprovaButton, 1);

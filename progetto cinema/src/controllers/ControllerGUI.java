@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Window;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,9 +16,9 @@ import entita.spettacolo.Sala;
 import gui.AvvioJF;
 import gui.ErroreSpettacoliSovrappostiJD;
 import gui.SpettacoloGUI;
-import gui.SuperJFrame;
 import gui.cancellazione.DaiConfermaCancellazioneJD;
-import gui.inserimento.DaiConfermaSalvataggioJD;
+import gui.inserimento.DaiConfermaInserimentoJD;
+import gui.modifica.DaiConfermaModificaJD;
 //TODO cancella la cartella documenti prima della consegna del progetto
 //TODO in tutte le finestre che contengono il datepicker, inserisci finestraCalendario.dispose()
 // su tutti i pulsanti di uscita dalla finestra;
@@ -27,7 +28,8 @@ public class ControllerGUI {
 	
 	private Stack<JFrame> stackSchermate = new Stack<>();
 	
-	private JFrame schermataSottoDialog;
+//	private JFrame schermataSottoDialog;
+	private JDialog dialogDachiudere;
 	
 	private ControllerCentrale controllerCentrale;
 	
@@ -58,24 +60,49 @@ public class ControllerGUI {
 		stackSchermate.pop().setVisible(true);
 	}
 	
-	public void apriDialog(JFrame schermataDaDisattivare, JDialog dialogDaMostrare) {
-		schermataSottoDialog = schermataDaDisattivare;
-		schermataSottoDialog.setEnabled(false);
-		dialogDaMostrare.setVisible(true);
-	}
-	
-	public void apriDialogDaDialog(JDialog dialogDaDisattivare, JDialog dialogDaMostrare) {
-		dialogDaDisattivare.setVisible(false);
-		dialogDaDisattivare.dispose();
-		dialogDaMostrare.setVisible(true);
+	public void apriDialogDaJFrame(JFrame daDisattivare, JDialog daMostrare) {
+//		schermataSottoDialog = schermataDaDisattivare;
+		stackSchermate.push(daDisattivare);
+		daDisattivare.setEnabled(false);
+		daMostrare.setVisible(true);
 	}
 	
 	public void chiudiDialog(JDialog daChiudere) {
 		daChiudere.setVisible(false);
 		daChiudere.dispose();
-		schermataSottoDialog.setEnabled(true);
-		schermataSottoDialog.requestFocus();
+		stackSchermate.lastElement().setEnabled(true);
+		stackSchermate.pop().requestFocus();
 	}
+	
+	public void apriDialogDaDialog(JDialog daChiudere, JDialog daAprire) {
+		dialogDachiudere=daChiudere;
+		dialogDachiudere.setVisible(false);
+		dialogDachiudere.dispose();
+		
+		stackSchermate.lastElement().setEnabled(true); //cerca di sistemare questa schifezza TODO
+		stackSchermate.lastElement().requestFocus();
+		stackSchermate.lastElement().setEnabled(false);
+		
+		daAprire.setVisible(true);
+	}
+	
+	public void tornaARicercaDopoOperazione(JDialog daChiudere, JFrame daAprire) {
+		daChiudere.setVisible(false);
+		daChiudere.dispose();
+		
+		stackSchermate.lastElement().setEnabled(true); //cerca di sistemare questa schifezza TODO
+		stackSchermate.lastElement().setVisible(false);
+		stackSchermate.pop().dispose();
+		
+		stackSchermate.pop().setVisible(true);		
+	}
+	
+	public void tornaAllAvvioDa(Window finestra) {
+		finestra.setVisible(false);
+		avvioJF.setVisible(true);
+		stackSchermate.clear();
+	}
+	
 
 	/***************************************************************************************/
 	
@@ -93,35 +120,29 @@ public class ControllerGUI {
 	}
 	
 	
-	public void tornaAllAvvioDa(SuperJFrame finestra) {
-		finestra.setVisible(false);
-		avvioJF.setVisible(true);
-	}
-	
-
 	//INSERIMENTO, MODIFICA ED ELIMINAZIONE
-	public void confermaSalvataggioSpettacolo(SpettacoloGUI spettacoloGuiDaInserire) {
+	public void confermaInserimentoSpettacolo(SpettacoloGUI spettacoloGuiDaInserire, JDialog daChiudere) {
 		Spettacolo daInserire = controllerCentrale.traduciInSpettacolo(spettacoloGuiDaInserire);
 		if(controllerCentrale.getSpettacoloDAO().insertSpettacolo(daInserire))
-			apriDialog(schermataSottoDialog, new DaiConfermaSalvataggioJD(this));
+			apriDialogDaDialog(daChiudere, new DaiConfermaInserimentoJD(this));
 		else
-			apriDialog(schermataSottoDialog, new ErroreSpettacoliSovrappostiJD(this));
+			apriDialogDaDialog(daChiudere, new ErroreSpettacoliSovrappostiJD(this));
 	}
 
-	public void confermaModificaSpettacolo(SpettacoloGUI spettacoloGuiModificato) {
+	public void confermaModificaSpettacolo(SpettacoloGUI spettacoloGuiModificato, JDialog daChiudere) {
 		Spettacolo spettacoloModificato = controllerCentrale.traduciInSpettacolo(spettacoloGuiModificato);
 		if(controllerCentrale.getSpettacoloDAO().updateSpettacolo(spettacoloTrovato,spettacoloModificato))
-			apriDialog(schermataSottoDialog, new DaiConfermaSalvataggioJD(this));// TODO CREARE UNA JD DIVERSA
+			apriDialogDaDialog(daChiudere, new DaiConfermaModificaJD(this));// TODO CREARE UNA JD DIVERSA
 		else
-			apriDialog(schermataSottoDialog, new ErroreSpettacoliSovrappostiJD(this));
+			apriDialogDaDialog(daChiudere, new ErroreSpettacoliSovrappostiJD(this));
 
 		spettacoloTrovato=null;
 	}
 
 
-	public void confermaCancellazioneSpettacolo() {
+	public void confermaCancellazioneSpettacolo(JDialog daChiudere) {
 		if(controllerCentrale.getSpettacoloDAO().removeSpettacolo(spettacoloTrovato))
-			apriDialog(schermataSottoDialog, new DaiConfermaCancellazioneJD(this));
+			apriDialogDaDialog(daChiudere, new DaiConfermaCancellazioneJD(this));
 		
 		spettacoloTrovato=null;
 		

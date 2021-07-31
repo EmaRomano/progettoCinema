@@ -14,12 +14,12 @@ import controllers.ControllerGUI;
 import gui.SpettacoloGUI;
 import gui.SuperJD;
 
-public class ChiediConfermaSalvataggioJD extends SuperJD {
+public class ChiediConfermaInserimentoJD extends SuperJD {
 
 	private ControllerGUI controllerGUI;
 	private final JPanel contentPanel = new JPanel();
 
-	public ChiediConfermaSalvataggioJD(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiDaInserire) {
+	public ChiediConfermaInserimentoJD(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiDaInserire) {
 		super(controllerGUI);
 		JDialog questaJD = this;
 		setTitle("richiesta conferma salvataggio");
@@ -46,7 +46,7 @@ public class ChiediConfermaSalvataggioJD extends SuperJD {
 		salvaButton.setToolTipText("salva");
 		salvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.confermaSalvataggioSpettacolo(spettacoloGuiDaInserire);
+				controllerGUI.confermaInserimentoSpettacolo(spettacoloGuiDaInserire, questaJD);
 			}
 		});
 		salvaButton.setBounds(268, 125, 74, 70);

@@ -43,7 +43,7 @@ public class ChiediConfermaCancellazioneJD extends SuperJD {
 		cancellaSpettacoloButton.setToolTipText("cancella spettacolo");
 		cancellaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.confermaCancellazioneSpettacolo();
+				controllerGUI.confermaCancellazioneSpettacolo(questaJD);
 			}
 		});
 		cancellaSpettacoloButton.setBounds(268, 125, 74, 70);

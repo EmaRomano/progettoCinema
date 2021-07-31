@@ -161,14 +161,16 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 				if (stringaLecita(titoloFilmTF.getText())) {
 					if (!titoloFilmTF.getText().replaceAll("\\s", "").equals("")) {
 						if (getSpettacoloGuiModificato() != null)
-							controllerGUI.apriDialog(questaFinestra,
+							controllerGUI.apriDialogDaJFrame(questaFinestra,
 									new ChiediConfermaModificaJD(controllerGUI, getSpettacoloGuiModificato()));
 						else
-							controllerGUI.apriDialog(questaFinestra, new ErroreSpettacoloNonIniziatoJD(controllerGUI));
+							controllerGUI.apriDialogDaJFrame(questaFinestra,
+									new ErroreSpettacoloNonIniziatoJD(controllerGUI));
 						finestraCalendario.dispose();
 					}
 				} else {
-					controllerGUI.apriDialog(questaFinestra, new ErroreInputTitoloFilmJD(controllerGUI));
+					controllerGUI.apriDialogDaJFrame(questaFinestra,
+							new ErroreInputTitoloFilmJD(controllerGUI));
 				}
 			}
 		});

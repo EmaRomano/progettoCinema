@@ -44,7 +44,7 @@ public class ChiediConfermaModificaJD extends SuperJD {
 		salvaButton.setToolTipText("salva");
 		salvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.confermaModificaSpettacolo(spettacoloGuiModificato);
+				controllerGUI.confermaModificaSpettacolo(spettacoloGuiModificato, questaJD);
 			}
 		});
 		salvaButton.setBounds(268, 125, 74, 70);

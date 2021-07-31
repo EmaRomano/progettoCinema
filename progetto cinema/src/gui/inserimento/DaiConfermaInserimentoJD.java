@@ -1,4 +1,4 @@
-package gui.cancellazione;
+package gui.inserimento;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,43 +7,43 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
 import gui.SuperJD;
-import gui.ricerca.CercaSpettacoloJF;
 
-public class DaiConfermaCancellazioneJD extends SuperJD {
+public class DaiConfermaInserimentoJD extends SuperJD {
 
 	private ControllerGUI controllerGUI;
+	private final JPanel contentPanel = new JPanel();
 
-	public DaiConfermaCancellazioneJD(ControllerGUI controllerGUI) {
+	public DaiConfermaInserimentoJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		JDialog questaJD = this;
-		setTitle("spettacolo cancellato");
+		setTitle("inserimento effettuato");
 		getContentPane().setBackground(new Color(230, 230, 250));
 		getContentPane().setLayout(null);
 		
 		JTextArea messaggioTA = new JTextArea();
 		messaggioTA.setEditable(false);
 		messaggioTA.setForeground(Color.BLACK);
-		messaggioTA.setText("Spettacolo cancellato con successo.");
+		messaggioTA.setText(" Spettacolo inserito con successo nel\r\n database.");
 		messaggioTA.setFont(new Font("Calibri", Font.PLAIN, 22));
 		messaggioTA.setBackground(new Color(230, 230, 250));
-		messaggioTA.setBounds(10, 44, 332, 70);
+		messaggioTA.setBounds(10, 44, 341, 70);
 		getContentPane().add(messaggioTA);
 		
-		JButton modificaAltroSpettacoloButton = new JButton("");
-		modificaAltroSpettacoloButton.setToolTipText("cancella un altro spettacolo");
-		modificaAltroSpettacoloButton.addActionListener(new ActionListener() {
+		JButton inserisciAltroSpettacoloButton = new JButton("");
+		inserisciAltroSpettacoloButton.setToolTipText("inserisci un altro spettacolo");
+		inserisciAltroSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.tornaARicercaDopoOperazione(questaJD,
-						new CercaSpettacoloJF(controllerGUI, false));
+				controllerGUI.chiudiDialog(questaJD);
 			}
 		});
-		modificaAltroSpettacoloButton.setBounds(55, 125, 74, 70);
-		creaSfondoScalatoSu(modificaAltroSpettacoloButton, "iconaCancellaNuovo.png");
-		getContentPane().add(modificaAltroSpettacoloButton);
+		inserisciAltroSpettacoloButton.setBounds(55, 125, 74, 70);
+		creaSfondoScalatoSu(inserisciAltroSpettacoloButton, "iconaAggiungiNuovo.png");
+		getContentPane().add(inserisciAltroSpettacoloButton);
 		
 		JButton tornaAllAvvioButton = new JButton("");
 		tornaAllAvvioButton.addActionListener(new ActionListener() {

@@ -100,7 +100,8 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			            oraSpinner.getOra());
 				controllerGUI.setSpettacoloTrovato(spettacoloTrovato);
 				if(spettacoloTrovato == null)
-					controllerGUI.apriDialog(CercaSpettacoloJF.this, new SpettacoloNonTrovatoJD(controllerGUI));
+					controllerGUI.apriDialogDaJFrame(questaFinestra,
+							new SpettacoloNonTrovatoJD(controllerGUI));
 				else {
 					SpettacoloGUI spettacoloGuiDaImportare=controllerGUI.traduciInSpettacoloGui(spettacoloTrovato);
 					if(cercaPerModifica)

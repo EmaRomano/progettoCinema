@@ -98,7 +98,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		cancellaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				finestraCalendario.dispose();
-				controllerGUI.apriDialog(questaFinestra, new ChiediConfermaCancellazioneJD(controllerGUI));
+				controllerGUI.apriDialogDaJFrame(questaFinestra, new ChiediConfermaCancellazioneJD(controllerGUI));
 				
 			}
 		});

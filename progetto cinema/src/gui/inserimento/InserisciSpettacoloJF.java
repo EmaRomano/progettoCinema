@@ -140,13 +140,15 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 					LocalDateTime dataEOra = LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data),
 							oraSpinner.getOra());
 					if (dataEOra.isBefore(LocalDateTime.now()))
-						controllerGUI.apriDialog(questaFinestra,
-								new ChiediConfermaSalvataggioJD(controllerGUI, getSpettacoloGuiDaInserire()));
+						controllerGUI.apriDialogDaJFrame( questaFinestra,
+								new ChiediConfermaInserimentoJD(controllerGUI, getSpettacoloGuiDaInserire()));
 					else
-						controllerGUI.apriDialog(questaFinestra, new ErroreSpettacoloNonIniziatoJD(controllerGUI));
+						controllerGUI.apriDialogDaJFrame(questaFinestra,
+								new ErroreSpettacoloNonIniziatoJD(controllerGUI));
 					finestraCalendario.dispose();
 				} else {
-					controllerGUI.apriDialog(questaFinestra, new ErroreInputTitoloFilmJD(controllerGUI));
+					controllerGUI.apriDialogDaJFrame(questaFinestra,
+							new ErroreInputTitoloFilmJD(controllerGUI));
 				}
 			}
 		});
