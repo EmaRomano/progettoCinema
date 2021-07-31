@@ -1,1 +1,15 @@
+Non aprite quella Finestra#Bergman#30/07/2021-20:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+La Jframe sul cortile#Kubrick#30/07/2021-18:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+La Jframe sul cortile#Kubrick#30/07/2021-20:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+La Jframe sul cortile#Kubrick#30/07/2021-22:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Paura e delirio in Eclipse#Hitchcock#30/07/2021-18:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Paura e delirio in Eclipse#Hitchcock#30/07/2021-20:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Paura e delirio in Eclipse#Hitchcock#30/07/2021-22:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Le cronache di Java#Gilliam#30/07/2021-18:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Le cronache di Java#Gilliam#30/07/2021-20:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Le cronache di Java#Gilliam#30/07/2021-22:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
 300 programmatori#Leone#30/07/2021-18:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+300 programmatori#Leone#30/07/2021-20:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Non aprite quella Finestra#Bergman#30/07/2021-22:30#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Non aprite quella Finestra+++++++#Bergman#30/07/2021-18:25#100#20#34.0#0.0#0.0#0.0#271#0#0#0
+300 programmatori+++++++++++++#Leone#30/07/2021-22:40#100#20#20.0#0.0#0.0#0.0#274#0#0#0

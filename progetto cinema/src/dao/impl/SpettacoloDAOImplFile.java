@@ -58,7 +58,7 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 
 	@Override
 	public boolean removeSpettacolo(Spettacolo daRimuovere) {
-		
+
 		List<Spettacolo> spettacoli = getAllSpettacoli();
 		boolean trovato = false;
 
@@ -90,16 +90,19 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 	@Override
 	public boolean updateSpettacolo(Spettacolo daModificare, Spettacolo modificato) {
 
-		if(!removeSpettacolo(daModificare))
+		if(!removeSpettacolo(daModificare)) 
 			return false;
-		return insertSpettacolo(modificato);
-		
+		else if (insertSpettacolo(modificato))
+			return true;
+		else 
+			return !insertSpettacolo(daModificare);
+
 	}
 
-	
+
 	/****************************************************************/
 	//METODI ACCESSORI
-	
+
 	//data una stringa del tipo: 
 	//"nomeSpettacolo#nomeSala#dataEoraInizio#duratafilm#margine#prezzo1#prezzo2#prezzo3#prezzo4#paganti1#paganti2#paganti3#paganti4"
 	//ritorna un oggetto Spettacolo con i dati presi dalla stringa
@@ -122,7 +125,7 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 		LocalDateTime dataOraInizio = LocalDateTime.parse(campi[2], formattatore);
 
 		Duration durataFilm = Duration.ofMinutes(Integer.valueOf(campi[3]));
-		
+
 		Duration margine = Duration.ofMinutes(Integer.valueOf(campi[4]));
 
 		Map<FasciaDiPrezzo,Integer> pagantiPerFasciaDiPrezzo = new HashMap<>();

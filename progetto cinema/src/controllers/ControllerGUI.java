@@ -19,16 +19,14 @@ import gui.SpettacoloGUI;
 import gui.cancellazione.DaiConfermaCancellazioneJD;
 import gui.inserimento.DaiConfermaInserimentoJD;
 import gui.modifica.DaiConfermaModificaJD;
-//TODO cancella la cartella documenti prima della consegna del progetto
+//TODO cancella la cartella documenti ed il package appunti prima della consegna del progetto
 //TODO in tutte le finestre che contengono il datepicker, inserisci finestraCalendario.dispose()
 // su tutti i pulsanti di uscita dalla finestra;
 //TODO nella finestra di avvio hai scritto unina con la la lettera piccola
 public class ControllerGUI {
-	
-	
+
 	private Stack<JFrame> stackSchermate = new Stack<>();
 	
-//	private JFrame schermataSottoDialog;
 	private JDialog dialogDachiudere;
 	
 	private ControllerCentrale controllerCentrale;
