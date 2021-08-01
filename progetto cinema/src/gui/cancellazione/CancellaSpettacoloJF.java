@@ -28,6 +28,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 	
 	private JLabel mostraTitoloFilmLabel;	
 	private JLabel mostraSalaLabel;
+	private JLabel mostraTecnologiaLabel;
 	private JLabel mostraDataLabel;
 	private JLabel mostraOraLabel;
 	private JLabel mostraDurataFilmLabel; 
@@ -48,6 +49,7 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		mostraTitoloFilmLabel.setText(sGui.getTitoloFilm());
 		mostraTitoloFilmLabel.setToolTipText(mostraTitoloFilmLabel.getText());
 		mostraSalaLabel.setText(sGui.getNomeSala().toUpperCase());
+		impostaTecnologiaSale();
 		mostraDataLabel.setText(sGui.getDataEOra().toLocalDate().format(formattatoreData));
 		mostraOraLabel.setText(sGui.getDataEOra().toLocalTime().format(formattatoreOra));
 		mostraDurataFilmLabel.setText(String.valueOf(sGui.getDurataFilmInMinuti()));
@@ -147,22 +149,22 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		creaSfondoScalatoSu(cancellaButton, "iconaCancella.png");
 
 		JLabel salaLabel = new JLabel("Sala:");
-		salaLabel.setBounds(12, 59, 75, 27);
+		salaLabel.setBounds(12, 57, 75, 27);
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel dataLabel = new JLabel("Data: ");
-		dataLabel.setBounds(12, 97, 75, 19);
+		dataLabel.setBounds(12, 122, 75, 19);
 		dataLabel.setVerticalAlignment(SwingConstants.TOP);
 		dataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel oraLabel = new JLabel("Ora:");
-		oraLabel.setBounds(12, 136, 75, 28);
+		oraLabel.setBounds(12, 159, 75, 28);
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
 
 		mostraOraLabel = new JLabel();
 		mostraOraLabel.setForeground(new Color(0, 0, 205));
-		mostraOraLabel.setBounds(140, 133, 75, 34);
+		mostraOraLabel.setBounds(140, 153, 75, 34);
 		mostraOraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.add(mostraOraLabel);
 		schedulingPanel.add(oraLabel);
@@ -189,33 +191,33 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
 		durataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		durataFilmLabel.setBounds(12, 179, 121, 25);
+		durataFilmLabel.setBounds(12, 198, 121, 25);
 		schedulingPanel.add(durataFilmLabel);
 
 		mostraDurataFilmLabel = new JLabel(); 
 		mostraDurataFilmLabel.setForeground(new Color(0, 0, 205));
 		mostraDurataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraDurataFilmLabel.setBounds(145, 174, 64, 34);
+		mostraDurataFilmLabel.setBounds(140, 193, 64, 34);
 		schedulingPanel.add(mostraDurataFilmLabel);
 
 		JLabel margineLabel = new JLabel(";    margine:");
 		margineLabel.setToolTipText("durata spettacolo = durata film + margine");
 		margineLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		margineLabel.setBounds(221, 178, 108, 25);
+		margineLabel.setBounds(221, 198, 108, 25);
 		schedulingPanel.add(margineLabel);
 
 		mostraMargineLabel = new JLabel();
 		mostraMargineLabel.setForeground(new Color(0, 0, 205));
 		mostraMargineLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraMargineLabel.setBounds(339, 174, 53, 34);
+		mostraMargineLabel.setBounds(339, 193, 53, 34);
 		schedulingPanel.add(mostraMargineLabel);
 
 		JLabel minutiLabel = new JLabel("(minuti)");
-		minutiLabel.setBounds(155, 209, 46, 14);
+		minutiLabel.setBounds(155, 228, 46, 14);
 		schedulingPanel.add(minutiLabel);
 
 		JLabel minutiLabel_1 = new JLabel("(minuti)");
-		minutiLabel_1.setBounds(339, 209, 46, 14);
+		minutiLabel_1.setBounds(339, 228, 46, 14);
 		schedulingPanel.add(minutiLabel_1);
 
 
@@ -444,17 +446,39 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		mostraDataLabel.setForeground(new Color(0, 0, 205));
 		mostraDataLabel.setVerticalAlignment(SwingConstants.TOP);
 		mostraDataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraDataLabel.setBounds(140, 97, 130, 20);
+		mostraDataLabel.setBounds(140, 122, 130, 20);
 		schedulingPanel.add(mostraDataLabel);
 		
 		mostraSalaLabel = new JLabel();
 		mostraSalaLabel.setForeground(new Color(0, 0, 205));
 		mostraSalaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		mostraSalaLabel.setBackground(new Color(230, 230, 250));
-		mostraSalaLabel.setBounds(140, 55, 231, 34);
+		mostraSalaLabel.setBounds(140, 53, 231, 34);
 		schedulingPanel.add(mostraSalaLabel);
+		
+		mostraTecnologiaLabel = new JLabel();
+		mostraTecnologiaLabel.setToolTipText("tecnologia video+audio");
+		mostraTecnologiaLabel.setForeground(new Color(0, 0, 205));
+		mostraTecnologiaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraTecnologiaLabel.setBounds(140, 88, 303, 27);
+		schedulingPanel.add(mostraTecnologiaLabel);
+		
+		JLabel tecnologiaLabel = new JLabel("Tecnologia:");
+		tecnologiaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		tecnologiaLabel.setBounds(10, 88, 108, 27);
+		schedulingPanel.add(tecnologiaLabel);
 		
 		
 		importaSpettacoloGui(spettacoloGuiDaImportare);
+	}
+	
+	private void impostaTecnologiaSale() {
+		String sala=mostraSalaLabel.getText();
+		if (sala.equals("LEONE"))
+			mostraTecnologiaLabel.setText("IMAX+Dolby Atmos");
+		else if (sala.equals("BERGMAN")||sala.equals("KUBRICK"))
+			mostraTecnologiaLabel.setText("HRF+Dolby Atmos");
+		else
+			mostraTecnologiaLabel.setText("24fps+Dolby classico");
 	}
 }

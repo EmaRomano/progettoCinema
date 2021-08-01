@@ -43,6 +43,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 	
 	private JTextField titoloFilmTF;
 	private JComboBox<String> elencoSaleCB;
+	private JLabel mostraTecnologiaLabel;
 	private Date data;
 	private OraSpinner oraSpinner;
 	private IntegerSpinner durataFilmSpinner;
@@ -94,6 +95,7 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		titoloFilmTF.setText(sGUI.getTitoloFilm());
 		titoloFilmTF.setToolTipText(titoloFilmTF.getText());
 		elencoSaleCB.setSelectedItem(sGUI.getNomeSala().toUpperCase());
+		impostaTecnologiaSale();
 		data = ConversioniDateTime.convertiInDate(sGUI.getDataEOra().toLocalDate());
 		mostraDataTF.setValue(data);			
 		oraSpinner.setOra(sGUI.getDataEOra().toLocalTime());
@@ -223,20 +225,25 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		salaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		elencoSaleCB = new JComboBox<String>();
+		elencoSaleCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				impostaTecnologiaSale();
+			}
+		});
 		elencoSaleCB.setForeground(Color.BLACK);
 		elencoSaleCB.setBackground(new Color(230, 230, 250));
-		elencoSaleCB.setBounds(145, 45, 231, 34);
+		elencoSaleCB.setBounds(133, 45, 196, 34);
 		elencoSaleCB.setModel(new DefaultComboBoxModel<String>(new String[] {
 				"LEONE", "BERGMAN", "KUBRICK", "HITCHCOCK", "GILLIAM"}));
 		elencoSaleCB.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel dataLabel = new JLabel("Data: ");
-		dataLabel.setBounds(12, 97, 75, 19);
+		dataLabel.setBounds(12, 123, 75, 19);
 		dataLabel.setVerticalAlignment(SwingConstants.TOP);
 		dataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 
 		JLabel oraLabel = new JLabel("Ora:");
-		oraLabel.setBounds(12, 136, 75, 28);
+		oraLabel.setBounds(12, 159, 75, 28);
 		oraLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
 		schedulingPanel.setLayout(null);
 		
@@ -274,9 +281,9 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 			}
 		});
 
-		mostraDataTF.setBounds(145, 94, 154, 28);
+		mostraDataTF.setBounds(133, 120, 154, 28);
 		schedulingPanel.add(mostraDataTF);
-		scegliDataButton.setBounds(300, 94, 139, 28);
+		scegliDataButton.setBounds(297, 120, 139, 28);
 		schedulingPanel.add(scegliDataButton);
 
 		/***********************************fine blocco codice per DatePicker**************************/	
@@ -289,40 +296,40 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		titoloFilmTF = new JTextField();
 		titoloFilmTF.setFont(new Font("Calibri", Font.PLAIN, 21));
 		titoloFilmTF.setColumns(10);
-		titoloFilmTF.setBounds(145, 11, 372, 28);
+		titoloFilmTF.setBounds(133, 11, 379, 28);
 		schedulingPanel.add(titoloFilmTF);
 
 		JLabel durataFilmLabel = new JLabel("Durata film:");
 		durataFilmLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		durataFilmLabel.setBounds(12, 179, 121, 25);
+		durataFilmLabel.setBounds(12, 198, 121, 25);
 		schedulingPanel.add(durataFilmLabel);
 
 		durataFilmSpinner = new IntegerSpinner();
 		durataFilmSpinner.setModel(new SpinnerNumberModel(100, 0, null, 1));
 		durataFilmSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		durataFilmSpinner.setBounds(145, 174, 64, 34);
+		durataFilmSpinner.setBounds(133, 193, 64, 34);
 		schedulingPanel.add(durataFilmSpinner);
 		rendiTestoNonEditabile(durataFilmSpinner);
 
 		JLabel margineDurataLabel = new JLabel(";    margine:");
 		margineDurataLabel.setToolTipText("durata spettacolo = durata film + margine");
 		margineDurataLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		margineDurataLabel.setBounds(221, 178, 108, 25);
+		margineDurataLabel.setBounds(207, 198, 108, 25);
 		schedulingPanel.add(margineDurataLabel);
 
 		margineSpinner = new IntegerSpinner();
 		margineSpinner.setModel(new SpinnerNumberModel(20, 5, null, 5));
 		margineSpinner.setFont(new Font("Calibri", Font.PLAIN, 22));
-		margineSpinner.setBounds(339, 174, 53, 34);
+		margineSpinner.setBounds(325, 193, 53, 34);
 		schedulingPanel.add(margineSpinner);
 		rendiTestoNonEditabile(margineSpinner);
 
 		JLabel minutiLabel = new JLabel("(minuti)");
-		minutiLabel.setBounds(155, 209, 46, 14);
+		minutiLabel.setBounds(143, 228, 46, 14);
 		schedulingPanel.add(minutiLabel);
 
 		JLabel minutiLabel_1 = new JLabel("(minuti)");
-		minutiLabel_1.setBounds(339, 209, 46, 14);
+		minutiLabel_1.setBounds(335, 228, 46, 14);
 		schedulingPanel.add(minutiLabel_1);
 
 
@@ -599,8 +606,20 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		rendiTestoNonEditabile(pagantiRidotto3Spinner);
 		
 		oraSpinner = new OraSpinner();
-		oraSpinner.setBounds(145, 134, 97, 30);
+		oraSpinner.setBounds(133, 158, 97, 30);
 		schedulingPanel.add(oraSpinner);
+		
+		mostraTecnologiaLabel = new JLabel();
+		mostraTecnologiaLabel.setToolTipText("tecnologia video+audio");
+		mostraTecnologiaLabel.setForeground(Color.BLUE);
+		mostraTecnologiaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraTecnologiaLabel.setBounds(133, 91, 303, 27);
+		schedulingPanel.add(mostraTecnologiaLabel);
+		
+		JLabel tecnologiaLabel = new JLabel("Tecnologia:");
+		tecnologiaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		tecnologiaLabel.setBounds(12, 91, 108, 27);
+		schedulingPanel.add(tecnologiaLabel);
 		/********************************fine blocco codice tabella prezzario*********************************/
 	
 		this.importaSpettacoloGui(spettacoloGuiDaImportare);
@@ -616,5 +635,15 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 	
 	public boolean stringaLecita(String stringa) {
 		return !stringa.replaceAll("\\s","").equals("")&& !stringa.contains("#");
+	}
+	
+	private void impostaTecnologiaSale() {
+		int numero=elencoSaleCB.getSelectedIndex();
+		if (numero==0)
+			mostraTecnologiaLabel.setText("IMAX+Dolby Atmos");
+		else if (numero==1||numero==2)
+			mostraTecnologiaLabel.setText("HRF+Dolby Atmos");
+		else
+			mostraTecnologiaLabel.setText("24fps+Dolby classico");
 	}
 }
