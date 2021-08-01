@@ -45,6 +45,6 @@ public class ErroreSpettacoliSovrappostiJD extends SuperJD {
 		riprovaButton.setBounds(143, 125, 74, 70);
 		contenitorePanel.add(riprovaButton);
 		riprovaButton.setToolTipText("riprova");
-		creaSfondoScalatoSu(riprovaButton, "riprova.png");
+		creaSfondoScalatoSu(riprovaButton, "iconaOk.png");
 	}
 }

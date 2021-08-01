@@ -97,6 +97,9 @@ public class ControllerGUI {
 	
 	public void tornaAllAvvioDa(Window finestra) {
 		finestra.setVisible(false);
+		finestra.dispose();
+		stackSchermate.lastElement().setVisible(false);
+		stackSchermate.lastElement().dispose();
 		avvioJF.setVisible(true);
 		stackSchermate.clear();
 	}
