@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dao.impl.SpettacoloDAOImplFile;
@@ -88,9 +89,9 @@ public class ControllerCentrale {
 	}
 	
 	
-//	public Sala[] getElencoSale() {
-//		return elencoSale;
-//	}
+	public Sala[] getElencoSale() {
+		return elencoSale;
+	}
 	
 	
 	
@@ -130,9 +131,7 @@ public class ControllerCentrale {
 	
 	
 	
-	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
-		return controllerStatistiche.calcolaAffluenzaPerFasce(daSempre);
-	}
+
 	
 	//metodo che prende uno spettacolo e lo assegna alla sua fascia oraria
 	public void assegnaSpettacoloAFasciaOraria(Spettacolo spettacolo) {
@@ -141,6 +140,24 @@ public class ControllerCentrale {
 				fasciaOraria.getSpettacoliDiQuestaFascia().add(spettacolo);
 		}
 
+	}
+	
+	public void assegnaSpettacoloASala(Spettacolo spettacolo) {
+		spettacolo.getSala().getListaSpettacoliInQuestaSala().add(spettacolo);
+	}
+	
+	
+//TODO doppione?	
+//	public static FasciaOraria[] getElencofasce() {
+//		return elencoFasce;
+//	}
+
+	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
+		return controllerStatistiche.calcolaAffluenzaPerFasce(daSempre);
+	}
+
+	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
+		return controllerStatistiche.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
 	}
 	
 	

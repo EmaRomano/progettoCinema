@@ -1,14 +1,18 @@
 package entita.spettacolo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import entita.Spettacolo;
 
 public class Sala {
 	private String nome;
 	private int postiDisponibili;
 	private String tecnologia;
 	
-//	private ArrayList<Spettacolo> listaSpettacoli;
-	
+	private List<Spettacolo> listaSpettacoliInQuestaSala = new ArrayList<>();
+
 	public Sala(String nome, int postiDisponibili, String tecnologia) {
 		this.nome = nome;
 		this.postiDisponibili = postiDisponibili;
@@ -21,6 +25,10 @@ public class Sala {
 
 	public String getNome() {
 		return nome;
+	}
+	
+	public List<Spettacolo> getListaSpettacoliInQuestaSala() {
+		return listaSpettacoliInQuestaSala;
 	}
 
 	@Override

@@ -21,7 +21,15 @@ public class FasciaOraria {
 		oraInizio=LocalTime.parse(oraInizioTxt, formattatore);
 	}
 
-
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public List<Spettacolo> getSpettacoliDiQuestaFascia() {
+		return spettacoliDiQuestaFascia;
+	}
+	
 	public boolean contiene(LocalTime evento) {
 		LocalTime oraInizioFasciaNotte=LocalTime.parse("23:00", formattatore);
 		LocalTime oraFineFasciaNotte=LocalTime.parse("00:30", formattatore);
@@ -35,8 +43,4 @@ public class FasciaOraria {
 					evento.isBefore(oraFineFasciaNotte);
 	}
 
-	public List<Spettacolo> getSpettacoliDiQuestaFascia() {
-		return spettacoliDiQuestaFascia;
-	}
-	
 }

@@ -94,12 +94,12 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		tassoAffluenzaSala1PB.setBounds(10, 33, 103, 245);
 		sala1Panel.add(tassoAffluenzaSala1PB);
 		
-		JLabel tassoAffluenzaFascia1Label = new JLabel(tassoAffluenzaSala1PB.getValue() + "%"); 
-		tassoAffluenzaFascia1Label.setToolTipText("tasso affluenza medio");
-		tassoAffluenzaFascia1Label.setFont(new Font("Calibri", Font.BOLD, 22));
-		tassoAffluenzaFascia1Label.setHorizontalAlignment(SwingConstants.CENTER);
-		tassoAffluenzaFascia1Label.setBounds(10, 0, 100, 34);
-		sala1Panel.add(tassoAffluenzaFascia1Label);
+		JLabel tassoAffluenzaSala1Label = new JLabel(tassoAffluenzaSala1PB.getValue() + "%"); 
+		tassoAffluenzaSala1Label.setToolTipText("tasso affluenza medio");
+		tassoAffluenzaSala1Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaSala1Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaSala1Label.setBounds(10, 0, 100, 34);
+		sala1Panel.add(tassoAffluenzaSala1Label);
 		
 		JLabel Sala1Label = new JLabel("1. Leone");
 		Sala1Label.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -121,12 +121,12 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		tassoAffluenzaSala2PB.setBounds(10, 33, 103, 245);
 		sala2Panel.add(tassoAffluenzaSala2PB);
 		
-		JLabel tassoAffluenzaFascia2Label = new JLabel(tassoAffluenzaSala2PB.getValue() + "%"); 
-		tassoAffluenzaFascia2Label.setToolTipText("tasso affluenza medio");
-		tassoAffluenzaFascia2Label.setHorizontalAlignment(SwingConstants.CENTER);
-		tassoAffluenzaFascia2Label.setFont(new Font("Calibri", Font.BOLD, 22));
-		tassoAffluenzaFascia2Label.setBounds(10, 0, 100, 34);
-		sala2Panel.add(tassoAffluenzaFascia2Label);
+		JLabel tassoAffluenzaSala2Label = new JLabel(tassoAffluenzaSala2PB.getValue() + "%"); 
+		tassoAffluenzaSala2Label.setToolTipText("tasso affluenza medio");
+		tassoAffluenzaSala2Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaSala2Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaSala2Label.setBounds(10, 0, 100, 34);
+		sala2Panel.add(tassoAffluenzaSala2Label);
 		
 		JLabel sala2Label = new JLabel("2. Bergman");
 		sala2Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -148,12 +148,12 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		tassoAffluenzaSala3PB.setBounds(10, 33, 103, 245);
 		sala3Panel.add(tassoAffluenzaSala3PB);
 		
-		JLabel tassoAffluenzaFascia3Label = new JLabel(tassoAffluenzaSala3PB.getValue() + "%"); 
-		tassoAffluenzaFascia3Label.setToolTipText("tasso affluenza medio");
-		tassoAffluenzaFascia3Label.setHorizontalAlignment(SwingConstants.CENTER);
-		tassoAffluenzaFascia3Label.setFont(new Font("Calibri", Font.BOLD, 22));
-		tassoAffluenzaFascia3Label.setBounds(10, 0, 100, 32);
-		sala3Panel.add(tassoAffluenzaFascia3Label);
+		JLabel tassoAffluenzaSala3Label = new JLabel(tassoAffluenzaSala3PB.getValue() + "%"); 
+		tassoAffluenzaSala3Label.setToolTipText("tasso affluenza medio");
+		tassoAffluenzaSala3Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaSala3Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaSala3Label.setBounds(10, 0, 100, 32);
+		sala3Panel.add(tassoAffluenzaSala3Label);
 		
 		JLabel sala3Label = new JLabel("3. Kubrick");
 		sala3Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -176,13 +176,13 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		tassoAffluenzaSala4PB.setBounds(10, 33, 103, 245);
 		sala4Panel.add(tassoAffluenzaSala4PB);
 		
-		JLabel tassoAffluenzaFascia4Label = new JLabel(tassoAffluenzaSala4PB.getValue() + "%"); 
-		tassoAffluenzaFascia4Label.setHorizontalAlignment(SwingConstants.CENTER);
-		tassoAffluenzaFascia4Label.setFont(new Font("Calibri", Font.BOLD, 22));
-		tassoAffluenzaFascia4Label.setBounds(10, 0, 100, 32);
-		sala4Panel.add(tassoAffluenzaFascia4Label);
+		JLabel tassoAffluenzaSala4Label = new JLabel(tassoAffluenzaSala4PB.getValue() + "%"); 
+		tassoAffluenzaSala4Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaSala4Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaSala4Label.setBounds(10, 0, 100, 32);
+		sala4Panel.add(tassoAffluenzaSala4Label);
 		
-		JLabel sala4Label = new JLabel("4. Eastwood");
+		JLabel sala4Label = new JLabel("4. Hitchcock");
 		sala4Label.setHorizontalAlignment(SwingConstants.CENTER);
 		sala4Label.setFont(new Font("Calibri", Font.BOLD, 18));
 		sala4Label.setBounds(0, 280, 126, 23);
@@ -202,12 +202,12 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		tassoAffluenzaSala5PB.setBounds(10, 33, 103, 245);
 		sala5Panel.add(tassoAffluenzaSala5PB);
 		
-		JLabel tassoAffluenzaFascia1Label_1 = new JLabel("55%");
-		tassoAffluenzaFascia1Label_1.setToolTipText("tasso affluenza medio");
-		tassoAffluenzaFascia1Label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		tassoAffluenzaFascia1Label_1.setFont(new Font("Calibri", Font.BOLD, 22));
-		tassoAffluenzaFascia1Label_1.setBounds(10, 0, 100, 34);
-		sala5Panel.add(tassoAffluenzaFascia1Label_1);
+		JLabel tassoAffluenzaSala5Label = new JLabel("55%");
+		tassoAffluenzaSala5Label.setToolTipText("tasso affluenza medio");
+		tassoAffluenzaSala5Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaSala5Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaSala5Label.setBounds(10, 0, 100, 34);
+		sala5Panel.add(tassoAffluenzaSala5Label);
 		
 		JLabel sala5Label = new JLabel("5. Gilliam");
 		sala5Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -257,6 +257,19 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		tornaAllAvvioButton.setToolTipText("torna alla finestra di avvio");
 		tornaAllAvvioButton.setOpaque(false);
 		creaSfondoScalatoSu(tornaAllAvvioButton, "home.png");
+		
+		JProgressBar[] tassiPB= {tassoAffluenzaSala1PB, tassoAffluenzaSala2PB,
+				tassoAffluenzaSala3PB, tassoAffluenzaSala4PB, tassoAffluenzaSala5PB};
+		
+		JLabel[] tassiLabels = {tassoAffluenzaSala1Label, tassoAffluenzaSala2Label,
+				tassoAffluenzaSala3Label, tassoAffluenzaSala4Label, tassoAffluenzaSala5Label};
+		
+		double[] tassiAffluenza=controllerGUI.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
+		
+		for(int i=0; i<tassiLabels.length; i++) { 
+			tassiLabels[i].setText(String.format("%.2f", tassiAffluenza[i]) +"%");
+			tassiPB[i].setValue((int)Math.round(tassiAffluenza[i]));
+		}
 
 	}
 }

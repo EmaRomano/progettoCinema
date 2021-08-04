@@ -6,6 +6,7 @@ import java.util.List;
 
 import entita.Spettacolo;
 import entita.spettacolo.FasciaOraria;
+import entita.spettacolo.Sala;
 
 public class ControllerStatistiche {
 	
@@ -27,23 +28,23 @@ public class ControllerStatistiche {
 		}
 
 		for(FasciaOraria fasciaOraria: controllerCentrale.getElencoFasce())
-			fasciaOraria.getSpettacoliDiQuestaFascia().clear();
+			fasciaOraria.getSpettacoliDiQuestaFascia().clear(); //TODO non ti dimenticare
 		
 		for(Spettacolo s : listaSpettacoli) {
 			controllerCentrale.assegnaSpettacoloAFasciaOraria(s);
 		}
 		
 		//TODO controllo, da cancellare
-		for(FasciaOraria f: controllerCentrale.getElencoFasce()) {
-			for(Spettacolo s: f.getSpettacoliDiQuestaFascia())
-				System.out.println(s);
-		}
+//		for(FasciaOraria f: controllerCentrale.getElencoFasce()) {
+//			for(Spettacolo s: f.getSpettacoliDiQuestaFascia())
+//				System.out.println(s);
+//		}
 		
 		double[] medieTassiAffluenza= new double[4];
 		
 		for(int i=0; i<medieTassiAffluenza.length;i++)
 			medieTassiAffluenza[i]=
-					mediaTassiAffluenza(controllerCentrale.getElencoFasce()[i].getSpettacoliDiQuestaFascia());
+					calcolaMediaTassiAffluenza(controllerCentrale.getElencoFasce()[i].getSpettacoliDiQuestaFascia());
 		
 		for(int i=0; i<medieTassiAffluenza.length;i++)
 			if(Double.isNaN(medieTassiAffluenza[i])) 
@@ -51,6 +52,44 @@ public class ControllerStatistiche {
 	
 		return medieTassiAffluenza;
 	}
+	
+	
+	//TODO togli parametro daSempre
+	
+	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
+		List<Spettacolo>listaSpettacoli=new ArrayList<>();
+		
+		for(FasciaOraria fasciaOraria: controllerCentrale.getElencoFasce()) {
+			if(fasceOrarieSelezionate.contains(fasciaOraria.getNome())) {
+//				System.out.println(fasceOrarieSelezionate.contains(fasciaOraria.getNome()));
+				for(Spettacolo spettacolo:fasciaOraria.getSpettacoliDiQuestaFascia())
+					listaSpettacoli.add(spettacolo);			
+			}
+		}
+		
+		for(Sala sala: controllerCentrale.getElencoSale())
+			sala.getListaSpettacoliInQuestaSala().clear(); 
+		
+		for(Spettacolo spettacolo: listaSpettacoli)
+			controllerCentrale.assegnaSpettacoloASala(spettacolo);
+		
+		double[] medieTassiAffluenza= new double[5];
+		
+		for(int i=0; i<medieTassiAffluenza.length;i++)
+			medieTassiAffluenza[i]=
+					calcolaMediaTassiAffluenza(controllerCentrale.getElencoSale()[i].getListaSpettacoliInQuestaSala());
+		
+		for(int i=0; i<medieTassiAffluenza.length;i++)
+			if(Double.isNaN(medieTassiAffluenza[i])) 
+				medieTassiAffluenza[i]=0;
+		
+		return medieTassiAffluenza;
+	}
+	
+	
+	
+	
+	
 	
 	
 	//metodo che prende tutti gli spettacoli e li filtra in base a due date
@@ -64,7 +103,7 @@ public class ControllerStatistiche {
 	}
 	
 	//metodo che prende in input una lista di spettacoli e calcola la media dei tassi di affluenza
-	public double mediaTassiAffluenza(List<Spettacolo> listaSpettacoli) {
+	public double calcolaMediaTassiAffluenza(List<Spettacolo> listaSpettacoli) {
 		double media=0;
 		for(Spettacolo s:listaSpettacoli) 
 			media+=s.getTassoAffluenza();

@@ -4,6 +4,7 @@ import java.awt.Window;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Stack;
 
@@ -192,6 +193,11 @@ public class ControllerGUI {
 	
 	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
 		return controllerCentrale.calcolaAffluenzaPerFasce(daSempre);
+	}
+
+
+	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
+		return controllerCentrale.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
 	}
 
 
