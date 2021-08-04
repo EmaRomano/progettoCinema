@@ -33,6 +33,7 @@ public class Spettacolo {
 		this.margine=margine;
 		this.numeroDiPagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
 	}
+
 	
 	public double getTassoAffluenza() {
 		return ((double)getTotalePaganti()/sala.getPostiDisponibili())*100;

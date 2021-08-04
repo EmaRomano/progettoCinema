@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controllers.ControllerGUI;
+import entita.Spettacolo;
 import gui.SuperJFrame;
 
 public class SpettacoliPerIncassoJF extends SuperJFrame {
@@ -29,26 +30,43 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 	private LocalDate dataInizioPeriodo, dataFinePeriodo;
 
 	
-	public void creaTabellaSpettacoli(int numeroRighe) {
+	public void creaTabellaSpettacoli(RigaSpettacoloJPanel[] righe) {
 		if(getContentPane().isAncestorOf(scrollTabella))
 			getContentPane().remove(scrollTabella);
-		listaRighe=new RigaSpettacoloJPanel[numeroRighe];
+
 		tabellaPanel = new JPanel();
-		tabellaPanel.setBounds(0, 0, 865, numeroRighe*29);
-		tabellaPanel.setLayout(new GridLayout(numeroRighe, 1));
-		for (int i=0; i<numeroRighe; i++) {
-			listaRighe[i]=new RigaSpettacoloJPanel();
-			listaRighe[i].setBounds(0, i*29, 865,29);
-			tabellaPanel.add(listaRighe[i]);
+		tabellaPanel.setBounds(0, 0, 865, righe.length*29);
+		tabellaPanel.setLayout(new GridLayout(righe.length, 1));
+		for (int i=0; i<righe.length; i++) {
+			righe[i].setBounds(0, i*29, 865,29);
+			tabellaPanel.add(righe[i]);
 		}
 		scrollTabella =new JScrollPane(tabellaPanel);
-		scrollTabella.setBounds(10,129, 890,290);
+		scrollTabella.setBounds(10,129, 1077,290);
 		scrollTabella.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		getContentPane().add(scrollTabella);
+		
 	}
-
+	
+	
+	public RigaSpettacoloJPanel[] creaRigheTabella(Spettacolo[] spettacoli) {
+		double massimoIncasso=spettacoli[0].getIncasso();
+		RigaSpettacoloJPanel[] righeSpettacoli=new RigaSpettacoloJPanel[spettacoli.length];
+		for(int i=0; i<spettacoli.length;i++) {
+			righeSpettacoli[i]=new RigaSpettacoloJPanel(i+1, 
+					spettacoli[i],
+					i==0?100 : (spettacoli[i].getIncasso()/massimoIncasso)*100);
+		}
+		
+		return righeSpettacoli;
+		
+		
+	}
+	
+	
+	//costruttore
 	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI, boolean daSempre,
-			List<String> fasceOrarieSelezionate, int primiSpettacoliPerIncasso)
+			List<String> fasceOrarieSelezionate, int numeroSpettacoli)
 	
 	{
 		super(controllerGUI);
@@ -56,6 +74,7 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
 			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
 		}
+		
 		SuperJFrame questaFinestra=this;
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setSize(1113, 622);
@@ -81,7 +100,7 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		
 		JLabel nellaFasciaOrariaLabel = new JLabel("Nelle fasce orarie: ");
 		nellaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		nellaFasciaOrariaLabel.setBounds(10, 43, 187, 29);
+		nellaFasciaOrariaLabel.setBounds(10, 49, 187, 29);
 		getContentPane().add(nellaFasciaOrariaLabel);
 		
 		String fasce="";
@@ -93,14 +112,14 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		JLabel indicaFasciaOrariaLabel = new JLabel(fasce);
 		indicaFasciaOrariaLabel.setForeground(Color.BLUE);
 		indicaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		indicaFasciaOrariaLabel.setBounds(179, 43, 696, 29);
+		indicaFasciaOrariaLabel.setBounds(195, 51, 696, 29);
 		getContentPane().add(indicaFasciaOrariaLabel);
 		
 		JPanel testataTabellaPanel = new JPanel();
 		testataTabellaPanel.setLayout(null);
 		testataTabellaPanel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		testataTabellaPanel.setBackground(new Color(230, 230, 250));
-		testataTabellaPanel.setBounds(10, 89, 865, 29);
+		testataTabellaPanel.setBounds(10, 89, 1059, 29);
 		getContentPane().add(testataTabellaPanel);
 		
 		JLabel titoloFilmTestataLabel = new JLabel("titolo film");
@@ -115,22 +134,22 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		salaTestataLabel.setBounds(385, 0, 129, 29);
 		testataTabellaPanel.add(salaTestataLabel);
 		
-		JLabel oraTestataLabel = new JLabel("ora");
-		oraTestataLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		oraTestataLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
-		oraTestataLabel.setBounds(524, 0, 53, 29);
-		testataTabellaPanel.add(oraTestataLabel);
+		JLabel dataEOraTestataLabel = new JLabel("data e ora");
+		dataEOraTestataLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		dataEOraTestataLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
+		dataEOraTestataLabel.setBounds(524, 0, 217, 29);
+		testataTabellaPanel.add(dataEOraTestataLabel);
 		
 		JLabel incassoTestataLabel = new JLabel("incasso");
 		incassoTestataLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		incassoTestataLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
-		incassoTestataLabel.setBounds(587, 0, 105, 29);
+		incassoTestataLabel.setBounds(751, 0, 105, 29);
 		testataTabellaPanel.add(incassoTestataLabel);
 		
 		JLabel incassoTestataPB = new JLabel("progress bar");
 		incassoTestataPB.setHorizontalAlignment(SwingConstants.CENTER);
 		incassoTestataPB.setFont(new Font("Calibri", Font.PLAIN, 18));
-		incassoTestataPB.setBounds(702, 0, 163, 29);
+		incassoTestataPB.setBounds(896, 0, 163, 29);
 		testataTabellaPanel.add(incassoTestataPB);
 		
 		JLabel lblN = new JLabel("n.");
@@ -162,6 +181,12 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		tornaAllAvvioButton.setToolTipText("torna alla finestra di avvio");
 		tornaAllAvvioButton.setOpaque(false);
 		creaSfondoScalatoSu(tornaAllAvvioButton, "home.png");
+		
+		Spettacolo[] primiPerIncasso=
+				controllerGUI.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
+
+		creaTabellaSpettacoli(creaRigheTabella(primiPerIncasso));
+		
 
 		
 	}

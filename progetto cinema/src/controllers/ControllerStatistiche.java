@@ -57,15 +57,14 @@ public class ControllerStatistiche {
 	//TODO togli parametro daSempre
 	
 	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
-		List<Spettacolo>listaSpettacoli=new ArrayList<>();
+		List<Spettacolo>listaSpettacoli=filtraPerFasceOrarie(fasceOrarieSelezionate);
 		
-		for(FasciaOraria fasciaOraria: controllerCentrale.getElencoFasce()) {
-			if(fasceOrarieSelezionate.contains(fasciaOraria.getNome())) {
-//				System.out.println(fasceOrarieSelezionate.contains(fasciaOraria.getNome()));
-				for(Spettacolo spettacolo:fasciaOraria.getSpettacoliDiQuestaFascia())
-					listaSpettacoli.add(spettacolo);			
-			}
-		}
+//		for(FasciaOraria fasciaOraria: controllerCentrale.getElencoFasce()) {
+//			if(fasceOrarieSelezionate.contains(fasciaOraria.getNome())) {
+//				for(Spettacolo spettacolo:fasciaOraria.getSpettacoliDiQuestaFascia())
+//					listaSpettacoli.add(spettacolo);			
+//			}
+//		}
 		
 		for(Sala sala: controllerCentrale.getElencoSale())
 			sala.getListaSpettacoliInQuestaSala().clear(); 
@@ -102,6 +101,26 @@ public class ControllerStatistiche {
 		return spettacoliFiltratiPerPeriodo;
 	}
 	
+	
+	
+
+	public List<Spettacolo> filtraPerFasceOrarie(List<String> fasceOrarieSelezionate){
+		List<Spettacolo> spettacoliFiltratiPerFasciaOraria=new ArrayList<>();
+
+		for(FasciaOraria fasciaOraria: controllerCentrale.getElencoFasce()) {
+			if(fasceOrarieSelezionate.contains(fasciaOraria.getNome())) {
+				for(Spettacolo spettacolo:fasciaOraria.getSpettacoliDiQuestaFascia())
+					spettacoliFiltratiPerFasciaOraria.add(spettacolo);			
+			}
+		}
+
+		return spettacoliFiltratiPerFasciaOraria;
+	}
+	
+	
+	
+	
+	
 	//metodo che prende in input una lista di spettacoli e calcola la media dei tassi di affluenza
 	public double calcolaMediaTassiAffluenza(List<Spettacolo> listaSpettacoli) {
 		double media=0;
@@ -109,6 +128,43 @@ public class ControllerStatistiche {
 			media+=s.getTassoAffluenza();
 		
 		return media/listaSpettacoli.size();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//metodo che prende in input una lista di spettacoli e ritorna il primo per incasso
+	//RICHIEDE UN CONTROLLO PER VERIFICARE CHE LA LISTA NON SIA VUOTA
+	public Spettacolo primoSpettacoloPerIncasso(List<Spettacolo> listaSpettacoli) {
+		Spettacolo primoPerIncasso=listaSpettacoli.get(0);
+		for(Spettacolo spettacolo:listaSpettacoli) {
+			if(spettacolo.getIncasso()>primoPerIncasso.getIncasso())
+				primoPerIncasso=spettacolo;
+		}
+		
+		return primoPerIncasso;
+	}
+	
+	
+	public Spettacolo[] calcolaPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numero){
+		List<Spettacolo> listaSpettacoli=filtraPerFasceOrarie(fasceOrarieSelezionate);
+		List<Spettacolo> primiNPerIncasso=new ArrayList<>();
+
+		if(numero<=listaSpettacoli.size()) {
+			for(int i=0; i<numero;i++) {
+				primiNPerIncasso.add(primoSpettacoloPerIncasso(listaSpettacoli));
+				listaSpettacoli.remove(primoSpettacoloPerIncasso(listaSpettacoli));		
+			}
+		}else {
+			return null;
+		}
+		
+		return primiNPerIncasso.toArray(new Spettacolo[numero]);
 	}
 	
 	

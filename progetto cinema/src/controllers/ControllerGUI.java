@@ -185,10 +185,14 @@ public class ControllerGUI {
 		return opzioniStatisticheJF.getDataRiferimentoFineStatistiche();
 	}
 
+	
+	
 
 	public void setOpzioniStatistiche(OpzioniStatisticheJF opzioniStatisticheJF) {
 		this.opzioniStatisticheJF=opzioniStatisticheJF;	
 	}
+	
+	
 	
 	
 	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
@@ -198,6 +202,11 @@ public class ControllerGUI {
 
 	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
 		return controllerCentrale.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
+	}
+
+
+	public Spettacolo[] trovaPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
+		return controllerCentrale.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
 	}
 
 

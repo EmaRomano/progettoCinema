@@ -159,7 +159,10 @@ public class ControllerCentrale {
 	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
 		return controllerStatistiche.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
 	}
-	
+
+	public Spettacolo[] trovaPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
+		return controllerStatistiche.calcolaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
+	}
 	
 	
 }

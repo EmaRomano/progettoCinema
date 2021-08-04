@@ -300,8 +300,13 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 								new StatistichePerSaleJF(controllerGUI, daSempre, fasceOrarieSelezionate));
 					} else {
 						int numeroSpettacoli = primiPerIncassoSpinner.getIntero();
-						controllerGUI.apriSchermata(questaFinestra, new SpettacoliPerIncassoJF(controllerGUI, daSempre,
-								fasceOrarieSelezionate, numeroSpettacoli));
+						
+						if (controllerGUI.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate,numeroSpettacoli)!=null) {
+							controllerGUI.apriSchermata(questaFinestra, new SpettacoliPerIncassoJF(controllerGUI,
+									daSempre, fasceOrarieSelezionate, numeroSpettacoli));
+						}
+						else
+							controllerGUI.apriDialogDaJFrame(questaFinestra, new SpettacoliMancantiJD(controllerGUI));
 					} 
 				} else {
 					controllerGUI.apriDialogDaJFrame(questaFinestra, new NessunaFasciaSelezionataJD(controllerGUI));
