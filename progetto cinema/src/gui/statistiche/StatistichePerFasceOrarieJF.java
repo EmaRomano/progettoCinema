@@ -5,6 +5,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,55 +27,64 @@ import gui.SuperJFrame;
 import gui.utilita.IntegerSpinner;
 
 public class StatistichePerFasceOrarieJF extends SuperJFrame {
-	private String dataDiRiferimento;
-
-	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI, String dataRiferimentoStatistiche) {
+	private LocalDate dataInizioPeriodo, dataFinePeriodo;
+	private boolean daSempre;
+	
+	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI, boolean daSempre) {
 		super(controllerGUI);
+		this.daSempre=daSempre;
+		if (!daSempre) {
+			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
+			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
+		}
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;
-		setTitle("Affluenza per fasce orarie");
+		setTitle("Tassi di affluenza per fasce orarie");
 		setSize(537, 737);
 		impostaAlCentro(questaFinestra);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		JLabel introLabel = new JLabel("Affluenza per fasce orarie da:");
+		JLabel introLabel = new JLabel("Tassi di affluenza per fasce orarie nel periodo:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		introLabel.setBounds(5, 11, 274, 29);
+		introLabel.setBounds(5, 11, 506, 29);
 		getContentPane().add(introLabel);
 		
-		JLabel aPartireDaLabel = new JLabel(dataRiferimentoStatistiche);
-		aPartireDaLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
-		aPartireDaLabel.setBounds(278, 11, 225, 29);
-		aPartireDaLabel.setForeground(new Color(138, 43, 226));
-		aPartireDaLabel.setText(dataDiRiferimento);
-		getContentPane().add(aPartireDaLabel);
+		JLabel periodoRiferimentoLabel = new JLabel();
+		periodoRiferimentoLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		periodoRiferimentoLabel.setBounds(5, 33, 506, 29);
+		periodoRiferimentoLabel.setForeground(Color.BLUE);
+		getContentPane().add(periodoRiferimentoLabel);
+		
+		DateTimeFormatter formattatore=DateTimeFormatter.ofPattern("dd LLL yyyy");
+		periodoRiferimentoLabel.setText(daSempre?"da sempre":
+            " "+dataInizioPeriodo.format(formattatore)+"  -  "+dataFinePeriodo.format(formattatore));
 
 		JPanel barrePanel = new JPanel();
 		barrePanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		barrePanel.setBackground(new Color(176, 196, 222));
-		barrePanel.setBounds(5, 64, 498, 394);
+		barrePanel.setBounds(5, 64, 507, 394);
 		getContentPane().add(barrePanel);
 		barrePanel.setLayout(new GridLayout(0, 4, 0, 0));
-
+		
 		JPanel fascia1Panel = new JPanel();
 		fascia1Panel.setBackground(new Color(176, 196, 222));
 		barrePanel.add(fascia1Panel);
 		fascia1Panel.setLayout(null);
 
 		JProgressBar tassoAffluenzaFascia1PB = new JProgressBar();
+		tassoAffluenzaFascia1PB.setToolTipText("tasso di affluenza medio");
 		tassoAffluenzaFascia1PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia1PB.setBackground(new Color(176, 196, 222));
 		tassoAffluenzaFascia1PB.setOrientation(SwingConstants.VERTICAL);
-		tassoAffluenzaFascia1PB.setValue(55);
 		tassoAffluenzaFascia1PB.setBounds(10, 33, 103, 245);
 		fascia1Panel.add(tassoAffluenzaFascia1PB);
 
-		JLabel nPagantiFascia1Label = new JLabel("1.000.000.000"); 
-		nPagantiFascia1Label.setFont(new Font("Calibri", Font.BOLD, 15));
-		nPagantiFascia1Label.setHorizontalAlignment(SwingConstants.CENTER);
-		nPagantiFascia1Label.setBounds(10, 0, 100, 34);
-		fascia1Panel.add(nPagantiFascia1Label);
+		JLabel tassoAffluenzaFascia1Label = new JLabel(); 
+		tassoAffluenzaFascia1Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaFascia1Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaFascia1Label.setBounds(10, 0, 100, 34);
+		fascia1Panel.add(tassoAffluenzaFascia1Label);
 
 		JLabel fascia1Label = new JLabel("sera");
 		fascia1Label.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -97,18 +110,18 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		barrePanel.add(fascia2Panel);
 
 		JProgressBar tassoAffluenzaFascia2PB = new JProgressBar();
+		tassoAffluenzaFascia2PB.setToolTipText("tasso di affluenza medio");
 		tassoAffluenzaFascia2PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia2PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia2PB.setValue(84);
 		tassoAffluenzaFascia2PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia2PB.setBounds(10, 33, 103, 245);
 		fascia2Panel.add(tassoAffluenzaFascia2PB);
 
-		JLabel nPagantiFascia2Label = new JLabel("n. paganti"); 
-		nPagantiFascia2Label.setHorizontalAlignment(SwingConstants.CENTER);
-		nPagantiFascia2Label.setFont(new Font("Calibri", Font.BOLD, 15));
-		nPagantiFascia2Label.setBounds(10, 0, 100, 34);
-		fascia2Panel.add(nPagantiFascia2Label);
+		JLabel tassoAffluenzaFascia2Label = new JLabel(); 
+		tassoAffluenzaFascia2Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaFascia2Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaFascia2Label.setBounds(10, 0, 100, 34);
+		fascia2Panel.add(tassoAffluenzaFascia2Label);
 
 		JLabel fascia2Label = new JLabel("prima serata");
 		fascia2Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,18 +147,18 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		barrePanel.add(fascia3Panel);
 
 		JProgressBar tassoAffluenzaFascia3PB = new JProgressBar();
+		tassoAffluenzaFascia3PB.setToolTipText("tasso di affluenza medio");
 		tassoAffluenzaFascia3PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia3PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia3PB.setValue(79);
 		tassoAffluenzaFascia3PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia3PB.setBounds(10, 33, 103, 245);
 		fascia3Panel.add(tassoAffluenzaFascia3PB);
 
-		JLabel nPagantiFascia3Label = new JLabel("n. paganti"); 
-		nPagantiFascia3Label.setHorizontalAlignment(SwingConstants.CENTER);
-		nPagantiFascia3Label.setFont(new Font("Calibri", Font.BOLD, 15));
-		nPagantiFascia3Label.setBounds(10, 0, 100, 32);
-		fascia3Panel.add(nPagantiFascia3Label);
+		JLabel tassoAffluenzaFascia3Label = new JLabel(); 
+		tassoAffluenzaFascia3Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaFascia3Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaFascia3Label.setBounds(10, 0, 100, 32);
+		fascia3Panel.add(tassoAffluenzaFascia3Label);
 
 		JLabel fascia3Label = new JLabel("seconda serata");
 		fascia3Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,18 +184,18 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		barrePanel.add(fascia4Panel);
 
 		JProgressBar tassoAffluenzaFascia4PB = new JProgressBar();
+		tassoAffluenzaFascia4PB.setToolTipText("tasso di affluenza medio");
 		tassoAffluenzaFascia4PB.setForeground(new Color(0, 0, 128));
 		tassoAffluenzaFascia4PB.setBackground(new Color(176, 196, 222));
-		tassoAffluenzaFascia4PB.setValue(48);
 		tassoAffluenzaFascia4PB.setOrientation(SwingConstants.VERTICAL);
 		tassoAffluenzaFascia4PB.setBounds(10, 33, 103, 245);
 		fascia4Panel.add(tassoAffluenzaFascia4PB);
 
-		JLabel nPagantiFascia4Label = new JLabel("n. paganti"); 
-		nPagantiFascia4Label.setHorizontalAlignment(SwingConstants.CENTER);
-		nPagantiFascia4Label.setFont(new Font("Calibri", Font.BOLD, 15));
-		nPagantiFascia4Label.setBounds(10, 0, 100, 32);
-		fascia4Panel.add(nPagantiFascia4Label);
+		JLabel tassoAffluenzaFascia4Label = new JLabel(); 
+		tassoAffluenzaFascia4Label.setHorizontalAlignment(SwingConstants.CENTER);
+		tassoAffluenzaFascia4Label.setFont(new Font("Calibri", Font.BOLD, 22));
+		tassoAffluenzaFascia4Label.setBounds(10, 0, 100, 32);
+		fascia4Panel.add(tassoAffluenzaFascia4Label);
 
 		JLabel fascia4Label = new JLabel("notte");
 		fascia4Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -210,7 +223,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JPanel opzioniPanel = new JPanel();
 		opzioniPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		opzioniPanel.setBackground(new Color(176, 196, 222));
-		opzioniPanel.setBounds(0, 0, 500, 112);
+		opzioniPanel.setBounds(0, 0, 507, 112);
 		opzioniEBottoniPanel.add(opzioniPanel);
 		opzioniPanel.setLayout(null);
 
@@ -267,18 +280,34 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		calcolaPerSalePanel.setBounds(414, 125, 87, 82);
 		opzioniEBottoniPanel.add(calcolaPerSalePanel);
 		calcolaPerSalePanel.setLayout(null);
+		
+		
 
 		JButton calcolaPerSaleOSpettacoliButton = new JButton("");
 		calcolaPerSaleOSpettacoliButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(affluenzaPerSaleRB.isSelected()) {
-					controllerGUI.apriSchermata(questaFinestra,
-							new StatistichePerSaleJF(controllerGUI, dataRiferimentoStatistiche));
+				
+				
+				List<String> fasceOrarieSelezionate=new ArrayList<String>();
+				if(fascia1CB.isSelected()) fasceOrarieSelezionate.add("sera");
+				if(fascia2CB.isSelected()) fasceOrarieSelezionate.add("prima serata");
+				if(fascia3CB.isSelected()) fasceOrarieSelezionate.add("seconda serata");
+				if(fascia4CB.isSelected()) fasceOrarieSelezionate.add("notte");
+				
+				if (fasceOrarieSelezionate.size()!=0) {
+					if (affluenzaPerSaleRB.isSelected()) {
+						controllerGUI.apriSchermata(questaFinestra,
+								new StatistichePerSaleJF(controllerGUI, daSempre, fasceOrarieSelezionate));
+					} else {
+						int numeroSpettacoli = primiPerIncassoSpinner.getIntero();
+						controllerGUI.apriSchermata(questaFinestra, new SpettacoliPerIncassoJF(controllerGUI, daSempre,
+								fasceOrarieSelezionate, numeroSpettacoli));
+					} 
 				} else {
-					int numeroSpettacoli=primiPerIncassoSpinner.getIntero();
-					controllerGUI.apriSchermata(questaFinestra,
-							new SpettacoliPerIncassoJF(controllerGUI, dataRiferimentoStatistiche, numeroSpettacoli));
+					controllerGUI.apriDialogDaJFrame(questaFinestra, new NessunaFasciaSelezionataJD(controllerGUI));
 				}
+				
+				
 			}
 		});
 		calcolaPerSaleOSpettacoliButton.setBounds(0, 0, 87, 82);
@@ -287,10 +316,23 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		calcolaPerSaleOSpettacoliButton.setOpaque(false);
 		creaSfondoScalatoSu(calcolaPerSaleOSpettacoliButton, "iconaCalcola.png");
 		
-		JLabel pagantiPerFasciaLabel = new JLabel("paganti per fascia:");
-		pagantiPerFasciaLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
-		pagantiPerFasciaLabel.setBounds(5, 48, 284, 17);
-		getContentPane().add(pagantiPerFasciaLabel);
-
+		
+		
+		JProgressBar[] tassiPB= {tassoAffluenzaFascia1PB, tassoAffluenzaFascia2PB,
+				                  tassoAffluenzaFascia3PB, tassoAffluenzaFascia4PB};
+		
+		JLabel[] tassiLabels = {tassoAffluenzaFascia1Label, tassoAffluenzaFascia2Label,
+				                               tassoAffluenzaFascia3Label, tassoAffluenzaFascia4Label};
+		
+		double[] tassiAffluenza=controllerGUI.calcolaAffluenzaPerFasce(daSempre);
+		
+		for(int i=0; i<tassiLabels.length; i++) { 
+			tassiLabels[i].setText(String.format("%.2f", tassiAffluenza[i]) +"%");
+			tassiPB[i].setValue((int)Math.round(tassiAffluenza[i]));
+		}
+	
+		
+		
 	}
+	
 }

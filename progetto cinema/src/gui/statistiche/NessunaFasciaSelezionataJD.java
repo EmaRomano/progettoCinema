@@ -1,4 +1,4 @@
-package gui;
+package gui.statistiche;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,16 +10,17 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
+import gui.SuperJD;
 
-public class ErroreSpettacoliSovrappostiJD extends SuperJD {
+public class NessunaFasciaSelezionataJD extends SuperJD {
 
 
-	public ErroreSpettacoliSovrappostiJD(ControllerGUI controllerGUI) {
+	public NessunaFasciaSelezionataJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);
 		SuperJD questaJD =this;
+		setTitle("Nessuna fascia selezionata");
 		setSize(378, 290);
 		impostaAlCentro(this);
-		this.setTitle("Sala occupata");
 		getContentPane().setLayout(null);
 		
 		JLayeredPane contenitorePanel = new JLayeredPane();
@@ -32,7 +33,7 @@ public class ErroreSpettacoliSovrappostiJD extends SuperJD {
 		contenitorePanel.add(messaggioTA);
 		messaggioTA.setEditable(false);
 		messaggioTA.setForeground(Color.BLACK);
-		messaggioTA.setText("  Impossibile inserire lo spettacolo:\r\n  sala gia' occupata alla data e \r\n  all'orario inseriti");
+		messaggioTA.setText("\r\n\r\nAttenzione: nessuna fascia selezionata.");
 		messaggioTA.setFont(new Font("Calibri", Font.PLAIN, 22));
 		messaggioTA.setBackground(new Color(230, 230, 250));
 		

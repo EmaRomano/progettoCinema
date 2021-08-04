@@ -19,10 +19,8 @@ import gui.SpettacoloGUI;
 import gui.cancellazione.DaiConfermaCancellazioneJD;
 import gui.inserimento.DaiConfermaInserimentoJD;
 import gui.modifica.DaiConfermaModificaJD;
-//TODO cancella la cartella documenti ed il package appunti prima della consegna del progetto
-//TODO in tutte le finestre che contengono il datepicker, inserisci finestraCalendario.dispose()
-// su tutti i pulsanti di uscita dalla finestra;
-//TODO nella finestra di avvio hai scritto unina con la la lettera piccola
+import gui.statistiche.OpzioniStatisticheJF;
+
 public class ControllerGUI {
 
 	private Stack<JFrame> stackSchermate = new Stack<>();
@@ -32,6 +30,8 @@ public class ControllerGUI {
 	private ControllerCentrale controllerCentrale;
 	
 	private AvvioJF avvioJF;
+	
+	private OpzioniStatisticheJF opzioniStatisticheJF;
 
 	private Spettacolo spettacoloTrovato;	
 	
@@ -170,7 +170,29 @@ public class ControllerGUI {
 								prezziSpettacolo, numeroPaganti);
 	}
 
+	
+	
+	
+	
+	
 
+	public LocalDate ottieniDataRiferimentoInizioStatistiche() {
+		return opzioniStatisticheJF.getDataRiferimentoInizioStatistiche();
+	}
+
+	public LocalDate ottieniDataRiferimentoFineStatistiche() {
+		return opzioniStatisticheJF.getDataRiferimentoFineStatistiche();
+	}
+
+
+	public void setOpzioniStatistiche(OpzioniStatisticheJF opzioniStatisticheJF) {
+		this.opzioniStatisticheJF=opzioniStatisticheJF;	
+	}
+	
+	
+	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
+		return controllerCentrale.calcolaAffluenzaPerFasce(daSempre);
+	}
 
 
 }

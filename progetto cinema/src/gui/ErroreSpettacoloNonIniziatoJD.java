@@ -19,6 +19,7 @@ public class ErroreSpettacoloNonIniziatoJD extends SuperJD {
 		SuperJD questaJD =this;
 		setSize(378, 290);
 		impostaAlCentro(this);
+		setTitle("Spettacolo non iniziato");
 		getContentPane().setLayout(null);
 		
 		JLayeredPane contenitorePanel = new JLayeredPane();

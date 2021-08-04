@@ -1,6 +1,7 @@
 package entita;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -79,8 +80,7 @@ public class Spettacolo {
 	public Sala getSala() {
 		return sala;
 	}
-
-
+	
 	public LocalDateTime getDataEOraInizio() {
 		return dataEOraInizio;
 	}
@@ -144,6 +144,12 @@ public class Spettacolo {
 	public Map<FasciaDiPrezzo, Integer> getNumeroDiPagantiPerFasciaDiPrezzo() {
 		return numeroDiPagantiPerFasciaDiPrezzo;
 	}
+	
+	public boolean proiettatoNelPeriodo(LocalDate inizio, LocalDate fine) {
+		LocalDate dataSpettacolo = dataEOraInizio.toLocalDate();
+		return !(dataSpettacolo.isBefore(inizio))&& !(dataSpettacolo.isAfter(fine));
+	}
+
 
 	
 }

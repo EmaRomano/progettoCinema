@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,16 +21,18 @@ import controllers.ControllerGUI;
 import gui.SuperJFrame;
 
 public class StatistichePerSaleJF extends SuperJFrame {
-	private String dataDiRiferimento;
-	private JLabel aPartireDaLabel = new JLabel();
+	
+	private LocalDate dataInizioPeriodo, dataFinePeriodo;
 
-//	public void setDataDiRiferimento(String data) {
-//		dataDiRiferimento=String.valueOf(data);
-//		aPartireDaLabel.setText(dataDiRiferimento);
-//	}
-
-	public StatistichePerSaleJF(ControllerGUI controllerGUI, String dataRiferimentoStatistiche) {
+	public StatistichePerSaleJF(ControllerGUI controllerGUI,
+			boolean daSempre, List<String> fasceOrarieSelezionate) 
+	
+	{
 		super(controllerGUI);
+		if (!daSempre) {
+			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
+			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
+		}
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;
 		setTitle("Affluenza per sale");
@@ -36,30 +41,42 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
-		JLabel introLabel = new JLabel("Affluenza per sale da:");
+		JLabel introLabel = new JLabel("Tassi di affluenza per sale nel periodo:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		introLabel.setBounds(5, 24, 208, 29);
+		introLabel.setBounds(5, 24, 353, 29);
 		getContentPane().add(introLabel);
 		
-		aPartireDaLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
-		aPartireDaLabel.setBounds(229, 24, 274, 29);
-		aPartireDaLabel.setForeground(new Color(138, 43, 226));
-		getContentPane().add(aPartireDaLabel);
+		JLabel periodoRiferimentoLabel = new JLabel("");
+		periodoRiferimentoLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		periodoRiferimentoLabel.setForeground(Color.BLUE);
+		periodoRiferimentoLabel.setBounds(368, 24, 309, 29);
+		getContentPane().add(periodoRiferimentoLabel);
+		
+		DateTimeFormatter formattatore=DateTimeFormatter.ofPattern("dd LLL yyyy");
+		periodoRiferimentoLabel.setText(daSempre?"da sempre":
+            " "+dataInizioPeriodo.format(formattatore)+"  -  "+dataFinePeriodo.format(formattatore));
 		
 		JLabel nellaFasciaOrariaLabel = new JLabel("Nelle fasce orarie: ");
 		nellaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		nellaFasciaOrariaLabel.setBounds(5, 62, 187, 29);
+		nellaFasciaOrariaLabel.setBounds(5, 64, 187, 29);
 		getContentPane().add(nellaFasciaOrariaLabel);
 		
-		JLabel indicaFasciaOrariaLabel = new JLabel("(fasce orarie)");
-		indicaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		indicaFasciaOrariaLabel.setBounds(202, 62, 187, 29);
-		getContentPane().add(indicaFasciaOrariaLabel);
+		String fasce="";
+		for(int i=0;i<fasceOrarieSelezionate.size()-1;i++)
+			fasce+=fasceOrarieSelezionate.get(i)+" ,";
+		
+		fasce+=fasceOrarieSelezionate.get(fasceOrarieSelezionate.size()-1);
+		
+		JLabel mostraFasceOrarieLabel = new JLabel(fasce);
+		mostraFasceOrarieLabel.setForeground(Color.BLUE);
+		mostraFasceOrarieLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		mostraFasceOrarieLabel.setBounds(174, 64, 475, 29);
+		getContentPane().add(mostraFasceOrarieLabel);
 		
 		JPanel barrePanel = new JPanel();
 		barrePanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		barrePanel.setBackground(new Color(176, 196, 222));
-		barrePanel.setBounds(5, 102, 644, 334);
+		barrePanel.setBounds(5, 106, 644, 335);
 		getContentPane().add(barrePanel);
 		barrePanel.setLayout(new GridLayout(0, 5, 0, 0));
 		

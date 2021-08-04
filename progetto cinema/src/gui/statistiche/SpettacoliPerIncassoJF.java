@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,17 +22,12 @@ import controllers.ControllerGUI;
 import gui.SuperJFrame;
 
 public class SpettacoliPerIncassoJF extends SuperJFrame {
-	private String dataDiRiferimento;
-	private JLabel dataRiferimentoLabel = new JLabel(); 
 	private RigaSpettacoloJPanel[] listaRighe;
 	private JPanel tabellaPanel;
 	private JScrollPane scrollTabella;
+	
+	private LocalDate dataInizioPeriodo, dataFinePeriodo;
 
-
-//	public void setDataDiRiferimento(String data) {
-//		dataDiRiferimento=String.valueOf(data);
-//		dataRiferimentoLabel.setText(dataDiRiferimento);
-//	}
 	
 	public void creaTabellaSpettacoli(int numeroRighe) {
 		if(getContentPane().isAncestorOf(scrollTabella))
@@ -49,10 +47,15 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		getContentPane().add(scrollTabella);
 	}
 
-	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI,
-			String dataRiferimentoStatistiche, int primiSpettacoliPerIncasso)
+	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI, boolean daSempre,
+			List<String> fasceOrarieSelezionate, int primiSpettacoliPerIncasso)
+	
 	{
 		super(controllerGUI);
+		if (!daSempre) {
+			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
+			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
+		}
 		SuperJFrame questaFinestra=this;
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setSize(1113, 622);
@@ -61,49 +64,37 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		getContentPane().setLayout(null);
 		setTitle("Spettacoli per incasso");
 		
-		JLabel introLabel = new JLabel("Spettacoli per incasso da:");
+		JLabel introLabel = new JLabel("Primi spettacoli per incasso nel periodo:");
 		introLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		introLabel.setBounds(10, 11, 247, 29);
+		introLabel.setBounds(10, 11, 371, 29);
 		getContentPane().add(introLabel);
 		
-		dataRiferimentoLabel.setForeground(new Color(138, 43, 226));
-		dataRiferimentoLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
-		dataRiferimentoLabel.setBounds(246, 11, 284, 29);
-		getContentPane().add(dataRiferimentoLabel);
+		JLabel periodoRiferimentoLabel = new JLabel(" <dynamic>  -  <dynamic>");
+		periodoRiferimentoLabel.setForeground(Color.BLUE);
+		periodoRiferimentoLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
+		periodoRiferimentoLabel.setBounds(380, 11, 495, 29);
+		getContentPane().add(periodoRiferimentoLabel);
+		
+		DateTimeFormatter formattatore=DateTimeFormatter.ofPattern("dd LLL yyyy");
+		periodoRiferimentoLabel.setText(daSempre?"da sempre":
+            " "+dataInizioPeriodo.format(formattatore)+"  -  "+dataFinePeriodo.format(formattatore));
 		
 		JLabel nellaFasciaOrariaLabel = new JLabel("Nelle fasce orarie: ");
 		nellaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		nellaFasciaOrariaLabel.setBounds(10, 49, 187, 29);
+		nellaFasciaOrariaLabel.setBounds(10, 43, 187, 29);
 		getContentPane().add(nellaFasciaOrariaLabel);
 		
-		JLabel indicaFasciaOrariaLabel = new JLabel("(fasce orarie)");
+		String fasce="";
+		for(int i=0;i<fasceOrarieSelezionate.size()-1;i++)
+			fasce+=fasceOrarieSelezionate.get(i)+" ,";
+		
+		fasce+=fasceOrarieSelezionate.get(fasceOrarieSelezionate.size()-1);
+		
+		JLabel indicaFasciaOrariaLabel = new JLabel(fasce);
+		indicaFasciaOrariaLabel.setForeground(Color.BLUE);
 		indicaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		indicaFasciaOrariaLabel.setBounds(207, 49, 187, 29);
+		indicaFasciaOrariaLabel.setBounds(179, 43, 696, 29);
 		getContentPane().add(indicaFasciaOrariaLabel);
-		
-		JButton indietroButton = new JButton("");
-		indietroButton.setBounds(10, 490, 87, 82);
-		getContentPane().add(indietroButton);
-		indietroButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controllerGUI.chiudiSchermata(questaFinestra);
-			}
-		});
-		indietroButton.setToolTipText("indietro");
-		indietroButton.setOpaque(false);
-		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
-		
-		JButton tornaAllAvvioButton = new JButton("");
-		tornaAllAvvioButton.setBounds(156, 490, 87, 82);
-		getContentPane().add(tornaAllAvvioButton);
-		tornaAllAvvioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controllerGUI.tornaAllAvvioDa(questaFinestra);
-			}
-		});
-		tornaAllAvvioButton.setToolTipText("torna alla finestra di avvio");
-		tornaAllAvvioButton.setOpaque(false);
-		creaSfondoScalatoSu(tornaAllAvvioButton, "home.png");
 		
 		JPanel testataTabellaPanel = new JPanel();
 		testataTabellaPanel.setLayout(null);
@@ -147,6 +138,30 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		lblN.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblN.setBounds(0, 0, 43, 29);
 		testataTabellaPanel.add(lblN);
+		
+		JButton indietroButton = new JButton("");
+		indietroButton.setBounds(10, 490, 87, 82);
+		getContentPane().add(indietroButton);
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.chiudiSchermata(questaFinestra);
+			}
+		});
+		indietroButton.setToolTipText("indietro");
+		indietroButton.setOpaque(false);
+		creaSfondoScalatoSu(indietroButton, "iconaIndietro.png");
+		
+		JButton tornaAllAvvioButton = new JButton("");
+		tornaAllAvvioButton.setBounds(156, 490, 87, 82);
+		getContentPane().add(tornaAllAvvioButton);
+		tornaAllAvvioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controllerGUI.tornaAllAvvioDa(questaFinestra);
+			}
+		});
+		tornaAllAvvioButton.setToolTipText("torna alla finestra di avvio");
+		tornaAllAvvioButton.setOpaque(false);
+		creaSfondoScalatoSu(tornaAllAvvioButton, "home.png");
 
 		
 	}

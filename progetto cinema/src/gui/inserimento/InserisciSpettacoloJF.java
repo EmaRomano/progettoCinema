@@ -44,7 +44,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 	private JTextField titoloFimlTF;
 	private JComboBox<String> elencoSaleCB;
 	private JLabel mostraTecnologiaLabel;
-	private Date data=new Date(System.currentTimeMillis());
+	private Date data;
 	private OraSpinner oraSpinner;
 	private IntegerSpinner durataFilmSpinner;
 	private IntegerSpinner margineSpinner;
@@ -111,6 +111,7 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		this.setTitle("Inserisci spettacolo");
 		mostraDataTF.setHorizontalAlignment(SwingConstants.CENTER);
 		mostraDataTF.setFont(new Font("Calibri", Font.PLAIN, 22));
+		data=new Date(System.currentTimeMillis());
 
 		mostraDataTF.setValue(new Date());
 		FinestraCalendario finestraCalendario = new FinestraCalendario(); 

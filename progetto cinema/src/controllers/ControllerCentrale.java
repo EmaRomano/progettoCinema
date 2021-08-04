@@ -1,6 +1,7 @@
 package controllers;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import gui.SpettacoloGUI;
 public class ControllerCentrale {
 	
 	private ControllerGUI controllerGUI;
-	
+	private ControllerStatistiche controllerStatistiche;
 	private SpettacoloDAO spettacoloDAO = new SpettacoloDAOImplFile();
 
 	//le sale non sono memorizzate su un file, ma in un array in quanto sono solo 5 e sono invariabili
@@ -28,6 +29,7 @@ public class ControllerCentrale {
 	
 	public ControllerCentrale() {
 		controllerGUI=new ControllerGUI(this);
+		controllerStatistiche=new ControllerStatistiche(this);
 		creaElencoSale();
 		creaElencoFasce();
 	}
@@ -84,6 +86,22 @@ public class ControllerCentrale {
 	public FasciaOraria[] getElencoFasce() {
 		return elencoFasce;
 	}
+	
+	
+//	public Sala[] getElencoSale() {
+//		return elencoSale;
+//	}
+	
+	
+	
+//	public int getNumeroFascia(FasciaOraria fascia) {
+//		for(int i=0; i<elencoFasce.length;i++ ) {
+//			if(elencoFasce[i].equals(fascia))
+//				return i;
+//		}
+//		
+//		return 0;
+//	}
 
 	
 	public SpettacoloDAO getSpettacoloDAO() {
@@ -99,4 +117,32 @@ public class ControllerCentrale {
 		
 		return null;
 	}
+	
+	
+	
+	public LocalDate ottieniDataRiferimentoInizioStatistiche() {
+		return controllerGUI.ottieniDataRiferimentoInizioStatistiche();
+	}
+
+	public LocalDate ottieniDataRiferimentoFineStatistiche() {
+		return controllerGUI.ottieniDataRiferimentoFineStatistiche();
+	}
+	
+	
+	
+	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
+		return controllerStatistiche.calcolaAffluenzaPerFasce(daSempre);
+	}
+	
+	//metodo che prende uno spettacolo e lo assegna alla sua fascia oraria
+	public void assegnaSpettacoloAFasciaOraria(Spettacolo spettacolo) {
+		for(FasciaOraria fasciaOraria:elencoFasce) {
+			if(fasciaOraria.contiene(spettacolo.getDataEOraInizio().toLocalTime()))
+				fasciaOraria.getSpettacoliDiQuestaFascia().add(spettacolo);
+		}
+
+	}
+	
+	
+	
 }

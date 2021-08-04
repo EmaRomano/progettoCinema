@@ -35,5 +35,5 @@ public class Sala {
 		return Objects.equals(nome, other.nome) && postiDisponibili == other.postiDisponibili
 				&& Objects.equals(tecnologia, other.tecnologia);
 	}
-	
+		
 }
