@@ -29,6 +29,7 @@ import javax.swing.border.LineBorder;
 import controllers.ControllerGUI;
 import gui.ErroreInputTitoloFilmJD;
 import gui.ErroreSpettacoloNonIniziatoJD;
+import gui.PostiSalaInsufficientiJD;
 import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
@@ -160,20 +161,34 @@ public class ModificaSpettacoloJF extends SuperJFrame implements PropertyChangeL
 		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (stringaLecita(titoloFilmTF.getText())) {
-					if (!titoloFilmTF.getText().replaceAll("\\s", "").equals("")) {
-						if (getSpettacoloGuiModificato() != null)
-							controllerGUI.apriDialogDaJFrame(questaFinestra,
-									new ChiediConfermaModificaJD(controllerGUI, getSpettacoloGuiModificato()));
-						else
-							controllerGUI.apriDialogDaJFrame(questaFinestra,
-									new ErroreSpettacoloNonIniziatoJD(controllerGUI));
-						finestraCalendario.dispose();
-					}
+				int pagantiTotali=pagantiRegolariSpinner.getIntero()+
+						pagantiRidotto1Spinner.getIntero()+
+						pagantiRidotto2Spinner.getIntero()+
+						pagantiRidotto3Spinner.getIntero();
+
+				int postiDisponibili=
+						controllerGUI.getPostiDisponibiliSala((String)elencoSaleCB.getSelectedItem());
+				
+				if (pagantiTotali<=postiDisponibili) {
+					if (stringaLecita(titoloFilmTF.getText())) {
+						if (!titoloFilmTF.getText().replaceAll("\\s", "").equals("")) {
+							if (getSpettacoloGuiModificato() != null)
+								controllerGUI.apriDialogDaJFrame(questaFinestra,
+										new ChiediConfermaModificaJD(controllerGUI, getSpettacoloGuiModificato()));
+							else
+								controllerGUI.apriDialogDaJFrame(questaFinestra,
+										new ErroreSpettacoloNonIniziatoJD(controllerGUI));
+							finestraCalendario.dispose();
+						}
+					} else {
+						controllerGUI.apriDialogDaJFrame(questaFinestra, new ErroreInputTitoloFilmJD(controllerGUI));
+					} 
 				} else {
 					controllerGUI.apriDialogDaJFrame(questaFinestra,
-							new ErroreInputTitoloFilmJD(controllerGUI));
+							new PostiSalaInsufficientiJD(controllerGUI));
 				}
+				
+				
 			}
 		});
 

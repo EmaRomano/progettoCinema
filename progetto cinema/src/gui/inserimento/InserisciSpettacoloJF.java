@@ -29,6 +29,7 @@ import javax.swing.border.LineBorder;
 import controllers.ControllerGUI;
 import gui.ErroreInputTitoloFilmJD;
 import gui.ErroreSpettacoloNonIniziatoJD;
+import gui.PostiSalaInsufficientiJD;
 import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
@@ -136,21 +137,32 @@ public class InserisciSpettacoloJF extends SuperJFrame implements PropertyChange
 		JButton salvaSpettacoloButton = new JButton("");
 		salvaSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int pagantiTotali=pagantiRegolariSpinner.getIntero()+
+						          pagantiRidotto1Spinner.getIntero()+
+						          pagantiRidotto2Spinner.getIntero()+
+						          pagantiRidotto3Spinner.getIntero();
 				
-				if (stringaLecita(titoloFimlTF.getText())) {
-					data = (Date) mostraDataTF.getValue();
-					LocalDateTime dataEOra = LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data),
-							oraSpinner.getOra());
-					if (dataEOra.isBefore(LocalDateTime.now()))
-						controllerGUI.apriDialogDaJFrame( questaFinestra,
-								new ChiediConfermaInserimentoJD(controllerGUI, getSpettacoloGuiDaInserire()));
-					else
-						controllerGUI.apriDialogDaJFrame(questaFinestra,
-								new ErroreSpettacoloNonIniziatoJD(controllerGUI));
-					finestraCalendario.dispose();
+				int postiDisponibili=
+						controllerGUI.getPostiDisponibiliSala((String)elencoSaleCB.getSelectedItem());
+				
+				if (pagantiTotali<=postiDisponibili) {
+					if (stringaLecita(titoloFimlTF.getText())) {
+						data = (Date) mostraDataTF.getValue();
+						LocalDateTime dataEOra = LocalDateTime.of(ConversioniDateTime.convertiInLocalDate(data),
+								oraSpinner.getOra());
+						if (dataEOra.isBefore(LocalDateTime.now()))
+							controllerGUI.apriDialogDaJFrame(questaFinestra,
+									new ChiediConfermaInserimentoJD(controllerGUI, getSpettacoloGuiDaInserire()));
+						else
+							controllerGUI.apriDialogDaJFrame(questaFinestra,
+									new ErroreSpettacoloNonIniziatoJD(controllerGUI));
+						finestraCalendario.dispose();
+					} else {
+						controllerGUI.apriDialogDaJFrame(questaFinestra, new ErroreInputTitoloFilmJD(controllerGUI));
+					} 
 				} else {
-					controllerGUI.apriDialogDaJFrame(questaFinestra,
-							new ErroreInputTitoloFilmJD(controllerGUI));
+					controllerGUI.apriDialogDaJFrame(questaFinestra, 
+							new PostiSalaInsufficientiJD(controllerGUI));
 				}
 			}
 		});

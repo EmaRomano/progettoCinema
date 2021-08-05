@@ -5,13 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import controllers.ControllerGUI;
 
 public class ErroreInputTitoloFilmJD extends SuperJD {
 
-	private final JPanel contentPanel = new JPanel();
+//	private final JPanel contentPanel = new JPanel();
 	
 	public ErroreInputTitoloFilmJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);

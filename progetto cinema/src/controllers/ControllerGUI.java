@@ -210,4 +210,9 @@ public class ControllerGUI {
 	}
 
 
+	public int getPostiDisponibiliSala(String nomeSala) {
+		return ControllerCentrale.getSalaPerNome(nomeSala).getPostiDisponibili();
+	}
+
+
 }
