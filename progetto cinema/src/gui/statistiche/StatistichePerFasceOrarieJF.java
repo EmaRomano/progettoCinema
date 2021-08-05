@@ -34,8 +34,8 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		super(controllerGUI);
 		this.daSempre=daSempre;
 		if (!daSempre) {
-			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
-			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
+			this.dataInizioPeriodo = controllerGUI.getDataRiferimentoInizioStatistiche();
+			this.dataFinePeriodo = controllerGUI.getDataRiferimentoFineStatistiche();
 		}
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;

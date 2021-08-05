@@ -30,8 +30,8 @@ public class StatistichePerSaleJF extends SuperJFrame {
 	{
 		super(controllerGUI);
 		if (!daSempre) {
-			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
-			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
+			this.dataInizioPeriodo = controllerGUI.getDataRiferimentoInizioStatistiche();
+			this.dataFinePeriodo = controllerGUI.getDataRiferimentoFineStatistiche();
 		}
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;

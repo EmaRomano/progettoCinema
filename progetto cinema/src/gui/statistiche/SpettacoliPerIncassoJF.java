@@ -71,8 +71,8 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 	{
 		super(controllerGUI);
 		if (!daSempre) {
-			this.dataInizioPeriodo = controllerGUI.ottieniDataRiferimentoInizioStatistiche();
-			this.dataFinePeriodo = controllerGUI.ottieniDataRiferimentoFineStatistiche();
+			this.dataInizioPeriodo = controllerGUI.getDataRiferimentoInizioStatistiche();
+			this.dataFinePeriodo = controllerGUI.getDataRiferimentoFineStatistiche();
 		}
 		
 		SuperJFrame questaFinestra=this;

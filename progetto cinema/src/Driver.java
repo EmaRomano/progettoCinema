@@ -12,7 +12,8 @@ public class Driver {
 		new Driver();
 	}
 	
-	//TODO ultimo salvataggio in copia1 il 4 agosto
-	// finita parte statistiche per fasce orarie
+	//TODO ultimo salvataggio in copia2 il 5 agosto
+	// praticamente finito il progetto
+	// ultima cosa fatta: controllo sui posti diponibili nelle sale
 
 }

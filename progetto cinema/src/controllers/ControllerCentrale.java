@@ -122,11 +122,11 @@ public class ControllerCentrale {
 	
 	
 	public LocalDate ottieniDataRiferimentoInizioStatistiche() {
-		return controllerGUI.ottieniDataRiferimentoInizioStatistiche();
+		return controllerGUI.getDataRiferimentoInizioStatistiche();
 	}
 
 	public LocalDate ottieniDataRiferimentoFineStatistiche() {
-		return controllerGUI.ottieniDataRiferimentoFineStatistiche();
+		return controllerGUI.getDataRiferimentoFineStatistiche();
 	}
 	
 	

@@ -59,7 +59,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 
 		this.setTitle("Opzioni statistiche");
 		SuperJFrame questaFinestra = this;
-		controllerGUI.setOpzioniStatistiche(this);
+//		controllerGUI.setOpzioniStatistiche(this);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		getContentPane().setLayout(null);
 
@@ -196,6 +196,8 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 				}else if(dataRiferimentoInizioStatistiche.isAfter(dataRiferimentoFineStatistiche)){
 					controllerGUI.apriDialogDaJFrame(questaFinestra, new ErroreDateJD(controllerGUI));
 				}else {
+					controllerGUI.setDataRiferimentoInizioStatistiche(dataRiferimentoInizioStatistiche);
+					controllerGUI.setDataRiferimentoFineStatistiche(dataRiferimentoFineStatistiche);
 					controllerGUI.apriSchermata(questaFinestra,
 							new StatistichePerFasceOrarieJF(controllerGUI,false));		
 				}
@@ -212,11 +214,11 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 
 	}
 
-	public LocalDate getDataRiferimentoInizioStatistiche() {
-		return dataRiferimentoInizioStatistiche;
-	}
-
-	public LocalDate getDataRiferimentoFineStatistiche() {
-		return dataRiferimentoFineStatistiche;
-	}
+//	public LocalDate getDataRiferimentoInizioStatistiche() {
+//		return dataRiferimentoInizioStatistiche;
+//	}
+//
+//	public LocalDate getDataRiferimentoFineStatistiche() {
+//		return dataRiferimentoFineStatistiche;
+//	}
 }

@@ -20,7 +20,6 @@ import gui.SpettacoloGUI;
 import gui.cancellazione.DaiConfermaCancellazioneJD;
 import gui.inserimento.DaiConfermaInserimentoJD;
 import gui.modifica.DaiConfermaModificaJD;
-import gui.statistiche.OpzioniStatisticheJF;
 
 public class ControllerGUI {
 
@@ -32,9 +31,11 @@ public class ControllerGUI {
 	
 	private AvvioJF avvioJF;
 	
-	private OpzioniStatisticheJF opzioniStatisticheJF;
+//	private OpzioniStatisticheJF opzioniStatisticheJF;
 
 	private Spettacolo spettacoloTrovato;	
+	
+	private LocalDate dataRiferimentoInizioStatistiche, dataRiferimentoFineStatistiche;
 	
 	public ControllerGUI(ControllerCentrale controllerCentrale) {
 		this.controllerCentrale=controllerCentrale;
@@ -43,7 +44,28 @@ public class ControllerGUI {
 		avvioJF.setVisible(true);
 	}
 
+    /**************************************************************************************/
 	
+	public LocalDate getDataRiferimentoInizioStatistiche() {
+		return dataRiferimentoInizioStatistiche;
+	}
+
+
+	public void setDataRiferimentoInizioStatistiche(LocalDate dataRiferimentoInizioStatistiche) {
+		this.dataRiferimentoInizioStatistiche = dataRiferimentoInizioStatistiche;
+	}
+
+
+	public LocalDate getDataRiferimentoFineStatistiche() {
+		return dataRiferimentoFineStatistiche;
+	}
+
+
+	public void setDataRiferimentoFineStatistiche(LocalDate dataRiferimentoFineStatistiche) {
+		this.dataRiferimentoFineStatistiche = dataRiferimentoFineStatistiche;
+	}
+
+
 	/*******************************metodi di navigazione finestre*******************************/
 
 	
@@ -170,29 +192,6 @@ public class ControllerGUI {
 								(int)s.getMargine().toMinutes(),
 								prezziSpettacolo, numeroPaganti);
 	}
-
-	
-	
-	
-	
-	
-
-	public LocalDate ottieniDataRiferimentoInizioStatistiche() {
-		return opzioniStatisticheJF.getDataRiferimentoInizioStatistiche();
-	}
-
-	public LocalDate ottieniDataRiferimentoFineStatistiche() {
-		return opzioniStatisticheJF.getDataRiferimentoFineStatistiche();
-	}
-
-	
-	
-
-	public void setOpzioniStatistiche(OpzioniStatisticheJF opzioniStatisticheJF) {
-		this.opzioniStatisticheJF=opzioniStatisticheJF;	
-	}
-	
-	
 	
 	
 	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
