@@ -18,21 +18,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
+import gui.NotificaJD;
 import gui.SuperJFrame;
-import gui.utilita.IntegerSpinner;
 
 public class StatistichePerFasceOrarieJF extends SuperJFrame {
 	private LocalDate dataInizioPeriodo, dataFinePeriodo;
-	private boolean daSempre;
+//	private boolean daSempre;
 	
 	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI, boolean daSempre) {
 		super(controllerGUI);
-		this.daSempre=daSempre;
+//		this.daSempre=daSempre;
 		if (!daSempre) {
 			this.dataInizioPeriodo = controllerGUI.getDataRiferimentoInizioStatistiche();
 			this.dataFinePeriodo = controllerGUI.getDataRiferimentoFineStatistiche();
@@ -256,7 +257,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		spettacoliPerIncassoLabel.setBounds(175, 68, 232, 33);
 		opzioniPanel.add(spettacoliPerIncassoLabel);
 		
-		IntegerSpinner primiPerIncassoSpinner = new IntegerSpinner();
+		JSpinner primiPerIncassoSpinner = new JSpinner();
 		primiPerIncassoSpinner.setModel(new SpinnerNumberModel(10, 1, null, 1));
 		primiPerIncassoSpinner.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		primiPerIncassoSpinner.setBounds(104, 68, 61, 33);
@@ -299,17 +300,18 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 						controllerGUI.apriSchermata(questaFinestra,
 								new StatistichePerSaleJF(controllerGUI, daSempre, fasceOrarieSelezionate));
 					} else {
-						int numeroSpettacoli = primiPerIncassoSpinner.getIntero();
+						int numeroSpettacoli = (Integer)primiPerIncassoSpinner.getValue();
 						
-						if (controllerGUI.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate,numeroSpettacoli)!=null) {
+						if (controllerGUI.chiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate,numeroSpettacoli)!=null) {
 							controllerGUI.apriSchermata(questaFinestra, new SpettacoliPerIncassoJF(controllerGUI,
 									daSempre, fasceOrarieSelezionate, numeroSpettacoli));
 						}
 						else
-							controllerGUI.apriDialogDaJFrame(questaFinestra, new SpettacoliMancantiJD(controllerGUI));
+							controllerGUI.apriDialogDaJFrame(questaFinestra,
+									new NotificaJD(controllerGUI, ((StatistichePerFasceOrarieJF) questaFinestra).messaggioSpettacoliMancanti()));
 					} 
 				} else {
-					controllerGUI.apriDialogDaJFrame(questaFinestra, new NessunaFasciaSelezionataJD(controllerGUI));
+					controllerGUI.apriDialogDaJFrame(questaFinestra, new NotificaJD(controllerGUI,((StatistichePerFasceOrarieJF) questaFinestra).messaggioNessunaFasciaSelezionata()));
 				}
 				
 				
@@ -329,15 +331,21 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JLabel[] tassiLabels = {tassoAffluenzaFascia1Label, tassoAffluenzaFascia2Label,
 				                               tassoAffluenzaFascia3Label, tassoAffluenzaFascia4Label};
 		
-		double[] tassiAffluenza=controllerGUI.calcolaAffluenzaPerFasce(daSempre);
+		double[] tassiAffluenza=controllerGUI.chiediAffluenzaPerFasce(daSempre);
 		
 		for(int i=0; i<tassiLabels.length; i++) { 
 			tassiLabels[i].setText(String.format("%.2f", tassiAffluenza[i]) +"%");
 			tassiPB[i].setValue((int)Math.round(tassiAffluenza[i]));
 		}
+	}
 	
-		
-		
+	public String messaggioSpettacoliMancanti() {
+		return "Attenzione: nelle fasce orarie selezionate sono stati"
+				+ " trovati meno spettacoli di quelli richiesti.";
+	}
+	
+	public String messaggioNessunaFasciaSelezionata() {
+		return "Attenzione: nessuna fascia selezionata.";
 	}
 	
 }

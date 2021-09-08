@@ -1,19 +1,19 @@
 package entita.spettacolo;
 
-import entita.spettacolo.enumeration.Fascia;
+import entita.spettacolo.enumeration.Biglietto;
 
 public class FasciaDiPrezzo {
 	
-	private Fascia fascia;
+	private Biglietto biglietto;
 	private double prezzo;
 	
-	public FasciaDiPrezzo(Fascia fascia, double prezzo) {
-		this.fascia = fascia;
+	public FasciaDiPrezzo(Biglietto biglietto, double prezzo) {
+		this.biglietto = biglietto;
 		this.prezzo = prezzo;
 	}
 
-	public Fascia getFascia() {
-		return fascia;
+	public Biglietto getBiglietto() {
+		return biglietto;
 	}
 
 	public double getPrezzo() {

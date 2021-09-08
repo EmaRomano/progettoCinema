@@ -6,20 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
-import gui.SuperJD;
+import gui.SuperJDialog;
 import gui.ricerca.CercaSpettacoloJF;
 
-public class DaiConfermaCancellazioneJD extends SuperJD {
-
-	private ControllerGUI controllerGUI;
+public class DaiConfermaCancellazioneJD extends SuperJDialog {
 
 	public DaiConfermaCancellazioneJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);
-		JDialog questaJD = this;
+		SuperJDialog questaJD = this;
 		setTitle("spettacolo cancellato");
 		getContentPane().setBackground(new Color(230, 230, 250));
 		getContentPane().setLayout(null);

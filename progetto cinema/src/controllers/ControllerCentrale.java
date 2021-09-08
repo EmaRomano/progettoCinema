@@ -14,23 +14,24 @@ import entita.Spettacolo;
 import entita.spettacolo.FasciaDiPrezzo;
 import entita.spettacolo.FasciaOraria;
 import entita.spettacolo.Sala;
-import entita.spettacolo.enumeration.Fascia;
+import entita.spettacolo.enumeration.Biglietto;
 import gui.SpettacoloGUI;
+import utilita.CalcolatoreStatistiche;
 
 public class ControllerCentrale {
 	
 	private ControllerGUI controllerGUI;
-	private ControllerStatistiche controllerStatistiche;
+	private CalcolatoreStatistiche controllerStatistiche;
 	private SpettacoloDAO spettacoloDAO = new SpettacoloDAOImplFile();
 
-	//le sale non sono memorizzate su un file, ma in un array in quanto sono solo 5 e sono invariabili
-	private static final Sala[] elencoSale = new Sala[5];
+	//sale e fasce orarie non sono memorizzate su un file, ma in un array in quanto sono solo 5 e sono invariabili
+	private static Sala[] elencoSale = new Sala[5];
 	
-	private static final FasciaOraria[] elencoFasce = new FasciaOraria[4]; //TODO anche loro static e final?
+	private FasciaOraria[] elencoFasce = new FasciaOraria[4];
 	
 	public ControllerCentrale() {
 		controllerGUI=new ControllerGUI(this);
-		controllerStatistiche=new ControllerStatistiche(this);
+		controllerStatistiche=new CalcolatoreStatistiche(this);
 		creaElencoSale();
 		creaElencoFasce();
 	}
@@ -43,6 +44,24 @@ public class ControllerCentrale {
 		elencoSale[4]= new Sala("Gilliam", 300, "24fps+dolby classico");
 	}
 	
+	public void creaElencoFasce() {
+		elencoFasce[0]=new FasciaOraria("sera", "18:30");
+		elencoFasce[1]=new FasciaOraria("prima serata", "20:00");
+		elencoFasce[2]=new FasciaOraria("seconda serata","21:30");
+		elencoFasce[3]=new FasciaOraria("notte", "23:00");
+	}
+	
+	public Sala[] getElencoSale() {
+		return elencoSale;
+	}
+	
+	public FasciaOraria[] getElencoFasce() {
+		return elencoFasce;
+	}
+	
+	
+
+	
 	public static Sala getSalaPerNome(String nomeSala) {
 		
 		for (Sala s : elencoSale) {
@@ -52,13 +71,12 @@ public class ControllerCentrale {
 		
 		return null;
 	}
-
-	public void creaElencoFasce() {
-		elencoFasce[0]=new FasciaOraria("sera", "18:30");
-		elencoFasce[1]=new FasciaOraria("prima serata", "20:00");
-		elencoFasce[2]=new FasciaOraria("seconda serata","21:30");
-		elencoFasce[3]=new FasciaOraria("notte", "23:00");
+	
+	public SpettacoloDAO getSpettacoloDAO() {
+		return spettacoloDAO;
 	}
+
+	
 
 	public Spettacolo traduciInSpettacolo(SpettacoloGUI sGui) {
 		
@@ -67,7 +85,7 @@ public class ControllerCentrale {
 		for(int i = 0; i < 4; i++) {
 			double prezzoCorrente = sGui.getPrezziSpettacolo()[i];
 			if(prezzoCorrente != 0.0) {
-				FasciaDiPrezzo p = new FasciaDiPrezzo(Fascia.values()[i],prezzoCorrente);
+				FasciaDiPrezzo p = new FasciaDiPrezzo(Biglietto.values()[i],prezzoCorrente);
 				int paganti = sGui.getPagantiSpettacolo()[i];
 				pagantiPerFasciaDiPrezzo.put(p, paganti);
 			}
@@ -76,44 +94,20 @@ public class ControllerCentrale {
 		
 		return new Spettacolo(
 				sGui.getTitoloFilm(),
-				ControllerCentrale.getSalaPerNome(sGui.getNomeSala()),
+				getSalaPerNome(sGui.getNomeSala()),
 				sGui.getDataEOra().truncatedTo(ChronoUnit.MINUTES),
 				Duration.ofMinutes(sGui.getDurataFilmInMinuti()),
 				Duration.ofMinutes(sGui.getMargineInMinuti()),
 				pagantiPerFasciaDiPrezzo);
 	}
 	
-
-	public FasciaOraria[] getElencoFasce() {
-		return elencoFasce;
-	}
 	
-	
-	public Sala[] getElencoSale() {
-		return elencoSale;
-	}
-	
-	
-	
-//	public int getNumeroFascia(FasciaOraria fascia) {
-//		for(int i=0; i<elencoFasce.length;i++ ) {
-//			if(elencoFasce[i].equals(fascia))
-//				return i;
-//		}
-//		
-//		return 0;
-//	}
-
-	
-	public SpettacoloDAO getSpettacoloDAO() {
-		return spettacoloDAO;
-	}
 
 	public Spettacolo cercaSpettacolo(Sala sala, LocalDateTime dataEOra) {
 		
-		for(Spettacolo s : spettacoloDAO.getAllSpettacoli()) {
-			if(s.siStaProiettandoIn(dataEOra, sala))
-				return s;
+		for(Spettacolo spettacolo : spettacoloDAO.getAllSpettacoli()) {
+			if(spettacolo.siStaProiettandoIn(dataEOra, sala))
+				return spettacolo;
 		}
 		
 		return null;
@@ -145,12 +139,7 @@ public class ControllerCentrale {
 	public void assegnaSpettacoloASala(Spettacolo spettacolo) {
 		spettacolo.getSala().getListaSpettacoliInQuestaSala().add(spettacolo);
 	}
-	
-	
-//TODO doppione?	
-//	public static FasciaOraria[] getElencofasce() {
-//		return elencoFasce;
-//	}
+
 
 	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
 		return controllerStatistiche.calcolaAffluenzaPerFasce(daSempre);

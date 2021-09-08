@@ -14,20 +14,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controllers.ControllerGUI;
-import gui.inserimento.InserisciSpettacoloJF;
 import gui.ricerca.CercaSpettacoloJF;
+import gui.salvataggio.EditaSpettacoloJF;
 import gui.statistiche.OpzioniStatisticheJF;
 
 public class AvvioJF extends SuperJFrame{
 
-	private JPanel contentPane;
-
 	public AvvioJF(ControllerGUI controllerGUI) {
-		super(controllerGUI);
+		super(controllerGUI);	
 		SuperJFrame questaFinestra=this;
 		setTitle("Benvenuto in S.I.G.M.A.");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -62,7 +60,7 @@ public class AvvioJF extends SuperJFrame{
 		JButton inserisciSpettacoloButton = new JButton("");
 		inserisciSpettacoloButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controllerGUI.apriSchermata(questaFinestra, new InserisciSpettacoloJF(controllerGUI));
+				controllerGUI.apriSchermata(questaFinestra, new EditaSpettacoloJF(controllerGUI, false, null));
 			}
 		});
 		inserisciSpettacoloButton.setToolTipText("aggiungi spettacolo");

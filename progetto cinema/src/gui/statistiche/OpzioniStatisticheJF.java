@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
+import gui.NotificaJD;
 import gui.SuperJFrame;
 import gui.utilita.FinestraCalendario;
 import utilita.ConversioniDateTime;
@@ -36,7 +37,6 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		//get the selected date from the calendar control and set it to the text field
 		if (event.getPropertyName().equals("selectedDate")) {
 
 			java.util.Calendar cal = (java.util.Calendar)event.getNewValue();
@@ -59,7 +59,6 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 
 		this.setTitle("Opzioni statistiche");
 		SuperJFrame questaFinestra = this;
-//		controllerGUI.setOpzioniStatistiche(this);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		getContentPane().setLayout(null);
 
@@ -96,7 +95,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 				finestraCalendarioInizio.setLocation(mostraDataInizioTF.getLocationOnScreen().x, 
 						(mostraDataInizioTF.getLocationOnScreen().y + mostraDataInizioTF.getHeight()));			
 
-				finestraCalendarioInizio.resetSelection((Date)mostraDataInizioTF.getValue());	
+				finestraCalendarioInizio.resettaSelezione((Date)mostraDataInizioTF.getValue());	
 
 				if (!finestraCalendarioInizio.isVisible()) {
 					finestraCalendarioInizio.setUndecorated(true);
@@ -129,7 +128,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 				finestraCalendarioFine.setLocation(mostraDataFineTF.getLocationOnScreen().x, 
 						(mostraDataFineTF.getLocationOnScreen().y + mostraDataFineTF.getHeight()));				
 
-				finestraCalendarioFine.resetSelection((Date)mostraDataFineTF.getValue());	
+				finestraCalendarioFine.resettaSelezione((Date)mostraDataFineTF.getValue());	
 
 				if (!finestraCalendarioFine.isVisible()) {
 					finestraCalendarioFine.setUndecorated(true);
@@ -194,7 +193,7 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 					controllerGUI.apriSchermata(questaFinestra,
 							new StatistichePerFasceOrarieJF(controllerGUI,true));	
 				}else if(dataRiferimentoInizioStatistiche.isAfter(dataRiferimentoFineStatistiche)){
-					controllerGUI.apriDialogDaJFrame(questaFinestra, new ErroreDateJD(controllerGUI));
+					controllerGUI.apriDialogDaJFrame(questaFinestra, new NotificaJD(controllerGUI, ((OpzioniStatisticheJF) questaFinestra).messaggioDateInvertite()));
 				}else {
 					controllerGUI.setDataRiferimentoInizioStatistiche(dataRiferimentoInizioStatistiche);
 					controllerGUI.setDataRiferimentoFineStatistiche(dataRiferimentoFineStatistiche);
@@ -213,12 +212,10 @@ public class OpzioniStatisticheJF extends SuperJFrame implements PropertyChangeL
 
 
 	}
+	
+	
+	public String messaggioDateInvertite() {
+		return "Attenzione: prima data posteriore alla seconda";
+	}
 
-//	public LocalDate getDataRiferimentoInizioStatistiche() {
-//		return dataRiferimentoInizioStatistiche;
-//	}
-//
-//	public LocalDate getDataRiferimentoFineStatistiche() {
-//		return dataRiferimentoFineStatistiche;
-//	}
 }

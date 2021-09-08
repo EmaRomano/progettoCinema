@@ -28,7 +28,7 @@ public class RigaSpettacoloJPanel extends JPanel {
 		this.titoloFilmLabel.setText(spettacolo.getTitoloFilm());
 		this.salaLabel.setText(spettacolo.getSala().getNome());
 		this.dataEOraLabel.setText(spettacolo.getDataEOraInizio().format(formattatore));
-		this.incassoLabel.setText(String.valueOf(spettacolo.getIncasso()));;
+		this.incassoLabel.setText(String.valueOf((spettacolo.getIncasso()*100)/100));
 		incassoPB.setValue((int)Math.round(proporzioneIncasso));	
 		
 		titoloFilmLabel.setToolTipText(titoloFilmLabel.getText());

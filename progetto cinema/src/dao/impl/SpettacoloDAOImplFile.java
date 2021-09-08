@@ -15,12 +15,12 @@ import dao.interfaces.SpettacoloDAO;
 import entita.Spettacolo;
 import entita.spettacolo.FasciaDiPrezzo;
 import entita.spettacolo.Sala;
-import entita.spettacolo.enumeration.Fascia;
+import entita.spettacolo.enumeration.Biglietto;
 import utilita.ScritturaLetturaSuFile;
 
 public class SpettacoloDAOImplFile implements SpettacoloDAO {
 
-	private static final String nomeFilePersistenza = "persistenza/spettacolo.txt";
+	private String nomeFilePersistenza = "persistenza/spettacolo.txt";
 
 	@Override
 	public List<Spettacolo> getAllSpettacoli() {
@@ -116,6 +116,8 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 			campi[indice++] = spettacoloStringa.substring(0, spettacoloStringa.indexOf('#'));
 			spettacoloStringa = spettacoloStringa.substring(spettacoloStringa.indexOf('#')+1);
 		}
+		//l'ultimo campo non termina con # e quindi va gestito fuori dal while
+		campi[12]=spettacoloStringa;
 
 		String nome = campi[0];
 
@@ -135,13 +137,13 @@ public class SpettacoloDAOImplFile implements SpettacoloDAO {
 		//indici 5,6,7,8 sono per i prezzi
 		for(indice = 5; indice < 9; indice++){
 			if(!campi[indice].equals("0.0"))
-				prezzi[indice-5] = new FasciaDiPrezzo(Fascia.values()[indice-5], Double.valueOf(campi[indice]));
+				prezzi[indice-5] = new FasciaDiPrezzo(Biglietto.values()[indice-5], Double.valueOf(campi[indice]));
 		}
 
 		//indici 9,10,11,12 sono per i paganti
 		for(FasciaDiPrezzo p : prezzi) {
 			if(p != null)
-				pagantiPerFasciaDiPrezzo.put(p, Integer.valueOf(campi[p.getFascia().ordinal()+9]));
+				pagantiPerFasciaDiPrezzo.put(p, Integer.valueOf(campi[p.getBiglietto().ordinal()+9]));
 		}
 
 		return new Spettacolo(nome,sala,dataOraInizio,durataFilm,margine,pagantiPerFasciaDiPrezzo);

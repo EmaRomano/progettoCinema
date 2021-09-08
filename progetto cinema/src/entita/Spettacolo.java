@@ -33,6 +33,30 @@ public class Spettacolo {
 		this.margine=margine;
 		this.numeroDiPagantiPerFasciaDiPrezzo = pagantiPerFasciaDiPrezzo;
 	}
+	
+	public String getTitoloFilm() {
+		return titoloFilm;
+	}
+	
+	public Sala getSala() {
+		return sala;
+	}
+	
+	public LocalDateTime getDataEOraInizio() {
+		return dataEOraInizio;
+	}
+
+	public Duration getDurataFilm() {
+		return durataFilm;
+	}
+	
+	public Duration getMargine() {
+		return margine;
+	}
+
+	public Map<FasciaDiPrezzo, Integer> getNumeroDiPagantiPerFasciaDiPrezzo() {
+		return numeroDiPagantiPerFasciaDiPrezzo;
+	}
 
 	
 	public double getTassoAffluenza() {
@@ -78,14 +102,6 @@ public class Spettacolo {
 				  (dataEOra.isAfter(this.dataEOraInizio) && dataEOra.isBefore(this.getDataEOraFine()))  );
 	}
 
-	public Sala getSala() {
-		return sala;
-	}
-	
-	public LocalDateTime getDataEOraInizio() {
-		return dataEOraInizio;
-	}
-
 
 	@Override
 	public String toString() {
@@ -96,8 +112,8 @@ public class Spettacolo {
 		for(Entry<FasciaDiPrezzo,Integer> e : numeroDiPagantiPerFasciaDiPrezzo.entrySet()) {
 			FasciaDiPrezzo p = e.getKey();
 			
-			prezziSpettacolo[p.getFascia().ordinal()] = p.getPrezzo();
-			numeroPaganti[p.getFascia().ordinal()] = e.getValue();
+			prezziSpettacolo[p.getBiglietto().ordinal()] = p.getPrezzo();
+			numeroPaganti[p.getBiglietto().ordinal()] = e.getValue();
 		}			
 		
 		String prezzi = "";
@@ -130,21 +146,7 @@ public class Spettacolo {
 				&& Objects.equals(sala, other.sala) && Objects.equals(titoloFilm, other.titoloFilm);
 	}
 
-	public String getTitoloFilm() {
-		return titoloFilm;
-	}
 
-	public Duration getDurataFilm() {
-		return durataFilm;
-	}
-	
-	public Duration getMargine() {
-		return margine;
-	}
-
-	public Map<FasciaDiPrezzo, Integer> getNumeroDiPagantiPerFasciaDiPrezzo() {
-		return numeroDiPagantiPerFasciaDiPrezzo;
-	}
 	
 	public boolean proiettatoNelPeriodo(LocalDate inizio, LocalDate fine) {
 		LocalDate dataSpettacolo = dataEOraInizio.toLocalDate();

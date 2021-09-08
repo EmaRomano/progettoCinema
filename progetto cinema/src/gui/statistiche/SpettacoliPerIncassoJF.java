@@ -28,43 +28,8 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 	private JScrollPane scrollTabella;
 	
 	private LocalDate dataInizioPeriodo, dataFinePeriodo;
-
-	
-	public void creaTabellaSpettacoli(RigaSpettacoloJPanel[] righe) {
-		if(getContentPane().isAncestorOf(scrollTabella))
-			getContentPane().remove(scrollTabella);
-
-		tabellaPanel = new JPanel();
-		tabellaPanel.setBounds(0, 0, 865, righe.length*29);
-		tabellaPanel.setLayout(new GridLayout(righe.length, 1));
-		for (int i=0; i<righe.length; i++) {
-			righe[i].setBounds(0, i*29, 865,29);
-			tabellaPanel.add(righe[i]);
-		}
-		scrollTabella =new JScrollPane(tabellaPanel);
-		scrollTabella.setBounds(10,129, 1077,290);
-		scrollTabella.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		getContentPane().add(scrollTabella);
-		
-	}
 	
 	
-	public RigaSpettacoloJPanel[] creaRigheTabella(Spettacolo[] spettacoli) {
-		double massimoIncasso=spettacoli[0].getIncasso();
-		RigaSpettacoloJPanel[] righeSpettacoli=new RigaSpettacoloJPanel[spettacoli.length];
-		for(int i=0; i<spettacoli.length;i++) {
-			righeSpettacoli[i]=new RigaSpettacoloJPanel(i+1, 
-					spettacoli[i],
-					i==0?100 : (spettacoli[i].getIncasso()/massimoIncasso)*100);
-		}
-		
-		return righeSpettacoli;
-		
-		
-	}
-	
-	
-	//costruttore
 	public SpettacoliPerIncassoJF(ControllerGUI controllerGUI, boolean daSempre,
 			List<String> fasceOrarieSelezionate, int numeroSpettacoli)
 	
@@ -105,14 +70,14 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		
 		String fasce="";
 		for(int i=0;i<fasceOrarieSelezionate.size()-1;i++)
-			fasce+=fasceOrarieSelezionate.get(i)+" ,";
+			fasce+=fasceOrarieSelezionate.get(i)+", ";
 		
 		fasce+=fasceOrarieSelezionate.get(fasceOrarieSelezionate.size()-1);
 		
 		JLabel indicaFasciaOrariaLabel = new JLabel(fasce);
 		indicaFasciaOrariaLabel.setForeground(Color.BLUE);
 		indicaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		indicaFasciaOrariaLabel.setBounds(195, 51, 696, 29);
+		indicaFasciaOrariaLabel.setBounds(195, 49, 696, 29);
 		getContentPane().add(indicaFasciaOrariaLabel);
 		
 		JPanel testataTabellaPanel = new JPanel();
@@ -140,13 +105,13 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		dataEOraTestataLabel.setBounds(524, 0, 217, 29);
 		testataTabellaPanel.add(dataEOraTestataLabel);
 		
-		JLabel incassoTestataLabel = new JLabel("incasso");
+		JLabel incassoTestataLabel = new JLabel("incasso(€)");
 		incassoTestataLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		incassoTestataLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
 		incassoTestataLabel.setBounds(751, 0, 105, 29);
 		testataTabellaPanel.add(incassoTestataLabel);
 		
-		JLabel incassoTestataPB = new JLabel("progress bar");
+		JLabel incassoTestataPB = new JLabel("proporzione incasso");
 		incassoTestataPB.setHorizontalAlignment(SwingConstants.CENTER);
 		incassoTestataPB.setFont(new Font("Calibri", Font.PLAIN, 18));
 		incassoTestataPB.setBounds(896, 0, 163, 29);
@@ -183,11 +148,41 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		creaSfondoScalatoSu(tornaAllAvvioButton, "home.png");
 		
 		Spettacolo[] primiPerIncasso=
-				controllerGUI.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
+				controllerGUI.chiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
 
 		creaTabellaSpettacoli(creaRigheTabella(primiPerIncasso));
 		
+	}
+	
+	public void creaTabellaSpettacoli(RigaSpettacoloJPanel[] righe) {
+		if(getContentPane().isAncestorOf(scrollTabella))
+			getContentPane().remove(scrollTabella);
 
+		tabellaPanel = new JPanel();
+		tabellaPanel.setBounds(0, 0, 865, righe.length*29);
+		tabellaPanel.setLayout(new GridLayout(righe.length, 1));
+		for (int i=0; i<righe.length; i++) {
+			righe[i].setBounds(0, i*29, 865,29);
+			tabellaPanel.add(righe[i]);
+		}
+		scrollTabella =new JScrollPane(tabellaPanel);
+		scrollTabella.setBounds(10,129, 1077,290);
+		scrollTabella.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		getContentPane().add(scrollTabella);
+		
+	}
+	
+	public RigaSpettacoloJPanel[] creaRigheTabella(Spettacolo[] spettacoli) {
+		double massimoIncasso=spettacoli[0].getIncasso();
+		RigaSpettacoloJPanel[] righeSpettacoli=new RigaSpettacoloJPanel[spettacoli.length];
+		for(int i=0; i<spettacoli.length;i++) {
+			righeSpettacoli[i]=new RigaSpettacoloJPanel(i+1, 
+					spettacoli[i],
+					i==0?100 : (spettacoli[i].getIncasso()/massimoIncasso)*100);
+		}
+		
+		return righeSpettacoli;
+		
 		
 	}
 }

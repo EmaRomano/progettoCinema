@@ -13,7 +13,6 @@ import com.mindfusion.common.DateTime;
 import com.mindfusion.scheduling.Calendar;
 import com.mindfusion.scheduling.ThemeType;
 
-//TODO cancella tutti i commenti
 public class FinestraCalendario extends JFrame {	
 
 	private static final long serialVersionUID = 1L;	
@@ -40,15 +39,11 @@ public class FinestraCalendario extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2)
 				{			
-					//clear the selection
 					calendario.getSelection().reset();
-					//get the date that was double-clicked
-      					DateTime dataPuntata = calendario.getDateAt(e.getX(), e.getY());
-					//create a java.util.Calendar instance that points to the selected Date
+      				DateTime dataPuntata = calendario.getDateAt(e.getX(), e.getY());
 					java.util.Calendar cal = java.util.Calendar.getInstance();
 					cal.set(dataPuntata.getYear(), dataPuntata.getMonth() - 1, dataPuntata.getDay());
-					//raise the event
-					setSelectedDate(cal);					
+					impostaDataSelezionata(cal);					
 
 					dispose();	
 
@@ -61,15 +56,12 @@ public class FinestraCalendario extends JFrame {
 	}
 
 
-	//getter of the selectedDate property
-	public java.util.Calendar getSelectedDate()
+	public java.util.Calendar getDataSelezionata()
 	{
 		return dataSelezionata;
-
 	}
 
-	//set the selectedDate when typed in the text field
-	public void resetSelection(Date data)
+	public void resettaSelezione(Date data)
 	{
 		calendario.getSelection().reset();
 		calendario.getSelection().set(new DateTime(data), new DateTime(data).addMinutes(2));
@@ -78,8 +70,7 @@ public class FinestraCalendario extends JFrame {
 	}
 
 
-	//raises the event that the selectedDate property has changed
-	public void setSelectedDate (java.util.Calendar dataSel)
+	public void impostaDataSelezionata (java.util.Calendar dataSel)
 	{
 
 		java.util.Calendar vecchioValore = (java.util.Calendar)dataSelezionata.clone();
@@ -89,7 +80,7 @@ public class FinestraCalendario extends JFrame {
 
 	}
 
-	//adds a listener for the PropertyChange event
+
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		cambiaSupporto.addPropertyChangeListener(listener);
 	}

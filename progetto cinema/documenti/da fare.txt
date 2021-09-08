@@ -1,1 +1,0 @@
-rimuovi associazioni da SuperJF e SuperJD a ControllerGUI: non servono.

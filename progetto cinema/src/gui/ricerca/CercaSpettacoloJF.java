@@ -23,10 +23,11 @@ import javax.swing.border.BevelBorder;
 
 import controllers.ControllerGUI;
 import entita.Spettacolo;
+import gui.NotificaJD;
 import gui.SpettacoloGUI;
 import gui.SuperJFrame;
 import gui.cancellazione.CancellaSpettacoloJF;
-import gui.modifica.ModificaSpettacoloJF;
+import gui.salvataggio.EditaSpettacoloJF;
 import gui.utilita.FinestraCalendario;
 import gui.utilita.OraSpinner;
 import utilita.ConversioniDateTime;
@@ -41,18 +42,6 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 	private OraSpinner oraSpinner;
 	
 	private boolean cercaPerModifica;
-
-
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		//get the selected date from the calendar control and set it to the text field
-		if (event.getPropertyName().equals("selectedDate")) {
-
-			java.util.Calendar calendario = (java.util.Calendar)event.getNewValue();
-			Date selezionaData =  calendario.getTime();
-			mostraDataTF.setValue(selezionaData);
-		}	
-	}
 
 	public CercaSpettacoloJF(ControllerGUI controllerGUI, boolean cercaPerModifica) {
 		super(controllerGUI);
@@ -101,12 +90,12 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 				controllerGUI.setSpettacoloTrovato(spettacoloTrovato);
 				if(spettacoloTrovato == null)
 					controllerGUI.apriDialogDaJFrame(questaFinestra,
-							new SpettacoloNonTrovatoJD(controllerGUI));
+							new NotificaJD(controllerGUI, ((CercaSpettacoloJF) questaFinestra).messaggioSpettacoloNonTrovato()));
 				else {
 					SpettacoloGUI spettacoloGuiDaImportare=controllerGUI.traduciInSpettacoloGui(spettacoloTrovato);
 					if(cercaPerModifica)
 						controllerGUI.apriSchermata(questaFinestra, 
-								new ModificaSpettacoloJF(controllerGUI, spettacoloGuiDaImportare));
+								new EditaSpettacoloJF(controllerGUI, true, spettacoloGuiDaImportare));
 					else
 						controllerGUI.apriSchermata(questaFinestra, 
 								new CancellaSpettacoloJF(controllerGUI, spettacoloGuiDaImportare));
@@ -210,7 +199,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
 //				data = (Date)mostraDataTF.getValue();				
 
-				finestraCalendario.resetSelection(data);				
+				finestraCalendario.resettaSelezione(data);				
 				if (!finestraCalendario.isVisible()) {
 					finestraCalendario.setUndecorated(true);
 				}
@@ -225,6 +214,20 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 
 		/***********************************fine blocco codice per DatePicker**************************/	
 
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		if (event.getPropertyName().equals("selectedDate")) {
+
+			java.util.Calendar calendario = (java.util.Calendar)event.getNewValue();
+			Date selezionaData =  calendario.getTime();
+			mostraDataTF.setValue(selezionaData);
+		}	
+	}
+	
+	public String messaggioSpettacoloNonTrovato() {
+		return "Spettacolo non trovato: sala libera alla data e all'orario specificati";
 	}
 }
 

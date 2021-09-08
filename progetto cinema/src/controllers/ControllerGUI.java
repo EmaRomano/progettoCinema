@@ -8,30 +8,24 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Stack;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
 import entita.Spettacolo;
 import entita.spettacolo.FasciaDiPrezzo;
 import entita.spettacolo.Sala;
 import gui.AvvioJF;
-import gui.ErroreSpettacoliSovrappostiJD;
+import gui.NotificaJD;
 import gui.SpettacoloGUI;
+import gui.SuperJDialog;
+import gui.SuperJFrame;
 import gui.cancellazione.DaiConfermaCancellazioneJD;
-import gui.inserimento.DaiConfermaInserimentoJD;
-import gui.modifica.DaiConfermaModificaJD;
+import gui.salvataggio.DaiConfermaSalvataggioJD;
 
 public class ControllerGUI {
 
-	private Stack<JFrame> stackSchermate = new Stack<>();
+	private Stack<SuperJFrame> stackSchermate = new Stack<>();
 	
-	private JDialog dialogDachiudere;
+	private SuperJDialog dialogDachiudere;
 	
 	private ControllerCentrale controllerCentrale;
-	
-	private AvvioJF avvioJF;
-	
-//	private OpzioniStatisticheJF opzioniStatisticheJF;
 
 	private Spettacolo spettacoloTrovato;	
 	
@@ -40,11 +34,11 @@ public class ControllerGUI {
 	public ControllerGUI(ControllerCentrale controllerCentrale) {
 		this.controllerCentrale=controllerCentrale;
 		
-		avvioJF=new AvvioJF(this);
-		avvioJF.setVisible(true);
+		stackSchermate.push(new AvvioJF(this));
+		stackSchermate.firstElement().setVisible(true);
 	}
 
-    /**************************************************************************************/
+    /*************************getters e setters date**********************************************/
 	
 	public LocalDate getDataRiferimentoInizioStatistiche() {
 		return dataRiferimentoInizioStatistiche;
@@ -69,49 +63,44 @@ public class ControllerGUI {
 	/*******************************metodi di navigazione finestre*******************************/
 
 	
-	public void apriSchermata(JFrame schermataCorrente, JFrame nuovaSchermata) {
+	public void apriSchermata(SuperJFrame schermataCorrente, SuperJFrame nuovaSchermata) {
 		stackSchermate.push(schermataCorrente);
 		schermataCorrente.setVisible(false);
 		nuovaSchermata.setVisible(true);
 	}
 	
-	public void chiudiSchermata(JFrame schermataCorrente) {
+	public void chiudiSchermata(SuperJFrame schermataCorrente) {
 		schermataCorrente.setVisible(false);
 		schermataCorrente.dispose();
 		stackSchermate.pop().setVisible(true);
 	}
 	
-	public void apriDialogDaJFrame(JFrame daDisattivare, JDialog daMostrare) {
-//		schermataSottoDialog = schermataDaDisattivare;
+	public void apriDialogDaJFrame(SuperJFrame daDisattivare, SuperJDialog daMostrare) {
 		stackSchermate.push(daDisattivare);
-		daDisattivare.setEnabled(false);
 		daMostrare.setVisible(true);
 	}
 	
-	public void chiudiDialog(JDialog daChiudere) {
+	public void chiudiDialog(SuperJDialog daChiudere) {
 		daChiudere.setVisible(false);
 		daChiudere.dispose();
-		stackSchermate.lastElement().setEnabled(true);
 		stackSchermate.pop().requestFocus();
 	}
 	
-	public void apriDialogDaDialog(JDialog daChiudere, JDialog daAprire) {
+	public void apriDialogDaDialog(SuperJDialog daChiudere, SuperJDialog daAprire) {
 		dialogDachiudere=daChiudere;
 		dialogDachiudere.setVisible(false);
 		dialogDachiudere.dispose();
 		
-		stackSchermate.lastElement().setEnabled(true); //cerca di sistemare questa schifezza TODO
 		stackSchermate.lastElement().requestFocus();
-		stackSchermate.lastElement().setEnabled(false);
 		
 		daAprire.setVisible(true);
 	}
 	
-	public void tornaARicercaDopoOperazione(JDialog daChiudere, JFrame daAprire) {
+	public void tornaARicercaDopoOperazione(SuperJDialog daChiudere, SuperJFrame daAprire) {
 		daChiudere.setVisible(false);
 		daChiudere.dispose();
 		
-		stackSchermate.lastElement().setEnabled(true); //cerca di sistemare questa schifezza TODO
+//		stackSchermate.lastElement().setEnabled(true);
 		stackSchermate.lastElement().setVisible(false);
 		stackSchermate.pop().dispose();
 		
@@ -123,7 +112,7 @@ public class ControllerGUI {
 		finestra.dispose();
 		stackSchermate.lastElement().setVisible(false);
 		stackSchermate.lastElement().dispose();
-		avvioJF.setVisible(true);
+		stackSchermate.firstElement().setVisible(true);
 		stackSchermate.clear();
 	}
 	
@@ -135,41 +124,26 @@ public class ControllerGUI {
 		this.spettacoloTrovato=spettacoloTrovato;
 	}
 
-	
-	
-
 	public Spettacolo cercaSpettacolo(String nomeSala, LocalDate data, LocalTime ora) {
 		Sala salaSpettacolo = ControllerCentrale.getSalaPerNome(nomeSala);
 		return controllerCentrale.cercaSpettacolo(salaSpettacolo, LocalDateTime.of(data, ora));
 	}
 	
-	
-	//INSERIMENTO, MODIFICA ED ELIMINAZIONE
-	public void confermaInserimentoSpettacolo(SpettacoloGUI spettacoloGuiDaInserire, JDialog daChiudere) {
-		Spettacolo daInserire = controllerCentrale.traduciInSpettacolo(spettacoloGuiDaInserire);
-		if(controllerCentrale.getSpettacoloDAO().insertSpettacolo(daInserire))
-			apriDialogDaDialog(daChiudere, new DaiConfermaInserimentoJD(this));
-		else
-			apriDialogDaDialog(daChiudere, new ErroreSpettacoliSovrappostiJD(this));
-	}
 
-	public void confermaModificaSpettacolo(SpettacoloGUI spettacoloGuiModificato, JDialog daChiudere) {
-		Spettacolo spettacoloModificato = controllerCentrale.traduciInSpettacolo(spettacoloGuiModificato);
-		if(controllerCentrale.getSpettacoloDAO().updateSpettacolo(spettacoloTrovato,spettacoloModificato))
-			apriDialogDaDialog(daChiudere, new DaiConfermaModificaJD(this));// TODO CREARE UNA JD DIVERSA
+	public void confermaSalvataggioSpettacolo(SpettacoloGUI spettacoloGuiDaSalvare, boolean perModifica, SuperJDialog daChiudere) {
+		Spettacolo spettacoloDaSalvare = controllerCentrale.traduciInSpettacolo(spettacoloGuiDaSalvare);
+		if(perModifica && controllerCentrale.getSpettacoloDAO().updateSpettacolo(spettacoloTrovato,spettacoloDaSalvare))
+			apriDialogDaDialog(daChiudere, new DaiConfermaSalvataggioJD(this, perModifica));
+		else if(!perModifica && controllerCentrale.getSpettacoloDAO().insertSpettacolo(spettacoloDaSalvare))
+			apriDialogDaDialog(daChiudere, new DaiConfermaSalvataggioJD(this, perModifica));
 		else
-			apriDialogDaDialog(daChiudere, new ErroreSpettacoliSovrappostiJD(this));
-
-		spettacoloTrovato=null;
+			apriDialogDaDialog(daChiudere, new NotificaJD(this, this.messaggioSpettacoliSovrapposti()));	
 	}
 
 
-	public void confermaCancellazioneSpettacolo(JDialog daChiudere) {
+	public void confermaCancellazioneSpettacolo(SuperJDialog daChiudere) {
 		if(controllerCentrale.getSpettacoloDAO().removeSpettacolo(spettacoloTrovato))
-			apriDialogDaDialog(daChiudere, new DaiConfermaCancellazioneJD(this));
-		
-		spettacoloTrovato=null;
-		
+			apriDialogDaDialog(daChiudere, new DaiConfermaCancellazioneJD(this));			
 	}
 
 
@@ -181,8 +155,8 @@ public class ControllerGUI {
 		for(Entry<FasciaDiPrezzo,Integer> e : s.getNumeroDiPagantiPerFasciaDiPrezzo().entrySet()) {
 			FasciaDiPrezzo p = e.getKey();
 			
-			prezziSpettacolo[p.getFascia().ordinal()] = p.getPrezzo();
-			numeroPaganti[p.getFascia().ordinal()] = e.getValue();
+			prezziSpettacolo[p.getBiglietto().ordinal()] = p.getPrezzo();
+			numeroPaganti[p.getBiglietto().ordinal()] = e.getValue();
 		}		
 		
 		return new SpettacoloGUI(s.getTitoloFilm(),
@@ -194,23 +168,28 @@ public class ControllerGUI {
 	}
 	
 	
-	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
+	public double[] chiediAffluenzaPerFasce(boolean daSempre) {
 		return controllerCentrale.calcolaAffluenzaPerFasce(daSempre);
 	}
 
 
-	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
+	public double[] chiediAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
 		return controllerCentrale.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
 	}
 
 
-	public Spettacolo[] trovaPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
+	public Spettacolo[] chiediPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
 		return controllerCentrale.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
 	}
 
 
 	public int getPostiDisponibiliSala(String nomeSala) {
 		return ControllerCentrale.getSalaPerNome(nomeSala).getPostiDisponibili();
+	}
+	
+	public String messaggioSpettacoliSovrapposti() {
+		return "Impossibile inserire lo spettacolo: sala gia' "
+				+ "occupata alla data e all'orario inseriti";
 	}
 
 

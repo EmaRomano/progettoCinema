@@ -18,15 +18,15 @@ public class Sala {
 		this.postiDisponibili = postiDisponibili;
 		this.tecnologia = tecnologia;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
 
 	public int getPostiDisponibili() {
 		return postiDisponibili;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-	
 	public List<Spettacolo> getListaSpettacoliInQuestaSala() {
 		return listaSpettacoliInQuestaSala;
 	}

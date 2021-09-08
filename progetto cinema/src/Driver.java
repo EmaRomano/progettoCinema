@@ -12,10 +12,16 @@ public class Driver {
 		new Driver();
 	}
 	
-	//TODO ultimo salvataggio in copia2 il 5 agosto
+	//TODO ultimo salvataggio in copia4 l' 8 settembre
 	// praticamente finito il progetto
-	// ultima cosa fatta: controllo sui posti diponibili nelle sale
-
-        //PROVA
+	// ultime cose fatte:
+	//eliminazione inserisciSpettacolo e relative JD
+	//uso di NotificaJD
+	//eliminazione di molteJD
+	//eliminazione di IntegerSpinner
+	//aggiustati gli attributi di EditaSpettacoloJF
+	//tolta associazione AvvioJF con ControllerGUI
+	//aggiustata CancellaSpettacoloJF (tolti tutti gli attributi)
+	//eliminata associazione di spettacoloGUI con EditaSpettacoloJF
 
 }

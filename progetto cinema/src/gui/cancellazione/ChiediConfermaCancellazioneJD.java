@@ -6,19 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JTextArea;
 
 import controllers.ControllerGUI;
-import gui.SuperJD;
+import gui.SuperJDialog;
 
-public class ChiediConfermaCancellazioneJD extends SuperJD {
-
-	private ControllerGUI controllerGUI;
+public class ChiediConfermaCancellazioneJD extends SuperJDialog {
 
 	public ChiediConfermaCancellazioneJD(ControllerGUI controllerGUI) {
 		super(controllerGUI);
-		JDialog questaJD = this;
+		SuperJDialog questaJD = this;
 		setTitle("richiesta conferma salvataggio");
 		getContentPane().setBackground(new Color(230, 230, 250));
 		getContentPane().setLayout(null);

@@ -28,11 +28,14 @@ public class StatistichePerSaleJF extends SuperJFrame {
 			boolean daSempre, List<String> fasceOrarieSelezionate) 
 	
 	{
+		
 		super(controllerGUI);
+		
 		if (!daSempre) {
 			this.dataInizioPeriodo = controllerGUI.getDataRiferimentoInizioStatistiche();
 			this.dataFinePeriodo = controllerGUI.getDataRiferimentoFineStatistiche();
 		}
+		
 		getContentPane().setBackground(new Color(230, 230, 250));
 		SuperJFrame questaFinestra=this;
 		setTitle("Affluenza per sale");
@@ -58,19 +61,19 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		
 		JLabel nellaFasciaOrariaLabel = new JLabel("Nelle fasce orarie: ");
 		nellaFasciaOrariaLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		nellaFasciaOrariaLabel.setBounds(5, 64, 187, 29);
+		nellaFasciaOrariaLabel.setBounds(5, 64, 191, 29);
 		getContentPane().add(nellaFasciaOrariaLabel);
 		
 		String fasce="";
 		for(int i=0;i<fasceOrarieSelezionate.size()-1;i++)
-			fasce+=fasceOrarieSelezionate.get(i)+" ,";
+			fasce+=fasceOrarieSelezionate.get(i)+", ";
 		
 		fasce+=fasceOrarieSelezionate.get(fasceOrarieSelezionate.size()-1);
 		
 		JLabel mostraFasceOrarieLabel = new JLabel(fasce);
 		mostraFasceOrarieLabel.setForeground(Color.BLUE);
 		mostraFasceOrarieLabel.setFont(new Font("Calibri", Font.PLAIN, 22));
-		mostraFasceOrarieLabel.setBounds(174, 64, 475, 29);
+		mostraFasceOrarieLabel.setBounds(180, 64, 469, 29);
 		getContentPane().add(mostraFasceOrarieLabel);
 		
 		JPanel barrePanel = new JPanel();
@@ -264,7 +267,7 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		JLabel[] tassiLabels = {tassoAffluenzaSala1Label, tassoAffluenzaSala2Label,
 				tassoAffluenzaSala3Label, tassoAffluenzaSala4Label, tassoAffluenzaSala5Label};
 		
-		double[] tassiAffluenza=controllerGUI.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
+		double[] tassiAffluenza=controllerGUI.chiediAffluenzaPerSale(fasceOrarieSelezionate);
 		
 		for(int i=0; i<tassiLabels.length; i++) { 
 			tassiLabels[i].setText(String.format("%.2f", tassiAffluenza[i]) +"%");

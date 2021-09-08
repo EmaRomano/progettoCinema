@@ -26,44 +26,6 @@ import gui.utilita.FinestraCalendario;
 
 public class CancellaSpettacoloJF extends SuperJFrame {
 	
-	private JLabel mostraTitoloFilmLabel;	
-	private JLabel mostraSalaLabel;
-	private JLabel mostraTecnologiaLabel;
-	private JLabel mostraDataLabel;
-	private JLabel mostraOraLabel;
-	private JLabel mostraDurataFilmLabel; 
-	private JLabel mostraMargineLabel;
-	private JLabel prezzoBigliettoRegolareLabel;
-	private JLabel prezzoBigliettoRidotto1Label;
-	private JLabel prezzoBigliettoRidotto2Label;
-	private JLabel prezzoBigliettoRidotto3Label;
-	private JLabel pagantiRegolariLabel;
-	private JLabel pagantiRidotto1Label;
-	private JLabel pagantiRidotto2Label;
-	private JLabel pagantiRidotto3Label;
-
-	public void importaSpettacoloGui(SpettacoloGUI sGui) {		
-		DateTimeFormatter formattatoreData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		DateTimeFormatter formattatoreOra = DateTimeFormatter.ofPattern("HH:mm");
-		
-		mostraTitoloFilmLabel.setText(sGui.getTitoloFilm());
-		mostraTitoloFilmLabel.setToolTipText(mostraTitoloFilmLabel.getText());
-		mostraSalaLabel.setText(sGui.getNomeSala().toUpperCase());
-		impostaTecnologiaSale();
-		mostraDataLabel.setText(sGui.getDataEOra().toLocalDate().format(formattatoreData));
-		mostraOraLabel.setText(sGui.getDataEOra().toLocalTime().format(formattatoreOra));
-		mostraDurataFilmLabel.setText(String.valueOf(sGui.getDurataFilmInMinuti()));
-		mostraMargineLabel.setText(String.valueOf(sGui.getMargineInMinuti()));
-		prezzoBigliettoRegolareLabel.setText(String.valueOf(sGui.getPrezziSpettacolo()[0]));
-		prezzoBigliettoRidotto1Label.setText(String.valueOf(sGui.getPrezziSpettacolo()[1]));
-		prezzoBigliettoRidotto2Label.setText(String.valueOf(sGui.getPrezziSpettacolo()[2]));
-		prezzoBigliettoRidotto3Label.setText(String.valueOf(sGui.getPrezziSpettacolo()[3]));
-		pagantiRegolariLabel.setText(String.valueOf(sGui.getPagantiSpettacolo()[0]));
-		pagantiRidotto1Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[1]));
-		pagantiRidotto2Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[2]));
-		pagantiRidotto3Label.setText(String.valueOf(sGui.getPagantiSpettacolo()[3]));
-	}
-
 	public CancellaSpettacoloJF(ControllerGUI controllerGUI, SpettacoloGUI spettacoloGuiDaImportare) {
 		super(controllerGUI);
 		getContentPane().setBackground(new Color(230, 230, 250));
@@ -147,6 +109,22 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		cancellaButton.setOpaque(false);
 		cancellaButton.setSize(87, 83);
 		creaSfondoScalatoSu(cancellaButton, "iconaCancella.png");
+		
+		 JLabel mostraTitoloFilmLabel;	
+		 JLabel mostraSalaLabel;
+		 JLabel mostraTecnologiaLabel;
+		 JLabel mostraDataLabel;
+		 JLabel mostraOraLabel;
+		 JLabel mostraDurataFilmLabel; 
+		 JLabel mostraMargineLabel;
+		 JLabel prezzoBigliettoRegolareLabel;
+		 JLabel prezzoBigliettoRidotto1Label;
+		 JLabel prezzoBigliettoRidotto2Label;
+		 JLabel prezzoBigliettoRidotto3Label;
+		 JLabel pagantiRegolariLabel;
+		 JLabel pagantiRidotto1Label;
+		 JLabel pagantiRidotto2Label;
+		 JLabel pagantiRidotto3Label;
 
 		JLabel salaLabel = new JLabel("Sala:");
 		salaLabel.setBounds(12, 57, 75, 27);
@@ -468,11 +446,27 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		tecnologiaLabel.setBounds(10, 88, 108, 27);
 		schedulingPanel.add(tecnologiaLabel);
 		
+		/*****************************codice per importare lo spettacoloGUI********************/
+		DateTimeFormatter formattatoreData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formattatoreOra = DateTimeFormatter.ofPattern("HH:mm");
 		
-		importaSpettacoloGui(spettacoloGuiDaImportare);
-	}
-	
-	private void impostaTecnologiaSale() {
+		mostraTitoloFilmLabel.setText(spettacoloGuiDaImportare.getTitoloFilm());
+		mostraTitoloFilmLabel.setToolTipText(mostraTitoloFilmLabel.getText());
+		mostraSalaLabel.setText(spettacoloGuiDaImportare.getNomeSala().toUpperCase());
+		mostraDataLabel.setText(spettacoloGuiDaImportare.getDataEOra().toLocalDate().format(formattatoreData));
+		mostraOraLabel.setText(spettacoloGuiDaImportare.getDataEOra().toLocalTime().format(formattatoreOra));
+		mostraDurataFilmLabel.setText(String.valueOf(spettacoloGuiDaImportare.getDurataFilmInMinuti()));
+		mostraMargineLabel.setText(String.valueOf(spettacoloGuiDaImportare.getMargineInMinuti()));
+		prezzoBigliettoRegolareLabel.setText(String.valueOf(spettacoloGuiDaImportare.getPrezziSpettacolo()[0]));
+		prezzoBigliettoRidotto1Label.setText(String.valueOf(spettacoloGuiDaImportare.getPrezziSpettacolo()[1]));
+		prezzoBigliettoRidotto2Label.setText(String.valueOf(spettacoloGuiDaImportare.getPrezziSpettacolo()[2]));
+		prezzoBigliettoRidotto3Label.setText(String.valueOf(spettacoloGuiDaImportare.getPrezziSpettacolo()[3]));
+		pagantiRegolariLabel.setText(String.valueOf(spettacoloGuiDaImportare.getPagantiSpettacolo()[0]));
+		pagantiRidotto1Label.setText(String.valueOf(spettacoloGuiDaImportare.getPagantiSpettacolo()[1]));
+		pagantiRidotto2Label.setText(String.valueOf(spettacoloGuiDaImportare.getPagantiSpettacolo()[2]));
+		pagantiRidotto3Label.setText(String.valueOf(spettacoloGuiDaImportare.getPagantiSpettacolo()[3]));
+		
+		/**************************imposta tecnologia sala****************************/
 		String sala=mostraSalaLabel.getText();
 		if (sala.equals("LEONE"))
 			mostraTecnologiaLabel.setText("IMAX+Dolby Atmos");
@@ -481,4 +475,5 @@ public class CancellaSpettacoloJF extends SuperJFrame {
 		else
 			mostraTecnologiaLabel.setText("24fps+Dolby classico");
 	}
+
 }
