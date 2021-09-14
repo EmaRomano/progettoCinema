@@ -1,10 +1,38 @@
-Notte brava con Java#Leone#01/08/2021-18:30#100#20#10.0#0.0#0.0#0.0#350#0#0#0
-Notte brava con Java#Leone#02/08/2021-23:00#100#20#4.0#0.0#0.0#0.0#250#0#0#0
-Notte brava con Java#Bergman#01/08/2021-23:00#100#20#6.0#0.0#0.0#0.0#250#0#0#0
-Notte brava con Java#Bergman#02/08/2021-23:30#100#20#5.0#0.0#0.0#0.0#250#0#0#0
-Notte brava con Java#Kubrick#02/08/2021-23:04#100#20#11.0#0.0#0.0#0.0#200#0#0#0
-Notte brava con Java#Hitchcock#02/08/2021-23:40#100#20#3.0#3.0#3.0#0.0#240#20#25#0
-Notte brava con Java#Gilliam#02/08/2021-23:50#100#20#6.0#0.0#0.0#0.0#250#0#0#0
-Notte brava con Java#Gilliam#01/08/2021-23:55#100#20#6.0#0.0#0.0#0.0#250#0#0#0
-Notte brava con Java#Hitchcock#01/08/2021-23:00#100#20#6.0#0.0#0.0#0.0#250#0#0#0
-Notte brava con Java#Kubrick#01/08/2021-00:00#100#20#6.0#0.0#0.0#0.0#250#0#0#0
+Non e' un  Paese per C++#Leone#10/09/2021-18:30#90#20#8.0#0.0#0.0#0.0#274#0#0#0
+Non e' un  Paese per C++#Leone#10/09/2021-20:30#90#20#8.0#0.0#0.0#0.0#307#0#0#0
+Non e' un  Paese per C++#Leone#10/09/2021-22:30#90#20#8.0#6.0#0.0#0.0#339#10#0#0
+Non e' un  Paese per C++#Leone#10/09/2021-00:20#90#20#8.0#6.0#0.0#0.0#310#16#0#0
+Il settimo sigillo#Bergman#10/09/2021-18:30#90#20#6.0#4.0#0.0#0.0#310#7#0#0
+Il settimo sigillo#Bergman#10/09/2021-20:30#90#20#6.0#4.0#0.0#0.0#329#7#0#0
+Il settimo sigillo#Bergman#10/09/2021-22:30#90#20#6.0#4.0#0.0#0.0#318#7#0#0
+Il settimo sigillo#Bergman#10/09/2021-00:20#90#20#6.0#4.0#0.0#0.0#300#7#0#0
+Non aprite quella finestra#Kubrick#10/09/2021-18:30#90#20#6.0#4.0#0.0#0.0#298#4#0#0
+Non aprite quella finestra#Kubrick#10/09/2021-20:30#90#20#6.0#4.0#0.0#0.0#301#4#0#0
+Non aprite quella finestra#Kubrick#10/09/2021-22:30#90#20#6.0#4.0#0.0#0.0#305#2#0#0
+Non aprite quella finestra#Kubrick#10/09/2021-00:20#90#20#6.0#4.0#0.0#0.0#290#2#0#0
+La JFrame sul cortile#Hitchcock#10/09/2021-18:30#90#20#7.0#5.0#0.0#0.0#290#2#0#0
+La JFrame sul cortile#Hitchcock#10/09/2021-20:30#90#20#7.0#5.0#0.0#0.0#286#8#0#0
+La JFrame sul cortile#Hitchcock#10/09/2021-22:30#90#20#7.0#5.0#0.0#0.0#283#8#0#0
+La JFrame sul cortile#Hitchcock#10/09/2021-00:20#90#20#6.0#5.0#0.0#0.0#283#8#0#0
+Paura e delirio in Eclipse#Gilliam#10/09/2021-18:30#90#20#6.0#5.0#0.0#0.0#283#8#0#0
+Paura e delirio in Eclipse#Gilliam#10/09/2021-20:30#90#20#6.0#5.0#0.0#0.0#289#8#0#0
+Paura e delirio in Eclipse#Gilliam#10/09/2021-22:30#90#20#6.0#5.0#0.0#0.0#254#8#0#0
+Paura e delirio in Eclipse#Gilliam#10/09/2021-00:20#90#20#6.0#5.0#0.0#0.0#237#8#0#0
+300 programmatori#Leone#11/09/2021-20:30#100#20#8.0#0.0#0.0#0.0#264#0#0#0
+Notte brava con Java#Bergman#11/09/2021-23:30#100#20#8.0#0.0#0.0#0.0#255#0#0#0
+Lost in Eclipse#Kubrick#11/09/2021-23:30#100#20#6.0#0.0#0.0#0.0#241#0#0#0
+A.I. - Artificial IntelliJ#Hitchcock#11/09/2021-23:30#100#20#6.0#0.0#0.0#0.0#241#0#0#0
+Il posto delle fragole#Gilliam#11/09/2021-23:30#100#20#6.0#0.0#0.0#0.0#230#0#0#0
+Shawshank redemption#Gilliam#12/09/2021-23:30#100#20#6.0#0.0#0.0#0.0#221#0#0#0
+Shawshank redemption#Gilliam#12/09/2021-18:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Shawshank redemption#Hitchcock#12/09/2021-18:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Shawshank redemption#Kubrick#12/09/2021-18:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Shawshank redemption#Bergman#12/09/2021-18:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Shawshank redemption#Leone#12/09/2021-18:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Parasite#Leone#12/09/2021-20:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Parasite#Bergman#12/09/2021-20:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Parasite#Kubrick#12/09/2021-22:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+Parasite#Hitchcock#12/09/2021-22:30#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+The Chronicles of Java#Leone#13/09/2021-00:20#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+The Chronicles of Java#Bergman#13/09/2021-00:20#100#20#6.0#0.0#0.0#0.0#218#0#0#0
+The Chronicles of Java#Gilliam#31/08/2021-00:20#100#20#6.0#0.0#0.0#0.0#218#0#0#0
