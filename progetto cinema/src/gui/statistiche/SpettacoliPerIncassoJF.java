@@ -148,7 +148,7 @@ public class SpettacoliPerIncassoJF extends SuperJFrame {
 		creaSfondoScalatoSu(tornaAllAvvioButton, "home.png");
 		
 		Spettacolo[] primiPerIncasso=
-				controllerGUI.chiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
+				controllerGUI.richiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
 
 		creaTabellaSpettacoli(creaRigheTabella(primiPerIncasso));
 		

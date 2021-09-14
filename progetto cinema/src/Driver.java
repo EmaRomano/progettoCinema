@@ -12,7 +12,5 @@ public class Driver {
 		new Driver();
 	}
 	
-	//TODO ultimo salvataggio in copia4 l' 8 settembre
-    // prova commit tramite github desktop
 
 }

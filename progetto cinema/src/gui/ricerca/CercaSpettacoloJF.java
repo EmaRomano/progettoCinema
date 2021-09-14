@@ -197,7 +197,7 @@ public class CercaSpettacoloJF extends SuperJFrame implements PropertyChangeList
 			{
 				finestraCalendario.setLocation(mostraDataTF.getLocationOnScreen().x, 
 						(mostraDataTF.getLocationOnScreen().y + mostraDataTF.getHeight()));
-//				data = (Date)mostraDataTF.getValue();				
+//TODO				data = (Date)mostraDataTF.getValue();				
 
 				finestraCalendario.resettaSelezione(data);				
 				if (!finestraCalendario.isVisible()) {

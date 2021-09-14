@@ -29,11 +29,9 @@ import gui.SuperJFrame;
 
 public class StatistichePerFasceOrarieJF extends SuperJFrame {
 	private LocalDate dataInizioPeriodo, dataFinePeriodo;
-//	private boolean daSempre;
 	
 	public StatistichePerFasceOrarieJF(ControllerGUI controllerGUI, boolean daSempre) {
 		super(controllerGUI);
-//		this.daSempre=daSempre;
 		if (!daSempre) {
 			this.dataInizioPeriodo = controllerGUI.getDataRiferimentoInizioStatistiche();
 			this.dataFinePeriodo = controllerGUI.getDataRiferimentoFineStatistiche();
@@ -302,7 +300,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 					} else {
 						int numeroSpettacoli = (Integer)primiPerIncassoSpinner.getValue();
 						
-						if (controllerGUI.chiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate,numeroSpettacoli)!=null) {
+						if (controllerGUI.richiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate,numeroSpettacoli)!=null) {
 							controllerGUI.apriSchermata(questaFinestra, new SpettacoliPerIncassoJF(controllerGUI,
 									daSempre, fasceOrarieSelezionate, numeroSpettacoli));
 						}
@@ -331,7 +329,7 @@ public class StatistichePerFasceOrarieJF extends SuperJFrame {
 		JLabel[] tassiLabels = {tassoAffluenzaFascia1Label, tassoAffluenzaFascia2Label,
 				                               tassoAffluenzaFascia3Label, tassoAffluenzaFascia4Label};
 		
-		double[] tassiAffluenza=controllerGUI.chiediAffluenzaPerFasce(daSempre);
+		double[] tassiAffluenza=controllerGUI.richiediAffluenzaPerFasce(daSempre);
 		
 		for(int i=0; i<tassiLabels.length; i++) { 
 			tassiLabels[i].setText(String.format("%.2f", tassiAffluenza[i]) +"%");

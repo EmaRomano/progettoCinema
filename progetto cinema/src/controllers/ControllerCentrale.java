@@ -3,6 +3,7 @@ package controllers;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
@@ -21,22 +22,21 @@ import utilita.CalcolatoreStatistiche;
 public class ControllerCentrale {
 	
 	private ControllerGUI controllerGUI;
-	private CalcolatoreStatistiche controllerStatistiche;
+	private CalcolatoreStatistiche calcolatoreStatistiche;
 	private SpettacoloDAO spettacoloDAO = new SpettacoloDAOImplFile();
 
-	//sale e fasce orarie non sono memorizzate su un file, ma in un array in quanto sono solo 5 e sono invariabili
 	private static Sala[] elencoSale = new Sala[5];
 	
 	private FasciaOraria[] elencoFasce = new FasciaOraria[4];
 	
 	public ControllerCentrale() {
 		controllerGUI=new ControllerGUI(this);
-		controllerStatistiche=new CalcolatoreStatistiche(this);
+		calcolatoreStatistiche=new CalcolatoreStatistiche(this);
 		creaElencoSale();
 		creaElencoFasce();
 	}
 
-	public void creaElencoSale() {	//TODO mostrare tecnologia sale da qualche parte nella GUI
+	public void creaElencoSale() {
 		elencoSale[0]=new Sala("Leone", 450, "IMAX+dolby atmos" );
 		elencoSale[1]=new Sala("Bergman", 350, "HRF+dolby atmos");
 		elencoSale[2]=new Sala("Kubrick", 350, "HRF+dolby atmos");
@@ -127,10 +127,10 @@ public class ControllerCentrale {
 	
 
 	
-	//metodo che prende uno spettacolo e lo assegna alla sua fascia oraria
 	public void assegnaSpettacoloAFasciaOraria(Spettacolo spettacolo) {
+		LocalTime oraInizio=spettacolo.getDataEOraInizio().toLocalTime();
 		for(FasciaOraria fasciaOraria:elencoFasce) {
-			if(fasciaOraria.contiene(spettacolo.getDataEOraInizio().toLocalTime()))
+			if(fasciaOraria.contiene(oraInizio))
 				fasciaOraria.getSpettacoliDiQuestaFascia().add(spettacolo);
 		}
 
@@ -141,16 +141,16 @@ public class ControllerCentrale {
 	}
 
 
-	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
-		return controllerStatistiche.calcolaAffluenzaPerFasce(daSempre);
+	public double[] richiediAffluenzaPerFasce(boolean daSempre) {
+		return calcolatoreStatistiche.calcolaAffluenzaPerFasce(daSempre);
 	}
 
-	public double[] calcolaAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
-		return controllerStatistiche.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
+	public double[] richiediAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
+		return calcolatoreStatistiche.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
 	}
 
-	public Spettacolo[] trovaPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
-		return controllerStatistiche.calcolaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
+	public Spettacolo[] richiediPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
+		return calcolatoreStatistiche.calcolaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
 	}
 	
 	

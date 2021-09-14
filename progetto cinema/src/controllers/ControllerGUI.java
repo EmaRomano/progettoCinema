@@ -168,18 +168,18 @@ public class ControllerGUI {
 	}
 	
 	
-	public double[] chiediAffluenzaPerFasce(boolean daSempre) {
-		return controllerCentrale.calcolaAffluenzaPerFasce(daSempre);
+	public double[] richiediAffluenzaPerFasce(boolean daSempre) {
+		return controllerCentrale.richiediAffluenzaPerFasce(daSempre);
 	}
 
 
-	public double[] chiediAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
-		return controllerCentrale.calcolaAffluenzaPerSale(fasceOrarieSelezionate);
+	public double[] richiediAffluenzaPerSale(List<String> fasceOrarieSelezionate) {
+		return controllerCentrale.richiediAffluenzaPerSale(fasceOrarieSelezionate);
 	}
 
 
-	public Spettacolo[] chiediPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
-		return controllerCentrale.trovaPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
+	public Spettacolo[] richiediPrimiNSpettacoliPerIncasso(List<String> fasceOrarieSelezionate, int numeroSpettacoli) {
+		return controllerCentrale.richiediPrimiNSpettacoliPerIncasso(fasceOrarieSelezionate, numeroSpettacoli);
 	}
 
 

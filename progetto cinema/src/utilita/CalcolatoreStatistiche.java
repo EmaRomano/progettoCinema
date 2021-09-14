@@ -16,9 +16,11 @@ public class CalcolatoreStatistiche {
 	public CalcolatoreStatistiche(ControllerCentrale controllerCentrale) {
 		this.controllerCentrale=controllerCentrale;
 	}
+	
 
 	public double[] calcolaAffluenzaPerFasce(boolean daSempre) {
 		List<Spettacolo>listaSpettacoli;
+		FasciaOraria[] elencoFasce=controllerCentrale.getElencoFasce();
 		
 		if(daSempre){
 			listaSpettacoli=controllerCentrale.getSpettacoloDAO().getAllSpettacoli();
@@ -28,7 +30,7 @@ public class CalcolatoreStatistiche {
 			listaSpettacoli=filtraSpettacoliPerPeriodo(dataInizioPeriodo, dataFinePeriodo);
 		}
 
-		for(FasciaOraria fasciaOraria: controllerCentrale.getElencoFasce())
+		for(FasciaOraria fasciaOraria: elencoFasce)
 			fasciaOraria.getSpettacoliDiQuestaFascia().clear(); //TODO non ti dimenticare
 		
 		for(Spettacolo s : listaSpettacoli) {
@@ -39,7 +41,7 @@ public class CalcolatoreStatistiche {
 		
 		for(int i=0; i<medieTassiAffluenza.length;i++)
 			medieTassiAffluenza[i]=
-					calcolaMediaTassiAffluenza(controllerCentrale.getElencoFasce()[i].getSpettacoliDiQuestaFascia());
+					calcolaMediaTassiAffluenza(elencoFasce[i].getSpettacoliDiQuestaFascia());
 		
 		for(int i=0; i<medieTassiAffluenza.length;i++)
 			if(Double.isNaN(medieTassiAffluenza[i])) 

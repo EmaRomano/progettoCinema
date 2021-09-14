@@ -267,7 +267,7 @@ public class StatistichePerSaleJF extends SuperJFrame {
 		JLabel[] tassiLabels = {tassoAffluenzaSala1Label, tassoAffluenzaSala2Label,
 				tassoAffluenzaSala3Label, tassoAffluenzaSala4Label, tassoAffluenzaSala5Label};
 		
-		double[] tassiAffluenza=controllerGUI.chiediAffluenzaPerSale(fasceOrarieSelezionate);
+		double[] tassiAffluenza=controllerGUI.richiediAffluenzaPerSale(fasceOrarieSelezionate);
 		
 		for(int i=0; i<tassiLabels.length; i++) { 
 			tassiLabels[i].setText(String.format("%.2f", tassiAffluenza[i]) +"%");
